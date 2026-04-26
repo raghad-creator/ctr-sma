@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة أولياء الأمور - سجل متابعة الطلاب</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط خاصة بصفحة أولياء الأمور */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-bar input, .search-bar select {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color, #e0e0e0);
+            border-radius: 8px;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 200px;
+            background: var(--bg-card, #fff);
+            color: var(--text-color, #333);
+        }
+
+        .parents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .parent-card {
+            background: var(--bg-card, #fff);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 4px solid var(--primary-color, #0F4C4C);
+        }
+
+        .parent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .parent-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .parent-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-color, #C9A24A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .parent-info h4 { margin: 0; color: var(--text-color, #333); }
+        .linked-student { margin: 0.25rem 0 0; color: var(--text-light, #666); font-size: 0.9rem; }
+        .linked-student span { color: var(--primary-color, #0F4C4C); font-weight: bold; }
+
+        .parent-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light, #666);
+        }
+
+        .parent-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--bg-card, #fff);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem; left: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light, #666);
+        }
+
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 0.75rem;
+            border: 2px solid var(--border-color, #e0e0e0);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-input, #fff);
+            color: var(--text-color, #333);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light, #666);
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-right">
+                <button class="back-btn" onclick="window.location.href='index.html'">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>القائمة الرئيسية</span>
+                </button>
+            </div>
+            <div class="header-center">
+                <h1><i class="fas fa-users"></i> سجل متابعة الطلاب</h1>
+            </div>
+            <div class="header-left">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="help-btn" onclick="window.location.href='help.html'">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h2><i class="fas fa-user-tie"></i> إدارة أولياء الأمور</h2>
+                <button class="btn btn-primary" onclick="openModal('addParentModal')">
+                    <i class="fas fa-plus"></i> إضافة ولي أمر جديد
+                </button>
+            </div>
+
+            <!-- Search & Filter -->
+            <div class="search-bar">
+                <input type="text" id="parentSearch" placeholder="🔍 بحث باسم ولي الأمر أو الطالب..." onkeyup="filterParents()">
+                <select id="filterClass" onchange="filterParents()">
+                    <option value="">جميع الصفوف</option>
+                </select>
+            </div>
+
+            <!-- Parents List -->
+            <div class="parents-grid" id="parentsList">
+                <!-- سيتم تعبئة البطاقات تلقائياً عبر JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Parent Modal -->
+    <div id="addParentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('addParentModal')">&times;</span>
+            <h3 id="modalTitle"><i class="fas fa-user-plus"></i> إضافة ولي أمر جديد</h3>
+            <form id="parentForm">
+                <input type="hidden" id="parentId">
+                <div class="form-group">
+                    <label>اسم ولي الأمر الكامل</label>
+                    <input type="text" id="parentName" required placeholder="مثال: أحمد محمد العلي">
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف</label>
+                    <input type="tel" id="parentPhone" required placeholder="05xxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني (اختياري)</label>
+                    <input type="email" id="parentEmail" placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                    <label>ربط بالطالب</label>
+                    <select id="linkStudent" required>
+                        <option value="">اختر الطالب المراد ربطه...</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="submit" class="btn btn-success" style="flex: 1;">
+                        <i class="fas fa-save"></i> حفظ البيانات
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addParentModal')">
+                        إلغاء
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <p>جميع الحقوق محفوظة &copy; 2026 - سجل متابعة الطلاب</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            loadParents();
+            populateStudentDropdown();
+            populateClassFilter();
+            initTheme();
+        });
+
+        // تحميل وعرض أولياء الأمور
+        function loadParents() {
+            const parents = JSON.parse(localStorage.getItem('parents')) || [];
+            const container = document.getElementById('parentsList');
+            container.innerHTML = '';
+
+            if (parents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                        <p>لا يوجد أولياء أمور مسجلين حالياً</p>
+                        <button class="btn btn-primary" onclick="openModal('addParentModal')" style="margin-top: 1rem;">
+                            <i class="fas fa-plus"></i> إضافة أول ولي أمر
+                        </button>
+                    </div>`;
+                return;
+            }
+
+            parents.forEach(parent => {
+                const card = document.createElement('div');
+                card.className = 'parent-card';
+                card.dataset.name = parent.name.toLowerCase();
+                card.dataset.student = (parent.studentName || '').toLowerCase();
+                card.innerHTML = `
+                    <div class="parent-header">
+                        <div class="parent-avatar"><i class="fas fa-user-tie"></i></div>
+                        <div class="parent-info">
+                            <h4>${parent.name}</h4>
+                            <p class="linked-student">الطالب المرتبط: <span>${parent.studentName || 'غير محدد'}</span></p>
+                        </div>
+                    </div>
+                    <div class="parent-contact">
+                        <span><i class="fas fa-phone"></i> ${parent.phone}</span>
+                        <span><i class="fas fa-envelope"></i> ${parent.email || '-'}</span>
+                    </div>
+                    <div class="parent-actions">
+                        <button class="btn btn-sm btn-secondary" onclick="viewStudentRecord('${parent.studentId}')">
+                            <i class="fas fa-eye"></i> عرض السجل
+                        </button>
+                        <button class="btn btn-sm btn-warning" onclick="editParent('${parent.id}')">
+                            <i class="fas fa-edit"></i> تعديل
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteParent('${parent.id}')">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // تعبئة قائمة الطلاب في المودال
+        function populateStudentDropdown() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const select = document.getElementById('linkStudent');
+            select.innerHTML = '<option value="">اختر الطالب المراد ربطه...</option>';
+            students.forEach(s => {
+                select.innerHTML += `<option value="${s.id}">${s.name} - ${s.class || 'غير محدد'}</option>`;
+            });
+        }
+
+        // تعبئة فلتر الصفوف
+        function populateClassFilter() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const classes = [...new Set(students.map(s => s.class).filter(Boolean))];
+            const select = document.getElementById('filterClass');
+            select.innerHTML = '<option value="">جميع الصفوف</option>';
+            classes.forEach(c => {
+                select.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+        }
+
+        // التحكم في المودال
+        function openModal(id) { 
+            document.getElementById(id).style.display = 'flex'; 
+            document.getElementById('parentForm').reset();
+            document.getElementById('parentId').value = '';
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus"></i> إضافة ولي أمر جديد';
+        }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // حفظ بيانات ولي الأمر
+        document.getElementById('parentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('parentId').value || Date.now().toString();
+            const name = document.getElementById('parentName').value.trim();
+            const phone = document.getElementById('parentPhone').value.trim();
+            const email = document.getElementById('parentEmail').value.trim();
+            const studentId = document.getElementById('linkStudent').value;
+
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const student = students.find(s => s.id == studentId);
+
+            const parentData = { 
+                id, name, phone, email, studentId, 
+                studentName: student ? student.name : 'غير محدد' 
+            };
+
+            let parents = JSON.parse(localStorage.getItem('parents')) || [];
+            const existingIndex = parents.findIndex(p => p.id == id);
+            if (existingIndex > -1) {
+                parents[existingIndex] = parentData;
+            } else {
+                parents.push(parentData);
+            }
+
+            localStorage.setItem('parents', JSON.stringify(parents));
+            closeModal('addParentModal');
+            loadParents();
+        });
+
+        // تعديل ولي أمر
+        function editParent(id) {
+            const parents = JSON.parse(localStorage.getItem('parents')) || [];
+            const parent = parents.find(p => p.id == id);
+            if (!parent) return;
+
+            document.getElementById('parentId').value = parent.id;
+            document.getElementById('parentName').value = parent.name;
+            document.getElementById('parentPhone').value = parent.phone;
+            document.getElementById('parentEmail').value = parent.email || '';
+            document.getElementById('linkStudent').value = parent.studentId || '';
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> تعديل بيانات ولي الأمر';
+            openModal('addParentModal');
+        }
+
+        // حذف ولي أمر
+        function deleteParent(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الولي؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                let parents = JSON.parse(localStorage.getItem('parents')) || [];
+                parents = parents.filter(p => p.id != id);
+                localStorage.setItem('parents', JSON.stringify(parents));
+                loadParents();
+            }
+        }
+
+        // عرض سجل الطالب المرتبط
+        function viewStudentRecord(studentId) {
+            if (studentId) {
+                window.location.href = `student-record.html?studentId=${studentId}`;
+            } else {
+                alert('⚠️ لم يتم ربط هذا الولي بأي طالب بعد. يرجى تعديل البيانات وربطه بطالب.');
+            }
+        }
+
+        // فلترة والبحث
+        function filterParents() {
+            const query = document.getElementById('parentSearch').value.toLowerCase();
+            const classFilter = document.getElementById('filterClass').value;
+            const cards = document.querySelectorAll('.parent-card');
+
+            cards.forEach(card => {
+                const matchSearch = card.dataset.name.includes(query) || card.dataset.student.includes(query);
+                const matchClass = classFilter === '' || card.dataset.student.includes(classFilter); // تبسيط للفلترة
+                card.style.display = (matchSearch && matchClass) ? 'block' : 'none';
+            });
+        }
+
+        // إغلاق المودال عند الضغط خارجه
+        window.onclick = function(event) {
+            const modal = document.getElementById('addParentModal');
+            if (event.target == modal) closeModal('addParentModal');
+        }
+    </script>
+</body>
+</html>
+
