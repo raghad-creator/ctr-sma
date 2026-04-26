@@ -1,16 +1,20 @@
 window.addEventListener('load', () => {
     console.log('=== سما بدأ التحميل ===');
     
-    // ========== 1. الوضع الليلي ==========
+    // فحص العناصر الموجودة
+    console.log('teacher-greeting:', document.getElementById('teacher-greeting'));
+    console.log('question:', document.getElementById('question'));
+    console.log('newStudent:', document.getElementById('newStudent'));
+    console.log('followStudents:', document.getElementById('followStudents'));
+    console.log('uploadParents:', document.getElementById('uploadParents'));
+    console.log('helpSupport:', document.getElementById('helpSupport'));
+    console.log('footer-text:', document.getElementById('footer-text'));
+    
+    // ========== الوضع الليلي ==========
     const themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) {
         const savedTheme = localStorage.getItem('sama-theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        
-        const icon = themeBtn.querySelector('i');
-        if (icon) {
-            icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-        }
         
         themeBtn.addEventListener('click', function() {
             const current = document.documentElement.getAttribute('data-theme');
@@ -18,14 +22,14 @@ window.addEventListener('load', () => {
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('sama-theme', next);
             
-            const ic = this.querySelector('i');
-            if (ic) {
-                ic.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
             }
         });
     }
     
-    // ========== 2. اللغة ==========
+    // ========== اللغة ==========
     const langBtn = document.getElementById('lang-toggle');
     let currentLang = localStorage.getItem('sama-lang') || 'ar';
     
@@ -115,7 +119,7 @@ window.addEventListener('load', () => {
     
     const flags = {
         ar: '🇸🇦', en: '🇬🇧', tr: '🇹🇷', es: '🇪🇸',
-        ko: '🇰🇷', ja: '🇯🇵', hi: '🇮🇳', fil: '🇵🇭', zh: '🇨🇳'
+        ko: '🇰🇷', ja: '🇯🇵', hi: '🇮🇳', fil: '🇵', zh: '🇨🇳'
     };
     
     // دالة الترجمة
@@ -124,81 +128,100 @@ window.addEventListener('load', () => {
         
         const t = translations[lang];
         if (!t) {
-            console.error('❌ اللغة غير موجودة');
+            alert('❌ اللغة غير موجودة!');
             return;
         }
         
         const teacherName = localStorage.getItem('sama-teacher') || 'معلمة';
         
-        // العناصر
-        const elements = {
-            'teacher-greeting': t.greeting + ' ' + teacherName + ' 👋',
-            'question': t.question,
-            'newStudent': t.newStudent,
-            'followStudents': t.followStudents,
-            'uploadParents': t.uploadParents,
-            'helpSupport': t.helpSupport,
-            'footer-text': t.footer
-        };
-        
-        // التطبيق
-        let count = 0;
-        for (const [id, text] of Object.entries(elements)) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.textContent = text;
-                count++;
-                console.log('✓', id);
-            } else {
-                console.log('✗ لم يوجد:', id);
-            }
+        // تحديث كل عنصر
+        const el1 = document.getElementById('teacher-greeting');
+        if (el1) {
+            el1.textContent = t.greeting + ' ' + teacherName + ' 👋';
+            console.log('✓ تم تحديث الترحيب');
+        } else {
+            console.error('✗ لم أجد teacher-greeting');
         }
         
-        console.log('✅ تم تحديث', count, 'عنصر');
+        const el2 = document.getElementById('question');
+        if (el2) {
+            el2.textContent = t.question;
+            console.log('✓ تم تحديث السؤال');
+        } else {
+            console.error('✗ لم أجد question');
+        }
+        
+        const el3 = document.getElementById('newStudent');
+        if (el3) {
+            el3.textContent = t.newStudent;
+            console.log('✓ تم تحديث newStudent');
+        }
+        
+        const el4 = document.getElementById('followStudents');
+        if (el4) {
+            el4.textContent = t.followStudents;
+            console.log('✓ تم تحديث followStudents');
+        }
+        
+        const el5 = document.getElementById('uploadParents');
+        if (el5) {
+            el5.textContent = t.uploadParents;
+            console.log('✓ تم تحديث uploadParents');
+        }
+        
+        const el6 = document.getElementById('helpSupport');
+        if (el6) {
+            el6.textContent = t.helpSupport;
+            console.log('✓ تم تحديث helpSupport');
+        }
+        
+        const el7 = document.getElementById('footer-text');
+        if (el7) {
+            el7.textContent = t.footer;
+            console.log('✓ تم تحديث footer');
+        }
         
         // الاتجاه
         document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
         document.documentElement.lang = lang;
+        
+        console.log('✅ اكتملت الترجمة!');
     }
     
     // زر اللغة
     if (langBtn) {
-        // تعيين العلم
-        langBtn.textContent = flags[currentLang] || '🇸';
+        langBtn.textContent = flags[currentLang] || '🇸🇦';
         langBtn.style.cursor = 'pointer';
-        langBtn.style.fontSize = '20px';
         
         // التطبيق الأولي
-        setTimeout(() => translatePage(currentLang), 200);
+        setTimeout(() => translatePage(currentLang), 300);
         
         // النقر
         langBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log(' نقر على اللغة');
+            console.log('🌐 نقر على زر اللغة');
             
             const langs = [
                 {code: 'ar', name: 'العربية', flag: '🇸🇦'},
-                {code: 'en', name: 'English', flag: '🇬🇧'},
-                {code: 'tr', name: 'Türkçe', flag: '🇹'},
+                {code: 'en', name: 'English', flag: '🇬'},
+                {code: 'tr', name: 'Türkçe', flag: '🇹🇷'},
                 {code: 'es', name: 'Español', flag: '🇪🇸'},
-                {code: 'ko', name: '한국어', flag: '🇰🇷'},
-                {code: 'ja', name: '日本語', flag: '🇯'},
+                {code: 'ko', name: '한국어', flag: '🇰'},
+                {code: 'ja', name: '日本語', flag: '🇯🇵'},
                 {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'},
                 {code: 'fil', name: 'Filipino', flag: '🇵🇭'},
-                {code: 'zh', name: '中文', flag: '🇨🇳'}
+                {code: 'zh', name: '中文', flag: '🇨'}
             ];
             
             // إزالة القائمة القديمة
-            const oldMenu = document.querySelector('.lang-dropdown');
-            if (oldMenu) {
-                oldMenu.remove();
-            }
+            const oldMenu = document.querySelector('.lang-menu');
+            if (oldMenu) oldMenu.remove();
             
             // إنشاء القائمة
             const menu = document.createElement('div');
-            menu.className = 'lang-dropdown';
+            menu.className = 'lang-menu';
             menu.style.cssText = 'position:absolute;top:100%;right:0;background:white;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.3);padding:10px;min-width:180px;z-index:9999;margin-top:5px;border:2px solid #1F6F6F;';
             
             langs.forEach(l => {
@@ -219,7 +242,7 @@ window.addEventListener('load', () => {
                     ev.preventDefault();
                     ev.stopPropagation();
                     
-                    console.log('✅ اختيار:', l.name);
+                    console.log('✅ اختيار اللغة:', l.name);
                     currentLang = l.code;
                     localStorage.setItem('sama-lang', currentLang);
                     langBtn.textContent = l.flag;
@@ -230,14 +253,13 @@ window.addEventListener('load', () => {
                 menu.appendChild(btn);
             });
             
-            // إضافة القائمة
             this.parentElement.style.position = 'relative';
             this.parentElement.appendChild(menu);
             console.log('📋 القائمة ظهرت');
         });
     }
     
-    // ========== 3. اسم المعلمة ==========
+    // ========== اسم المعلمة ==========
     let teacherName = localStorage.getItem('sama-teacher');
     if (!teacherName) {
         teacherName = prompt('👋 أهلاً بكِ في سما!\n\nالرجاء إدخال اسم المعلمة:') || 'معلمة';
