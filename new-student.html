@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سما | إنشاء سجل طالب جديد</title>
+    <title id="ns-page-title">سما | إنشاء سجل طالب جديد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -47,8 +47,7 @@
         }
         body.dark-mode .form-section-title {
             color: var(--light-gold);
-        }
-        .form-group {
+        }        .form-group {
             margin-bottom: 1.5rem;
         }
         .form-group label {
@@ -97,8 +96,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        .btn-group {
-            display: flex;
+        .btn-group {            display: flex;
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -147,17 +145,10 @@
             border-radius: 8px;
             margin-bottom: 1rem;
             text-align: center;
-            animation: slideIn 0.3s ease;
-        }
+            animation: slideIn 0.3s ease;        }
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -170,8 +161,8 @@
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <div class="titles">
-                <h1 class="site-name">سما</h1>
-                <p class="site-subtitle">إنشاء سجل طالب جديد</p>
+                <h1 class="site-name" id="ns-site-name">سما</h1>
+                <p class="site-subtitle" id="ns-site-subtitle">إنشاء سجل طالب جديد</p>
             </div>
         </div>
         <div class="controls">
@@ -189,148 +180,101 @@
         <div class="form-container">
             <div class="form-header">
                 <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
-                <h2>بيانات الطالب الجديد</h2>
-                <p>يرجى تعبئة جميع الحقول المطلوبة بدقة</p>
+                <h2 id="ns-form-title">بيانات الطالب الجديد</h2>
+                <p id="ns-form-desc">يرجى تعبئة جميع الحقول المطلوبة بدقة</p>
             </div>
 
-            <div id="success-msg" class="success-message">
-                <i class="fas fa-check-circle"></i> تم حفظ البيانات بنجاح!
+            <div id="ns-success-msg" class="success-message">
+                <i class="fas fa-check-circle"></i> <span id="ns-success-text">تم حفظ البيانات بنجاح!</span>
             </div>
 
             <form id="new-student-form" novalidate>
                 <!-- قسم بيانات الطالب -->
                 <div class="form-section">
-                    <h3 class="form-section-title">
+                    <h3 class="form-section-title" id="ns-section-student">
                         <i class="fas fa-user-graduate"></i>
-                        بيانات الطالب
-                    </h3>
-                    
+                        <span id="ns-title-student">بيانات الطالب</span>
+                    </h3>                    
                     <div class="form-group">
                         <label for="student-name">
-                            اسم الطالب الرباعي <span class="required">*</span>
+                            <span id="ns-label-student-name">اسم الطالب الرباعي</span> <span class="required">*</span>
                         </label>
-                        <input 
-                            type="text" 
-                            id="student-name" 
-                            name="student-name"
-                            placeholder="مثال: أحمد محمد علي عبدالله" 
-                            required
-                            pattern="[\u0600-\u06FF\s]{10,}"
-                            title="يرجى إدخال الاسم الرباعي باللغة العربية (10 أحرف على الأقل)"
-                        >
+                        <input type="text" id="student-name" name="student-name" 
+                            data-ph="ns-ph-student-name" placeholder="مثال: أحمد محمد علي عبدالله" required>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="student-id">
-                                رقم الهوية / الإقامة <span class="required">*</span>
+                                <span id="ns-label-student-id">رقم الهوية / الإقامة</span> <span class="required">*</span>
                             </label>
-                            <input 
-                                type="text" 
-                                id="student-id" 
-                                name="student-id"
-                                placeholder="1xxxxxxxxx" 
-                                required
-                                pattern="[0-9]{10}"
-                                title="يرجى إدخال رقم الهوية (10 أرقام)"
-                                maxlength="10"
-                            >
+                            <input type="text" id="student-id" name="student-id" 
+                                data-ph="ns-ph-student-id" placeholder="1xxxxxxxxx" required>
                         </div>
-
                         <div class="form-group">
                             <label for="grade-level">
-                                المرحلة الدراسية <span class="required">*</span>
+                                <span id="ns-label-grade">المرحلة الدراسية</span> <span class="required">*</span>
                             </label>
                             <select id="grade-level" name="grade-level" required>
-                                <option value="" disabled selected>اختر المرحلة...</option>
-                                <option value="primary">ابتدائي</option>
-                                <option value="middle">متوسط</option>
-                                <option value="high">ثانوي</option>
+                                <option value="" disabled selected id="ns-opt-select">اختر المرحلة...</option>
+                                <option value="primary" id="ns-opt-primary">ابتدائي</option>
+                                <option value="middle" id="ns-opt-middle">متوسط</option>
+                                <option value="high" id="ns-opt-high">ثانوي</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="class-room">
-                            الصف والفصل <span class="required">*</span>
+                            <span id="ns-label-class">الصف والفصل</span> <span class="required">*</span>
                         </label>
-                        <input 
-                            type="text" 
-                            id="class-room" 
-                            name="class-room"
-                            placeholder="مثال: الثالث أ" 
-                            required
-                        >
+                        <input type="text" id="class-room" name="class-room" 
+                            data-ph="ns-ph-class" placeholder="مثال: الثالث أ" required>
                     </div>
                 </div>
 
                 <!-- قسم بيانات ولي الأمر -->
                 <div class="form-section">
-                    <h3 class="form-section-title">
+                    <h3 class="form-section-title" id="ns-section-parent">
                         <i class="fas fa-user-shield"></i>
-                        بيانات ولي الأمر
+                        <span id="ns-title-parent">بيانات ولي الأمر</span>
                     </h3>
                     
                     <div class="form-group">
                         <label for="parent-name">
-                            اسم ولي الأمر الرباعي <span class="required">*</span>
-                        </label>
-                        <input 
-                            type="text" 
-                            id="parent-name" 
-                            name="parent-name"
-                            placeholder="الاسم الرباعي لولي الأمر" 
-                            required
-                            pattern="[\u0600-\u06FF\s]{10,}"
-                            title="يرجى إدخال الاسم الرباعي باللغة العربية"
-                        >
+                            <span id="ns-label-parent-name">اسم ولي الأمر الرباعي</span> <span class="required">*</span>
+                        </label>                        <input type="text" id="parent-name" name="parent-name" 
+                            data-ph="ns-ph-parent-name" placeholder="الاسم الرباعي لولي الأمر" required>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="parent-phone">
-                                رقم الجوال <span class="required">*</span>
+                                <span id="ns-label-phone">رقم الجوال</span> <span class="required">*</span>
                             </label>
-                            <input 
-                                type="tel" 
-                                id="parent-phone" 
-                                name="parent-phone"
-                                placeholder="05xxxxxxxx" 
-                                required
-                                pattern="05[0-9]{8}"
-                                title="يرجى إدخال رقم جوال صحيح يبدأ بـ 05"
-                                maxlength="10"
-                            >
+                            <input type="tel" id="parent-phone" name="parent-phone" 
+                                data-ph="ns-ph-phone" placeholder="05xxxxxxxx" required>
                         </div>
-
                         <div class="form-group">
                             <label for="parent-email">
-                                البريد الإلكتروني
+                                <span id="ns-label-email">البريد الإلكتروني</span>
                             </label>
-                            <input 
-                                type="email" 
-                                id="parent-email" 
-                                name="parent-email"
-                                placeholder="example@email.com"
-                            >
+                            <input type="email" id="parent-email" name="parent-email" 
+                                data-ph="ns-ph-email" placeholder="example@email.com">
                         </div>
                     </div>
                 </div>
 
                 <!-- ملاحظات إضافية -->
                 <div class="form-section" style="border-bottom: none;">
-                    <h3 class="form-section-title">
+                    <h3 class="form-section-title" id="ns-section-notes">
                         <i class="fas fa-sticky-note"></i>
-                        معلومات إضافية
+                        <span id="ns-title-notes">معلومات إضافية</span>
                     </h3>
-                    
                     <div class="form-group">
-                        <label for="notes">ملاحظات</label>
-                        <textarea 
-                            id="notes" 
-                            name="notes"
-                            placeholder="أي معلومات إضافية عن الطالب (حالة صحية، ظروف خاصة، إلخ...)"
-                        ></textarea>
+                        <label for="notes"><span id="ns-label-notes">ملاحظات</span></label>
+                        <textarea id="notes" name="notes" data-ph="ns-ph-notes" 
+                            placeholder="أي معلومات إضافية عن الطالب (حالة صحية، ظروف خاصة، إلخ...)"></textarea>
                     </div>
                 </div>
 
@@ -338,34 +282,30 @@
                 <div class="btn-group">
                     <button type="submit" class="btn-primary">
                         <i class="fas fa-save"></i>
-                        حفظ السجل
+                        <span id="ns-btn-save">حفظ السجل</span>
                     </button>
                     <button type="reset" class="btn-secondary">
                         <i class="fas fa-undo"></i>
-                        إعادة تعيين
+                        <span id="ns-btn-reset">إعادة تعيين</span>
                     </button>
                 </div>
             </form>
         </div>
     </main>
-
     <script src="script.js"></script>
     <script>
-        // التحقق من صحة النموذج
+        // ========== التحقق من صحة النموذج ==========
         const form = document.getElementById('new-student-form');
-        const successMsg = document.getElementById('success-msg');
+        const successMsg = document.getElementById('ns-success-msg');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // التحقق من صحة جميع الحقول
             if (!form.checkValidity()) {
                 e.stopPropagation();
                 form.reportValidity();
                 return;
             }
 
-            // جمع البيانات
             const studentData = {
                 studentName: document.getElementById('student-name').value.trim(),
                 studentId: document.getElementById('student-id').value.trim(),
@@ -379,41 +319,28 @@
                 createdDate: new Date().toLocaleDateString('ar-SA')
             };
 
-            // حفظ البيانات (يمكن تعديلها لاحقاً للربط مع قاعدة البيانات)
             console.log('=== بيانات الطالب الجديد ===');
             console.log(studentData);
 
-            // حفظ في localStorage كمثال
             let students = JSON.parse(localStorage.getItem('students') || '[]');
             students.push(studentData);
             localStorage.setItem('students', JSON.stringify(students));
 
-            // إظهار رسالة النجاح
             successMsg.style.display = 'block';
-            
-            // إخفاء الرسالة بعد 3 ثواني
             setTimeout(() => {
                 successMsg.style.display = 'none';
-                // إعادة توجيه لصفحة السجلات
-                window.location.href = 'view-records.html';
+                window.location.href = 'students.html';
             }, 2000);
-
-            // إعادة تعيين النموذج
             form.reset();
         });
 
-        // تنسيق أرقام الهواتف تلقائياً
-        document.getElementById('parent-phone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 10) value = value.slice(0, 10);
-            e.target.value = value;
-        });
-
-        document.getElementById('student-id').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 10) value = value.slice(0, 10);
-            e.target.value = value;
-        });
-    </script>
+        // تنسيق الأرقام
+        ['parent-phone', 'student-id'].forEach(id => {
+            document.getElementById(id)?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 10) value = value.slice(0, 10);
+                e.target.value = value;
+            });
+        });    </script>
 </body>
 </html>
