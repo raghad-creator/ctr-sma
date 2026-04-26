@@ -1,0 +1,335 @@
+/* ==================== خلفية مختلفة لصفحة المساعدة ==================== */
+.help-container {
+    background: linear-gradient(135deg, #f0f9f9 0%, #e8f4f4 100%);
+    min-height: calc(100vh - 200px);
+    padding: 2rem 5%;
+}
+
+[data-theme="dark"] .help-container {
+    background: linear-gradient(135deg, #0d2525 0%, #0a1f1f 100%);
+}
+
+/* ==================== رأس الصفحة ==================== */
+.help-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+    border-radius: 20px;
+    color: #fff;
+    box-shadow: 0 8px 25px var(--shadow);
+}
+
+.help-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--gold-light);
+}
+
+.help-header h1 i {
+    margin-left: 0.5rem;
+}
+
+.help-header p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* ==================== قسم الأسئلة الشائعة ==================== */
+.faq-section {
+    max-width: 900px;
+    margin: 0 auto 3rem;
+}
+
+.faq-title {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 2rem;
+    text-align: center;
+    padding: 1rem;
+    background: var(--card-bg);    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+[data-theme="dark"] .faq-title {
+    color: var(--gold-light);
+}
+
+.faq-title i {
+    margin-left: 0.5rem;
+    color: var(--gold);
+}
+
+/* ==================== الأكورديون (الأسئلة القابلة للطي) ==================== */
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.accordion-item {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow);
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.accordion-item:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 1.3rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-mid), var(--primary-dark));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Tajawal', sans-serif;
+    transition: var(--transition);
+    text-align: right;
+}
+.accordion-header:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+}
+
+.question-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.question-icon i {
+    color: var(--gold-light);
+    font-size: 1.2rem;
+}
+
+.question-text {
+    flex: 1;
+}
+
+.accordion-icon {
+    font-size: 1rem;
+    color: var(--gold-light);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.accordion-header.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-header.active {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+    border-bottom: 1px solid var(--gold);
+}
+
+/* ==================== محتوى السؤال ==================== */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    background: var(--off-white);
+}
+
+[data-theme="dark"] .accordion-content {    background: #0f2a2a;
+}
+
+.accordion-content.show {
+    max-height: 1000px;
+    padding: 1.5rem;
+}
+
+.accordion-content p,
+.accordion-content ol,
+.accordion-content ul {
+    color: var(--primary-dark);
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+[data-theme="dark"] .accordion-content p,
+[data-theme="dark"] .accordion-content ol,
+[data-theme="dark"] .accordion-content ul {
+    color: var(--text);
+}
+
+.accordion-content ol,
+.accordion-content ul {
+    margin: 1rem 0;
+    padding-right: 1.5rem;
+}
+
+.accordion-content li {
+    margin-bottom: 0.7rem;
+}
+
+.accordion-content strong {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+[data-theme="dark"] .accordion-content strong {
+    color: var(--gold-light);
+}
+
+/* ==================== قسم التواصل ==================== */
+.contact-section {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px var(--shadow);
+    text-align: center;    border-top: 4px solid var(--gold);
+}
+
+.contact-section h2 {
+    color: var(--primary-dark);
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .contact-section h2 {
+    color: var(--gold-light);
+}
+
+.contact-section h2 i {
+    margin-left: 0.5rem;
+    color: var(--gold);
+}
+
+.contact-section > p {
+    color: var(--primary-mid);
+    margin-bottom: 2rem;
+    font-size: 1.05rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(111, 175, 175, 0.1), rgba(15, 76, 76, 0.05));
+    border-radius: 10px;
+    color: var(--primary-dark);
+    font-weight: 500;
+}
+
+[data-theme="dark"] .contact-item {
+    background: linear-gradient(135deg, rgba(111, 175, 175, 0.2), rgba(15, 76, 76, 0.1));
+    color: var(--text);
+}
+
+.contact-item i {
+    color: var(--gold);
+    font-size: 1.3rem;}
+
+/* ==================== التجاوب مع الشاشات ==================== */
+@media (max-width: 768px) {
+    .help-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .help-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .help-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .help-header p {
+        font-size: 0.95rem;
+    }
+
+    .faq-title {
+        font-size: 1.4rem;
+        padding: 0.8rem;
+    }
+
+    .accordion-header {
+        padding: 1rem;
+        font-size: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .question-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .question-icon i {
+        font-size: 1rem;
+    }
+
+    .question-text {
+        font-size: 0.95rem;
+    }
+
+    .accordion-content.show {
+        padding: 1rem;
+    }
+
+    .accordion-content p,
+    .accordion-content ol,    .accordion-content ul {
+        font-size: 0.9rem;
+    }
+
+    .contact-section {
+        padding: 1.5rem 1rem;
+    }
+
+    .contact-section h2 {
+        font-size: 1.3rem;
+    }
+
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .contact-item i {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .help-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .faq-title {
+        font-size: 1.2rem;
+    }
+
+    .accordion-header {
+        padding: 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .question-text {
+        font-size: 0.9rem;
+    }
+}
