@@ -29,34 +29,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const languages = [
         { code: 'ar', name: 'العربية', flag: '🇸🇦' },
         { code: 'en', name: 'English', flag: '🇬🇧' },
-        { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+        { code: 'tr', name: 'Türkçe', flag: '🇹' },
         { code: 'es', name: 'Español', flag: '🇪🇸' },
         { code: 'ko', name: '한국어', flag: '🇰🇷' },
         { code: 'ja', name: '日本語', flag: '🇯🇵' },
         { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
         { code: 'fil', name: 'Filipino', flag: '🇵🇭' },
-        { code: 'zh', name: '中文', flag: '🇨🇳' }
+        { code: 'zh', name: '中文', flag: '🇨' }
     ];
     
-    // تطبيق الترجمة
+    // تطبيق الترجمة - الدالة الرئيسية
     function translatePage(lang) {
         console.log(`🔄 جاري الترجمة إلى: ${lang}`);
+        console.log('📦 ملف الترجمات:', typeof translations);
         
         // التحقق من وجود ملف الترجمات
         if (typeof translations === 'undefined') {
             console.error('❌ ملف translations.js غير موجود!');
-            alert('ملف الترجمات غير موجود. تأكد من رفع translations.js');
             return;
         }        
         if (!translations[lang]) {
-            console.error(`❌ اللغة ${lang} غير موجودة في الترجمات!`);
+            console.error(`❌ اللغة ${lang} غير موجودة!`);
             return;
         }
         
-        // تحديث جميع العناصر
-        document.querySelectorAll('[data-translate]').forEach(element => {
+        const langData = translations[lang];
+        console.log('📝 بيانات اللغة:', langData);
+        
+        // تحديث جميع العناصر التي لها data-translate
+        const elements = document.querySelectorAll('[data-translate]');
+        console.log(`🔍 عدد العناصر للترجمة: ${elements.length}`);
+        
+        elements.forEach(element => {
             const key = element.getAttribute('data-translate');
-            const translation = translations[lang][key];
+            const translation = langData[key];
+            
+            console.log(`  - ${key}: ${translation ? '✓' : '✗'}`);
             
             if (translation) {
                 if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
@@ -69,11 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // تحديث الترحيب
+        // تحديث الترحيب بشكل خاص
         const teacherName = localStorage.getItem('sama-teacher') || 'معلمة';
         const greetingEl = document.getElementById('teacher-greeting');
-        if (greetingEl) {
-            greetingEl.textContent = `${translations[lang].greeting || 'أهلاً،'} ${teacherName} 👋`;
+        if (greetingEl && langData.greeting) {
+            greetingEl.textContent = `${langData.greeting} ${teacherName} 👋`;
         }
         
         // تحديث اتجاه الصفحة
@@ -81,13 +89,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.dir = rtlLangs.includes(lang) ? 'rtl' : 'ltr';
         document.documentElement.lang = lang;
         
-        console.log(`✅ تمت الترجمة إلى ${lang}`);
+        console.log(`✅ تمت الترجمة إلى ${lang} بنجاح!`);
     }
     
     // إنشاء القائمة المنسدلة
     function showLanguageMenu() {
         // إزالة أي قائمة موجودة
-        document.querySelector('.lang-menu')?.remove();
+        const existingMenu = document.querySelector('.lang-menu');
+        if (existingMenu) {            existingMenu.remove();
+            return;
+        }
         
         const menu = document.createElement('div');
         menu.className = 'lang-menu';
@@ -96,9 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
             top: 100%;
             right: 0;
             background: white;
-            border-radius: 10px;            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
             padding: 10px;
-            min-width: 150px;
+            min-width: 180px;
             z-index: 1000;
             margin-top: 5px;
         `;
@@ -108,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.textContent = `${lang.flag} ${lang.name}`;
             btn.style.cssText = `
                 width: 100%;
-                padding: 8px 12px;
+                padding: 10px 12px;
                 margin: 3px 0;
                 border: none;
                 background: transparent;
@@ -116,17 +128,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursor: pointer;
                 text-align: right;
                 font-family: 'Tajawal', sans-serif;
-                transition: background 0.2s;
+                font-size: 14px;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                gap: 8px;
             `;
-            btn.onmouseover = () => btn.style.background = '#f0f0f0';
-            btn.onmouseout = () => btn.style.background = 'transparent';
-            btn.onclick = () => {
+            
+            btn.onmouseover = () => {
+                btn.style.background = 'var(--primary-light)';
+                btn.style.color = 'white';
+            };
+            btn.onmouseout = () => {
+                btn.style.background = 'transparent';
+                btn.style.color = 'inherit';
+            };
+            
+            btn.onclick = (e) => {
+                e.stopPropagation();                console.log(`🌐 اختيار اللغة: ${lang.name}`);
                 currentLang = lang.code;
                 localStorage.setItem('sama-lang', currentLang);
                 langToggle.textContent = lang.flag;
-                translatePage(currentLang);
                 menu.remove();
+                
+                // تطبيق الترجمة فوراً
+                translatePage(currentLang);
             };
+            
             menu.appendChild(btn);
         });
         
@@ -134,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         langToggle.parentElement.appendChild(menu);
     }
     
+    // حدث النقر على زر اللغة
     langToggle?.addEventListener('click', (e) => {
         e.stopPropagation();
         showLanguageMenu();
@@ -144,12 +173,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.lang-menu')?.remove();
     });
     
-    // تحميل اللغة المحفوظة
-    if (langToggle) {        const savedLang = languages.find(l => l.code === currentLang);
+    // تحميل اللغة المحفوظة عند البدء
+    if (langToggle) {
+        const savedLang = languages.find(l => l.code === currentLang);
         if (savedLang) {
             langToggle.textContent = savedLang.flag;
         }
-        translatePage(currentLang);
+        
+        // تطبيق الترجمة بعد تأخير بسيط للتأكد من تحميل كل شيء
+        setTimeout(() => {
+            translatePage(currentLang);
+        }, 100);
     }
     
     // ========== 3. اسم المعلمة ==========
@@ -160,8 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('sama-teacher', teacherName.trim());
     }
     
-    const greetingEl = document.getElementById('teacher-greeting');
-    if (greetingEl) {
+    const greetingEl = document.getElementById('teacher-greeting');    if (greetingEl) {
         greetingEl.textContent = `أهلاً، ${teacherName} 👋`;
     }
     
