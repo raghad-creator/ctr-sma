@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // ========== 1. الوضع الليلي/النهاري ==========
     const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = themeToggle.querySelector('i');
+    const themeIcon = themeToggle?.querySelector('i');
     
     // تحميل الوضع المحفوظ
     const savedTheme = localStorage.getItem('sama-theme') || 'light';
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeIcon(savedTheme);
     
     // تبديل الوضع عند الضغط
-    themeToggle.addEventListener('click', () => {
+    themeToggle?.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     function updateThemeIcon(theme) {
+        if (!themeIcon) return;
         if (theme === 'light') {
             themeIcon.classList.remove('fa-sun');
             themeIcon.classList.add('fa-moon');
@@ -30,34 +31,157 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // ========== 2. تغيير اللغة ==========
+    // ========== 2. تغيير اللغة (يدعم 9 لغات) ==========
     const langToggle = document.getElementById('lang-toggle');
-    let currentLang = localStorage.getItem('sama-lang') || 'ar';
     
-    // تطبيق اللغة المحفوظة
-    applyLanguage(currentLang);
+    // قائمة اللغات المدعومة
+    const supportedLanguages = [
+        { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+        { code: 'en', name: 'English', flag: '🇬' },
+        { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+        { code: 'es', name: 'Español', flag: '🇪🇸' },
+        { code: 'ko', name: '한국어', flag: '🇰🇷' },
+        { code: 'ja', name: '日本語', flag: '🇯🇵' },
+        { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+        { code: 'fil', name: 'Filipino', flag: '🇵' },
+        { code: 'zh', name: '中文', flag: '🇨' }
+    ];
     
-    langToggle.addEventListener('click', () => {
-        currentLang = currentLang === 'ar' ? 'en' : 'ar';
-        localStorage.setItem('sama-lang', currentLang);
-        applyLanguage(currentLang);
-    });
-    
-    function applyLanguage(lang) {
-        document.documentElement.lang = lang;
-        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-        langToggle.textContent = lang === 'ar' ? 'EN' : 'عربي';
+    let currentLang = localStorage.getItem('sama-lang') || 'ar';    
+    // إنشاء قائمة منسدلة للغات
+    function createLanguageDropdown() {
+        const dropdown = document.createElement('div');
+        dropdown.className = 'lang-dropdown';
+        dropdown.style.cssText = `
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px var(--shadow);
+            padding: 0.5rem;
+            min-width: 180px;
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            gap: 0.3rem;
+            border: 1px solid var(--border-color);
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 5px;
+        `;
         
-        // هنا سيتم إضافة الترجمات الكاملة لاحقاً
-        if (lang === 'en') {
-            document.getElementById('teacher-greeting').textContent = 
-                `Welcome, ${localStorage.getItem('sama-teacher') || 'Teacher'} 👋`;
-            document.querySelector('.question').textContent = 'What would you like to do today?';
-        } else {
-            const teacherName = localStorage.getItem('sama-teacher') || 'معلمة';
-            document.getElementById('teacher-greeting').textContent = `أهلاً، ${teacherName} 👋`;
-            document.querySelector('.question').textContent = 'ماذا تريد أن تفعل اليوم؟';
+        supportedLanguages.forEach(lang => {
+            const btn = document.createElement('button');
+            btn.textContent = `${lang.flag} ${lang.name}`;
+            btn.style.cssText = `
+                padding: 0.6rem 1rem;
+                text-align: left;
+                background: transparent;
+                border: none;
+                border-radius: 8px;
+                color: var(--text);
+                font-family: 'Tajawal', sans-serif;
+                font-size: 0.9rem;
+                cursor: pointer;
+                transition: var(--transition);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            `;
+            btn.onmouseenter = () => btn.style.background = 'var(--primary-light)';
+            btn.onmouseleave = () => btn.style.background = 'transparent';
+            btn.onclick = () => {
+                currentLang = lang.code;
+                localStorage.setItem('sama-lang', currentLang);
+                applyLanguage(currentLang);
+                dropdown.style.display = 'none';
+                dropdown.remove();                if (langToggle) {
+                    langToggle.innerHTML = `${lang.flag}`;
+                }
+            };
+            dropdown.appendChild(btn);
+        });
+        
+        return dropdown;
+    }
+    
+    // تطبيق اللغة
+    function applyLanguage(lang) {
+        document.documentElement.lang = lang === 'ar' ? 'ar' : lang;
+        document.documentElement.dir = lang === 'ar' || lang === 'he' || lang === 'fa' || lang === 'ur' ? 'rtl' : 'ltr';
+        
+        // تحديث زر اللغة
+        const currentFlag = supportedLanguages.find(l => l.code === lang)?.flag || '🌐';
+        if (langToggle) {
+            langToggle.innerHTML = currentFlag;
         }
+        
+        // تحديث جميع العناصر القابلة للترجمة
+        if (typeof translations !== 'undefined') {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang]?.[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else if (el.tagName === 'IMG') {
+                        el.alt = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // تحديث عنوان الصفحة
+            const pageTitle = document.querySelector('title[data-translate]');
+            if (pageTitle) {
+                const key = pageTitle.getAttribute('data-translate');
+                if (translations[lang]?.[key]) {
+                    document.title = translations[lang][key];
+                }
+            }
+        }
+        
+        // تحديث الترحيب للمعلمة
+        const teacherName = localStorage.getItem('sama-teacher') || 'معلمة';
+        const greetingEl = document.getElementById('teacher-greeting');
+        if (greetingEl && typeof translations !== 'undefined' && translations[lang]?.greeting) {            greetingEl.textContent = `${translations[lang].greeting} ${teacherName} 👋`;
+        }
+        
+        // تحديث السؤال الرئيسي
+        const questionEl = document.querySelector('.question');
+        if (questionEl && typeof translations !== 'undefined' && translations[lang]?.question) {
+            questionEl.textContent = translations[lang].question;
+        }
+    }
+    
+    // إعداد زر اللغة
+    if (langToggle) {
+        langToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            // إزالة أي قائمة مفتوحة مسبقاً
+            document.querySelectorAll('.lang-dropdown').forEach(d => d.remove());
+            
+            // إنشاء وعرض القائمة
+            const dropdown = createLanguageDropdown();
+            langToggle.parentElement.style.position = 'relative';
+            langToggle.parentElement.appendChild(dropdown);
+            dropdown.style.display = 'flex';
+            
+            // إغلاق القائمة عند النقر خارجها
+            setTimeout(() => {
+                document.addEventListener('click', function closeDropdown(event) {
+                    if (!dropdown.contains(event.target) && event.target !== langToggle) {
+                        dropdown.remove();
+                        document.removeEventListener('click', closeDropdown);
+                    }
+                });
+            }, 0);
+        });
+        
+        // تطبيق اللغة المحفوظة عند التحميل
+        applyLanguage(currentLang);
     }
     
     // ========== 3. ترحيب المعلمة ==========
@@ -66,46 +190,60 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (!teacherName || teacherName.trim() === '') {
         // أول زيارة للموقع
-        teacherName = prompt('👋 أهلاً بكِ في سما!\n\nالرجاء إدخال اسم المعلمة:') || 'معلمة';
-        teacherName = teacherName.trim();
+        const welcomeMsg = (typeof translations !== 'undefined' && translations[currentLang]?.welcome) 
+            ? translations[currentLang].welcome 
+            : '👋 أهلاً بكِ في سما!\n\nالرجاء إدخال اسم المعلمة:';
+        
+        teacherName = prompt(welcomeMsg) || 'معلمة';        teacherName = teacherName.trim();
         localStorage.setItem('sama-teacher', teacherName);
     }
     
     // عرض الترحيب
-    updateGreeting(teacherName);
+    if (greetingElement) {
+        updateGreeting(teacherName);
+    }
     
     // ========== 4. إدارة الحساب (تعديل الاسم) ==========
     const accountBtn = document.getElementById('account-btn');
-    accountBtn.addEventListener('click', () => {
+    accountBtn?.addEventListener('click', () => {
         const currentName = localStorage.getItem('sama-teacher') || 'معلمة';
-        const newName = prompt('✏️ تعديل اسم المعلمة\n\nالاسم الحالي: ' + currentName, currentName);
+        const editMsg = (typeof translations !== 'undefined' && translations[currentLang]?.editTeacherName)
+            ? translations[currentLang].editTeacherName
+            : '✏️ تعديل اسم المعلمة\n\nالاسم الحالي:';
+        
+        const newName = prompt(editMsg + ' ' + currentName, currentName);
         
         if (newName !== null && newName.trim() !== '') {
             const trimmedName = newName.trim();
             localStorage.setItem('sama-teacher', trimmedName);
             updateGreeting(trimmedName);
             
-            // تحديث الترحيب إذا كانت اللغة إنجليزي
-            if (currentLang === 'en') {
-                greetingElement.textContent = `Welcome, ${trimmedName} 👋`;
+            // تحديث الترحيب إذا كانت اللغة موجودة
+            if (typeof translations !== 'undefined' && translations[currentLang]?.greeting) {
+                if (greetingElement) {
+                    greetingElement.textContent = `${translations[currentLang].greeting} ${trimmedName} 👋`;
+                }
             }
             
-            showNotification('✅ تم تحديث الاسم بنجاح');
+            showNotification((typeof translations !== 'undefined' && translations[currentLang]?.nameUpdated) 
+                ? translations[currentLang].nameUpdated 
+                : '✅ تم تحديث الاسم بنجاح');
         }
     });
     
     function updateGreeting(name) {
-        if (currentLang === 'ar') {
-            greetingElement.textContent = `أهلاً، ${name} 👋`;
+        if (!greetingElement) return;
+        
+        if (typeof translations !== 'undefined' && translations[currentLang]?.greeting) {
+            greetingElement.textContent = `${translations[currentLang].greeting} ${name} 👋`;
         } else {
-            greetingElement.textContent = `Welcome, ${name} 👋`;
+            greetingElement.textContent = `أهلاً، ${name} 👋`;
         }
     }
     
     // ========== 5. دالة إشعارات بسيطة ==========
     function showNotification(message) {
-        // إنشاء عنصر الإشعار
-        const notification = document.createElement('div');
+        // إنشاء عنصر الإشعار        const notification = document.createElement('div');
         notification.textContent = message;
         notification.style.cssText = `
             position: fixed;
