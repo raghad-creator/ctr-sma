@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعدة والدعم - سجل متابعة الطالب</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-header">
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>سجل متابعة الطالب</span>
+                </div>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                <li><a href="new-student.html"><i class="fas fa-user-plus"></i> تسجيل طالب جديد</a></li>
+                <li><a href="students.html"><i class="fas fa-users"></i> الطلاب</a></li>
+                <li><a href="parents.html"><i class="fas fa-user-friends"></i> أولياء الأمور</a></li>
+                <li><a href="help.html" class="active"><i class="fas fa-question-circle"></i> المساعدة</a></li>
+                <li><button onclick="toggleTheme()" class="theme-toggle"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1><i class="fas fa-question-circle"></i> المساعدة والدعم</h1>
+            <p>نحن هنا لمساعدتك في أي وقت</p>
+        </div>
+
+        <div class="help-container">
+            <!-- FAQ Section -->
+            <div class="help-section">
+                <h2><i class="fas fa-info-circle"></i> الأسئلة الشائعة</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>كيف أضيف طالب جديد؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>للإضافة طالب جديد، انتقل إلى صفحة "تسجيل طالب جديد" من القائمة الرئيسية، ثم املأ جميع الحقول المطلوبة (اسم الطالب، رقم الهوية، معلومات ولي الأمر، إلخ) واضغط على زر "حفظ".</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>كيف أبحث عن طالب محدد؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>من صفحة "الطلاب"، استخدم خانة البحث في الأعلى للبحث عن الطالب بالاسم أو رقم الهوية أو رقم ولي الأمر.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>كيف أعدل على بيانات طالب؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>من صفحة "الطلاب"، اضغط على اسم الطالب المراد تعديل بياناته، ثم اضغط على زر "تعديل" في صفحة السجل، قم بالتعديلات المطلوبة ثم احفظ التغييرات.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>كيف أضيف ولي أمر جديد؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>يمكنك إضافة ولي أمر جديد من صفحة "أولياء الأمور" بالضغط على زر "إضافة ولي أمر" وملء البيانات المطلوبة.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>كيف أطبع سجل الطالب؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>من صفحة "سجل الطالب"، اضغط على زر "طباعة" في الأعلى، وسيتم فتح نافذة الطباعة تلقائياً.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Support Section -->
+            <div class="help-section">
+                <h2><i class="fas fa-headset"></i> تواصل مع الدعم الفني</h2>
+                
+                <div class="contact-methods">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>البريد الإلكتروني</h3>
+                        <p>support@studentrecord.edu</p>
+                        <a href="mailto:support@studentrecord.edu" class="btn btn-primary">أرسل رسالة</a>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>الهاتف</h3>
+                        <p>800-123-4567</p>
+                        <p class="small-text">متاح من الأحد إلى الخميس<br>8:00 ص - 4:00 م</p>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>الدردشة المباشرة</h3>
+                        <p>تواصل معنا مباشرة</p>
+                        <button class="btn btn-secondary" onclick="openChat()">ابدأ المحادثة</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Tutorials Section -->
+            <div class="help-section">
+                <h2><i class="fas fa-video"></i> شروحات فيديو</h2>
+                
+                <div class="tutorials-grid">
+                    <div class="tutorial-card">
+                        <div class="tutorial-thumbnail">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h4>كيفية إضافة طالب جديد</h4>
+                        <p>شرح مفصل لخطوات تسجيل طالب في النظام</p>
+                        <button class="btn btn-outline">مشاهدة الفيديو</button>
+                    </div>
+
+                    <div class="tutorial-card">
+                        <div class="tutorial-thumbnail">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h4>إدارة سجلات الطلاب</h4>
+                        <p>كيفية تعديل وتحديث بيانات الطلاب</p>
+                        <button class="btn btn-outline">مشاهدة الفيديو</button>
+                    </div>
+
+                    <div class="tutorial-card">
+                        <div class="tutorial-thumbnail">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h4>التواصل مع أولياء الأمور</h4>
+                        <p>طرق التواصل وإرسال التقارير</p>
+                        <button class="btn btn-outline">مشاهدة الفيديو</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="help-section">
+                <h2><i class="fas fa-link"></i> روابط سريعة</h2>
+                
+                <div class="quick-links">
+                    <a href="index.html" class="quick-link">
+                        <i class="fas fa-home"></i>
+                        <span>الصفحة الرئيسية</span>
+                    </a>
+                    <a href="new-student.html" class="quick-link">
+                        <i class="fas fa-user-plus"></i>
+                        <span>تسجيل طالب جديد</span>
+                    </a>
+                    <a href="students.html" class="quick-link">
+                        <i class="fas fa-users"></i>
+                        <span>قائمة الطلاب</span>
+                    </a>
+                    <a href="parents.html" class="quick-link">
+                        <i class="fas fa-user-friends"></i>
+                        <span>أولياء الأمور</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 سجل متابعة الطالب. جميع الحقوق محفوظة</p>
+            <p>النسخة 1.0.0</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            faqItem.classList.toggle('active');
+            
+            if (faqItem.classList.contains('active')) {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.style.maxHeight = '0';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Open Chat
+        function openChat() {
+            alert('سيتم فتح نافذة الدردشة المباشرة قريباً');
+        }
+    </script>
+</body>
+</html>
+
