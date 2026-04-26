@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المساعدة والدعم - سجل متابعة الطالب</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- استخدام أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -13,48 +12,103 @@
     <!-- الهيدر -->
     <header class="main-header">
         <div class="container">
-            <h1>المساعدة والدعم الفني</h1>
+            <h1><i class="fas fa-headset"></i> المساعدة والدعم الفني</h1>
             <p>دليلك الشامل لاستخدام نظام سجلات الطلاب</p>
         </div>
     </header>
 
-    <main class="container">
+    <main class="container main-content">
         
         <!-- قسم الأسئلة الشائعة -->
         <section class="section faq-section">
             <h2 class="section-title"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</h2>
             
-            <div class="faq-grid">
+            <div class="faq-container">
                 <!-- سؤال 1 -->
-                <div class="faq-card">
+                <div class="faq-item">
                     <div class="faq-question">
-                        <span>كيف أضيف طالب جديد؟</span>
-                        <i class="fas fa-chevron-down"></i>
+                        <span><i class="fas fa-user-plus"></i> كيف أضيف طالب جديد؟</span>
+                        <i class="fas fa-chevron-down arrow"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>انتقل إلى القائمة الرئيسية واختر "إضافة طالب". املأ البيانات المطلوبة (الاسم، الهوية، الهاتف) ثم اضغط حفظ.</p>
+                        <p>انتقل إلى القائمة الرئيسية واختر <strong>"طالب جديد"</strong>. املأ جميع الحقول المطلوبة:</p>
+                        <ul>
+                            <li>اسم الطالب الرباعي</li>
+                            <li>رقم الهوية الوطنية</li>
+                            <li>رقم جوال ولي الأمر</li>
+                            <li>البريد الإلكتروني</li>
+                        </ul>
+                        <p>ثم اضغط على زر <strong>"حفظ"</strong> لإتمام العملية.</p>
                     </div>
                 </div>
 
                 <!-- سؤال 2 -->
-                <div class="faq-card">
+                <div class="faq-item">
                     <div class="faq-question">
-                        <span>كيف أعدل بيانات طالب؟</span>
-                        <i class="fas fa-chevron-down"></i>
+                        <span><i class="fas fa-edit"></i> كيف أعدل بيانات طالب؟</span>
+                        <i class="fas fa-chevron-down arrow"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>اذهب لصفحة "قائمة الطلاب"، ابحث عن الطالب، واضغط على أيقونة "القلم" بجانب اسمه لتعديل البيانات.</p>
+                        <p>اتبع الخطوات التالية:</p>
+                        <ol>
+                            <li>اذهب إلى صفحة <strong>"الطلاب"</strong> من القائمة الرئيسية</li>
+                            <li>ابحث عن الطالب باستخدام خانة البحث في الأعلى</li>
+                            <li>اضغط على اسم الطالب لفتح سجله</li>
+                            <li>اضغط على زر <strong>"تعديل"</strong> في أعلى الصفحة</li>
+                            <li>قم بالتعديلات المطلوبة ثم اضغط <strong>"حفظ التغييرات"</strong></li>
+                        </ol>
                     </div>
                 </div>
 
                 <!-- سؤال 3 -->
-                <div class="faq-card">
+                <div class="faq-item">
                     <div class="faq-question">
-                        <span>كيف أطبع تقرير الطالب؟</span>
-                        <i class="fas fa-chevron-down"></i>
+                        <span><i class="fas fa-print"></i> كيف أطبع تقرير الطالب؟</span>
+                        <i class="fas fa-chevron-down arrow"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>داخل سجل الطالب، ستجد زر "طباعة التقرير" في الأعلى، اضغط عليه لفتح نافذة الطباعة.</p>
+                        <p>من صفحة <strong>"سجل الطالب"</strong>:</p>
+                        <ul>
+                            <li>اضغط على زر <strong>"طباعة"</strong> في الزاوية العلوية</li>
+                            <li>ستفتح نافذة الطباعة تلقائياً</li>
+                            <li>اختر الطابعة واضغط <strong>"طباعة"</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- سؤال 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span><i class="fas fa-user-friends"></i> كيف أضيف ولي أمر جديد؟</span>
+                        <i class="fas fa-chevron-down arrow"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>انتقل إلى صفحة <strong>"أولياء الأمور"</strong> واضغط على زر <strong>"إضافة ولي أمر"</strong>. أدخل البيانات التالية:</p>
+                        <ul>
+                            <li>الاسم الكامل</li>
+                            <li>رقم الهوية</li>
+                            <li>رقم الجوال</li>
+                            <li>البريد الإلكتروني</li>
+                        </ul>
+                        <p>ثم اربطه بأبنائه الطلاب واضغط <strong>"حفظ"</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- سؤال 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span><i class="fas fa-chart-line"></i> كيف أدخل التقييمات والمهارات؟</span>
+                        <i class="fas fa-chevron-down arrow"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>من سجل الطالب:</p>
+                        <ol>
+                            <li>انتقل إلى تبويب <strong>"المهارات"</strong> أو <strong>"التقييمات"</strong></li>
+                            <li>اختر المهارة أو التقييم المطلوب</li>
+                            <li>أدخل الدرجة أو المستوى</li>
+                            <li>أضف ملاحظات إذا لزم الأمر</li>
+                            <li>اضغط <strong>"حفظ"</strong></li>
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -62,44 +116,86 @@
 
         <!-- قسم التواصل والدعم -->
         <section class="section contact-section">
-            <h2 class="section-title"><i class="fas fa-headset"></i> تواصل معنا</h2>
+            <h2 class="section-title"><i class="fas fa-envelope"></i> تواصل معنا</h2>
             
             <div class="contact-grid">
                 <!-- كرت البريد -->
-                <div class="contact-card">
-                    <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                <a href="mailto:raa7240@gmail.com" class="contact-card">
+                    <div class="icon-box">
+                        <i class="fas fa-envelope"></i>
+                    </div>
                     <h3>البريد الإلكتروني</h3>
-                    <p>support@studentrecord.edu</p>
-                </div>
+                    <p class="contact-text">raa7240@gmail.com</p>
+                    <small>نرد خلال 24 ساعة</small>
+                </a>
 
                 <!-- كرت الهاتف -->
-                <div class="contact-card">
-                    <div class="icon-box"><i class="fas fa-phone"></i></div>
-                    <h3>الهاتف</h3>
-                    <p>800-123-4567</p>
-                    <small>متاح من 8 ص - 4 م</small>
-                </div>
+                <a href="tel:0551764832" class="contact-card">
+                    <div class="icon-box">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>الهاتف / واتساب</h3>
+                    <p class="contact-text" dir="ltr">0551764832</p>
+                    <small>متاح من الأحد إلى الخميس<br>8:00 ص - 4:00 م</small>
+                </a>
 
-                <!-- كرت الفيديو -->
+                <!-- كرت الشروحات -->
                 <div class="contact-card">
-                    <div class="icon-box"><i class="fas fa-play-circle"></i></div>
+                    <div class="icon-box">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
                     <h3>شروحات فيديو</h3>
-                    <p>شاهد الدروس التعليمية</p>
+                    <p class="contact-text">شاهد الدروس التعليمية</p>
+                    <small>خطوات مفصلة لاستخدام النظام</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم المعلومات الإضافية -->
+        <section class="section info-section">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> معلومات إضافية</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-book"></i> دليل المستخدم</h4>
+                    <p>يمكنك تحميل دليل المستخدم الكامل بصيغة PDF من خلال الضغط على زر "تحميل الدليل" في الصفحة الرئيسية.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4><i class="fas fa-video"></i> التدريب المباشر</h4>
+                    <p>نقدم جلسات تدريبية مباشرة عبر Zoom للمعلمين الجدد. للتسجيل تواصل معنا عبر البريد الإلكتروني.</p>
                 </div>
             </div>
         </section>
 
     </main>
 
+    <!-- الفوتر -->
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 سجل متابعة الطالب. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
     <script>
-        // سكربت بسيط لفتح وإغلاق الأسئلة
-        document.querySelectorAll('.faq-question').forEach(item => {
-            item.addEventListener('click', () => {
-                item.parentElement.classList.toggle('active');
+        // سكربت لفتح وإغلاق الأسئلة
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // إغلاق جميع الأسئلة
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // فتح السؤال الحالي إذا لم يكن نشطاً
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
             });
         });
     </script>
 </body>
 </html>
-
