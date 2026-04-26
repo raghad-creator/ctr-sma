@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سما | سجلات الطلاب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --dark-green: #0F4C4C;
+            --med-green: #1F6F6F;
+            --light-green: #6FAFAF;
+            --gold: #C9A24A;
+            --light-gold: #E2C97A;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #0F4C4C;
+            --text-sec: #555;
+            --shadow: 0 4px 15px rgba(15, 76, 76, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-main: #E2C97A;
+            --text-sec: #ccc;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: 0.3s;
+        }
+
+        /* الهيدر الرئيسي */
+        .main-header {
+            background: linear-gradient(135deg, var(--dark-green), var(--med-green));
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-circle {
+            width: 50px; height: 50px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; color: var(--dark-green);
+        }
+        .site-name { font-size: 1.5rem; font-weight: bold; color: var(--light-gold); }
+        .site-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+
+        .controls { display: flex; gap: 10px; }
+        .control-btn {
+            background: rgba(255,255,255,0.2);
+            border: none; color: white;
+            padding: 8px 12px; border-radius: 8px;
+            cursor: pointer; font-size: 1rem;
+            transition: 0.3s;
+        }
+        .control-btn:hover { background: var(--gold); color: var(--dark-green); }
+
+        /* رأس الصفحة */
+        .page-header {
+            background: linear-gradient(135deg, var(--dark-green), var(--med-green));
+            color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 0 30px 30px;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* شريط التحكم */
+        .controls-bar {
+            max-width: 1200px;
+            margin: -1rem auto 2rem;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--light-green);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 162, 74, 0.15);
+        }
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sec);
+        }
+        .filter-select {
+            padding: 12px 20px;
+            border: 2px solid var(--light-green);
+            border-radius: 10px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        .add-btn {
+            padding: 12px 25px;
+            background: var(--gold);
+            color: var(--dark-green);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .add-btn:hover {
+            background: var(--light-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 162, 74, 0.4);
+        }
+
+        /* شبكة الطلاب */
+        .students-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+        }
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .student-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-right: 5px solid var(--light-green);
+            position: relative;
+            overflow: hidden;
+        }
+        .student-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--light-gold));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(15, 76, 76, 0.2);
+            border-right-color: var(--gold);
+        }
+        .student-card:hover::before {
+            transform: scaleX(1);
+        }
+        .student-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-green), var(--med-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            font-weight: bold;
+        }
+        .student-info h3 {
+            color: var(--text-main);
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        .student-info p {
+            color: var(--text-sec);
+            font-size: 0.9rem;
+        }
+        .student-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-green);
+        }
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-sec);
+        }
+        .detail-item i {
+            color: var(--gold);
+            width: 20px;
+        }
+        .student-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-green);
+        }
+        .stat-badge {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+            background: var(--bg-color);
+            border-radius: 8px;
+        }
+        .stat-badge .number {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--med-green);
+        }
+        body.dark-mode .stat-badge .number {
+            color: var(--gold);
+        }
+        .stat-badge .label {
+            font-size: 0.8rem;
+            color: var(--text-sec);
+        }
+
+        /* النافذة المنبثقة */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        .hidden { display: none; }
+        .modal-content-large {
+            background: var(--card-bg);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-sec);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.3s;
+            z-index: 10;
+        }
+        .close-modal:hover {
+            background: rgba(0,0,0,0.1);
+            color: var(--dark-green);
+        }
+
+        .student-profile-header {
+            background: linear-gradient(135deg, var(--dark-green), var(--med-green));
+            color: white;
+            padding: 3rem 2rem 2rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .student-profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--dark-green);
+            font-weight: bold;
+            border: 5px solid white;
+            flex-shrink: 0;
+        }
+        .student-profile-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .student-profile-info p {
+            opacity: 0.9;
+            margin: 0.3rem 0;
+        }
+
+        .records-section {
+            padding: 2rem;
+        }
+        .section-title {
+            color: var(--text-main);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--light-green);
+        }
+        body.dark-mode .section-title {
+            color: var(--gold);
+        }
+
+        .skills-container {
+            margin-bottom: 2rem;
+        }
+        .skill-category {
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-right: 4px solid var(--gold);
+        }
+        .skill-category h4 {
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--light-green);
+        }
+        .skill-item:last-child {
+            border-bottom: none;
+        }
+        .skill-name {
+            color: var(--text-sec);
+            font-weight: 500;
+        }
+        .skill-grade {
+            font-weight: bold;
+            color: var(--med-green);
+            background: rgba(31, 111, 111, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+        body.dark-mode .skill-grade {
+            color: var(--gold);
+            background: rgba(201, 162, 74, 0.2);
+        }
+
+        .info-card {
+            background: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--light-green);
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            color: var(--text-sec);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .info-value {
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .no-students {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-sec);
+        }
+        .no-students i {
+            font-size: 4rem;
+            color: var(--light-green);
+            margin-bottom: 1rem;
+        }
+        .no-students h3 {
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .student-profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .student-details {
+                grid-template-columns: 1fr;
+            }
+            .controls-bar {
+                flex-direction: column;
+            }
+            .search-box {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="logo-circle">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="titles">
+                <h1 class="site-name">سما</h1>
+                <p class="site-subtitle">سجل متابعة الطالب</p>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="theme-toggle" class="control-btn" title="تبديل الوضع">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="index.html" class="control-btn" style="text-decoration: none; display: inline-flex; align-items: center;">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- رأس الصفحة -->
+    <div class="page-header">
+        <h1><i class="fas fa-users"></i> قائمة الطلاب</h1>
+        <p>متابعة سجلات الطلاب وتقارير الأداء</p>
+    </div>
+
+    <!-- شريط التحكم -->
+    <div class="controls-bar">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="ابحث عن طالب بالاسم أو رقم الهوية...">
+        </div>
+        <select class="filter-select" id="gradeFilter">
+            <option value="">جميع المراحل</option>
+            <option value="primary">ابتدائي</option>
+            <option value="middle">متوسط</option>
+            <option value="high">ثانوي</option>
+        </select>
+        <a href="new-student.html" class="add-btn">
+            <i class="fas fa-plus"></i>
+            طالب جديد
+        </a>
+    </div>
+
+    <!-- محتوى الصفحة -->
+    <main class="students-container">
+        <div id="studentsGrid" class="students-grid">
+            <!-- سيتم ملء البطاقات هنا بواسطة JavaScript -->
+        </div>
+        
+        <div id="noStudents" class="no-students" style="display: none;">
+            <i class="fas fa-inbox"></i>
+            <h3>لا يوجد طلاب مسجلين</h3>
+            <p>ابدأ بإضافة طالب جديد</p>
+        </div>
+    </main>
+
+    <!-- نافذة تفاصيل الطالب -->
+    <div id="studentModal" class="modal hidden">
+        <div class="modal-content-large">
+            <span class="close-modal" onclick="closeStudentModal()">&times;</span>
+            <div id="studentModalContent">
+                <!-- سيتم ملء المحتوى هنا -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // تحميل الطلاب من localStorage أو استخدام بيانات تجريبية
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+
+        // دالة لعرض الطلاب
+        function renderStudents(studentsList = students) {
+            const grid = document.getElementById('studentsGrid');
+            const noStudents = document.getElementById('noStudents');
+            
+            if (studentsList.length === 0) {
+                grid.innerHTML = '';
+                noStudents.style.display = 'block';
+                return;
+            }
+            
+            noStudents.style.display = 'none';
+            grid.innerHTML = studentsList.map((student, index) => {
+                const initials = student.studentName.split(' ').map(n => n[0]).join('').substring(0, 2);
+                const gradeText = {
+                    'primary': 'ابتدائي',
+                    'middle': 'متوسط',
+                    'high': 'ثانوي'
+                }[student.gradeLevel] || student.gradeLevel;
+                
+                const totalRecords = student.records?.skills?.length || 0;
+                const avgGrade = student.records?.skills?.length ? 
+                    (student.records.skills.reduce((sum, s) => sum + parseFloat(s.grade || 0), 0) / student.records.skills.length).toFixed(1) : 
+                    '0';
+                
+                return `
+                    <div class="student-card" onclick="showStudentDetails('${student.studentId}')">
+                        <div class="student-header">
+                            <div class="student-avatar">${initials}</div>
+                            <div class="student-info">
+                                <h3>${student.studentName}</h3>
+                                <p>${gradeText} - ${student.classRoom}</p>
+                            </div>
+                        </div>
+                        <div class="student-details">
+                            <div class="detail-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>${student.studentId}</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                <span>${student.parentPhone}</span>
+                            </div>
+                        </div>
+                        <div class="student-stats">
+                            <div class="stat-badge">
+                                <span class="number">${totalRecords}</span>
+                                <span class="label">سجل</span>
+                            </div>
+                            <div class="stat-badge">
+                                <span class="number">${avgGrade}%</span>
+                                <span class="label">المعدل</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // عرض تفاصيل الطالب
+        function showStudentDetails(studentId) {
+            const student = students.find(s => s.studentId === studentId);
+            if (!student) return;
+            
+            const modal = document.getElementById('studentModal');
+            const content = document.getElementById('studentModalContent');
+            
+            const initials = student.studentName.split(' ').map(n => n[0]).join('').substring(0, 2);
+            const gradeText = {
+                'primary': 'ابتدائي',
+                'middle': 'متوسط',
+                'high': 'ثانوي'
+            }[student.gradeLevel] || student.gradeLevel;
+            
+            // تجهيز السجلات
+            let skillsHTML = '';
+            if (student.records && student.records.skills && student.records.skills.length > 0) {
+                skillsHTML = student.records.skills.map(skill => `
+                    <div class="skill-item">
+                        <span class="skill-name">${skill.name}</span>
+                        <span class="skill-grade">${skill.grade}%</span>
+                    </div>
+                `).join('');
+            } else {
+                skillsHTML = '<p style="color: var(--text-sec); padding: 1rem; text-align: center;">لا توجد سجلات بعد</p>';
+            }
+            
+            content.innerHTML = `
+                <div class="student-profile-header">
+                    <div class="student-profile-avatar">${initials}</div>
+                    <div class="student-profile-info">
+                        <h2>${student.studentName}</h2>
+                        <p><i class="fas fa-graduation-cap"></i> ${gradeText} - ${student.classRoom}</p>
+                        <p><i class="fas fa-id-card"></i> الهوية: ${student.studentId}</p>
+                    </div>
+                </div>
+                <div class="records-section">
+                    <div class="section-title">
+                        <i class="fas fa-chart-bar"></i>
+                        السجلات والمهارات
+                    </div>
+                    <div class="skills-container">
+                        <div class="skill-category">
+                            <h4><i class="fas fa-tasks"></i> المهارات والتقييمات</h4>
+                            ${skillsHTML}
+                        </div>
+                    </div>
+                    
+                    <div class="section-title">
+                        <i class="fas fa-user-tie"></i>
+                        بيانات ولي الأمر
+                    </div>
+                    <div class="info-card">
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-user"></i> الاسم</span>
+                            <span class="info-value">${student.parentName}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-phone"></i> الجوال</span>
+                            <span class="info-value">${student.parentPhone}</span>
+                        </div>
+                        ${student.parentEmail ? `
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-envelope"></i> البريد الإلكتروني</span>
+                            <span class="info-value">${student.parentEmail}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    ${student.notes ? `
+                    <div class="section-title">
+                        <i class="fas fa-sticky-note"></i>
+                        ملاحظات
+                    </div>
+                    <div class="info-card">
+                        <p style="color: var(--text-sec); line-height: 1.8;">${student.notes}</p>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // إغلاق نافذة الطالب
+        function closeStudentModal() {
+            document.getElementById('studentModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // البحث والفلترة
+        function filterStudents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const gradeFilter = document.getElementById('gradeFilter').value;
+            
+            const filtered = students.filter(student => {
+                const matchSearch = student.studentName.toLowerCase().includes(searchTerm) || 
+                                   student.studentId.includes(searchTerm);
+                const matchGrade = gradeFilter ? student.gradeLevel === gradeFilter : true;
+                return matchSearch && matchGrade;
+            });
+            
+            renderStudents(filtered);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterStudents);
+        document.getElementById('gradeFilter').addEventListener('change', filterStudents);
+
+        // إغلاق النافذة عند النقر خارجها
+        document.getElementById('studentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeStudentModal();
+            }
+        });
+
+        // إغلاق النافذة بزر Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeStudentModal();
+            }
+        });
+
+        // عرض الطلاب عند تحميل الصفحة
+        renderStudents();
+    </script>
+</body>
+</html>
