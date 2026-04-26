@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سما | إنشاء سجل طالب جديد</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--gold);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .form-header h2 {
+            color: var(--dark-green);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        body.dark-mode .form-header h2 {
+            color: var(--gold);
+        }
+        .form-header p {
+            color: var(--text-sec);
+            font-size: 0.9rem;
+        }
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-green);
+        }
+        .form-section-title {
+            color: var(--med-green);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        body.dark-mode .form-section-title {
+            color: var(--light-gold);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+        .form-group label .required {
+            color: #e74c3c;
+            margin-right: 3px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-main);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 162, 74, 0.15);
+            transform: translateY(-2px);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn-primary {
+            flex: 2;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--med-green), var(--dark-green));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 76, 76, 0.3);
+        }
+        .btn-secondary {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            color: var(--text-main);
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: var(--light-green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, var(--light-green), var(--med-green));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="logo-circle">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="titles">
+                <h1 class="site-name">سما</h1>
+                <p class="site-subtitle">إنشاء سجل طالب جديد</p>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="theme-toggle" class="control-btn" title="تبديل الوضع">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="index.html" class="control-btn" style="text-decoration: none; display: inline-flex; align-items: center;">
+                <i class="fas fa-home"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- محتوى الصفحة -->
+    <main class="main-content">
+        <div class="form-container">
+            <div class="form-header">
+                <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                <h2>بيانات الطالب الجديد</h2>
+                <p>يرجى تعبئة جميع الحقول المطلوبة بدقة</p>
+            </div>
+
+            <div id="success-msg" class="success-message">
+                <i class="fas fa-check-circle"></i> تم حفظ البيانات بنجاح!
+            </div>
+
+            <form id="new-student-form" novalidate>
+                <!-- قسم بيانات الطالب -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-user-graduate"></i>
+                        بيانات الطالب
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="student-name">
+                            اسم الطالب الرباعي <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="student-name" 
+                            name="student-name"
+                            placeholder="مثال: أحمد محمد علي عبدالله" 
+                            required
+                            pattern="[\u0600-\u06FF\s]{10,}"
+                            title="يرجى إدخال الاسم الرباعي باللغة العربية (10 أحرف على الأقل)"
+                        >
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="student-id">
+                                رقم الهوية / الإقامة <span class="required">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="student-id" 
+                                name="student-id"
+                                placeholder="1xxxxxxxxx" 
+                                required
+                                pattern="[0-9]{10}"
+                                title="يرجى إدخال رقم الهوية (10 أرقام)"
+                                maxlength="10"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="grade-level">
+                                المرحلة الدراسية <span class="required">*</span>
+                            </label>
+                            <select id="grade-level" name="grade-level" required>
+                                <option value="" disabled selected>اختر المرحلة...</option>
+                                <option value="primary">ابتدائي</option>
+                                <option value="middle">متوسط</option>
+                                <option value="high">ثانوي</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="class-room">
+                            الصف والفصل <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="class-room" 
+                            name="class-room"
+                            placeholder="مثال: الثالث أ" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- قسم بيانات ولي الأمر -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-user-shield"></i>
+                        بيانات ولي الأمر
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="parent-name">
+                            اسم ولي الأمر الرباعي <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="parent-name" 
+                            name="parent-name"
+                            placeholder="الاسم الرباعي لولي الأمر" 
+                            required
+                            pattern="[\u0600-\u06FF\s]{10,}"
+                            title="يرجى إدخال الاسم الرباعي باللغة العربية"
+                        >
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="parent-phone">
+                                رقم الجوال <span class="required">*</span>
+                            </label>
+                            <input 
+                                type="tel" 
+                                id="parent-phone" 
+                                name="parent-phone"
+                                placeholder="05xxxxxxxx" 
+                                required
+                                pattern="05[0-9]{8}"
+                                title="يرجى إدخال رقم جوال صحيح يبدأ بـ 05"
+                                maxlength="10"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="parent-email">
+                                البريد الإلكتروني
+                            </label>
+                            <input 
+                                type="email" 
+                                id="parent-email" 
+                                name="parent-email"
+                                placeholder="example@email.com"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ملاحظات إضافية -->
+                <div class="form-section" style="border-bottom: none;">
+                    <h3 class="form-section-title">
+                        <i class="fas fa-sticky-note"></i>
+                        معلومات إضافية
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label for="notes">ملاحظات</label>
+                        <textarea 
+                            id="notes" 
+                            name="notes"
+                            placeholder="أي معلومات إضافية عن الطالب (حالة صحية، ظروف خاصة، إلخ...)"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- أزرار التحكم -->
+                <div class="btn-group">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i>
+                        حفظ السجل
+                    </button>
+                    <button type="reset" class="btn-secondary">
+                        <i class="fas fa-undo"></i>
+                        إعادة تعيين
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // التحقق من صحة النموذج
+        const form = document.getElementById('new-student-form');
+        const successMsg = document.getElementById('success-msg');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // التحقق من صحة جميع الحقول
+            if (!form.checkValidity()) {
+                e.stopPropagation();
+                form.reportValidity();
+                return;
+            }
+
+            // جمع البيانات
+            const studentData = {
+                studentName: document.getElementById('student-name').value.trim(),
+                studentId: document.getElementById('student-id').value.trim(),
+                gradeLevel: document.getElementById('grade-level').value,
+                classRoom: document.getElementById('class-room').value.trim(),
+                parentName: document.getElementById('parent-name').value.trim(),
+                parentPhone: document.getElementById('parent-phone').value.trim(),
+                parentEmail: document.getElementById('parent-email').value.trim(),
+                notes: document.getElementById('notes').value.trim(),
+                createdAt: new Date().toISOString(),
+                createdDate: new Date().toLocaleDateString('ar-SA')
+            };
+
+            // حفظ البيانات (يمكن تعديلها لاحقاً للربط مع قاعدة البيانات)
+            console.log('=== بيانات الطالب الجديد ===');
+            console.log(studentData);
+
+            // حفظ في localStorage كمثال
+            let students = JSON.parse(localStorage.getItem('students') || '[]');
+            students.push(studentData);
+            localStorage.setItem('students', JSON.stringify(students));
+
+            // إظهار رسالة النجاح
+            successMsg.style.display = 'block';
+            
+            // إخفاء الرسالة بعد 3 ثواني
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+                // إعادة توجيه لصفحة السجلات
+                window.location.href = 'view-records.html';
+            }, 2000);
+
+            // إعادة تعيين النموذج
+            form.reset();
+        });
+
+        // تنسيق أرقام الهواتف تلقائياً
+        document.getElementById('parent-phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) value = value.slice(0, 10);
+            e.target.value = value;
+        });
+
+        document.getElementById('student-id').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) value = value.slice(0, 10);
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
