@@ -3,52 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المساعدة والدعم - سجل متابعة الطالب</title>
+    <title>المساعدة والدعم | سما</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="help.css">
 </head>
 <body>
-
-    <!-- الهيدر -->
     <header class="main-header">
-        <div class="container">
-            <h1><i class="fas fa-headset"></i> المساعدة والدعم الفني</h1>
-            <p>دليلك الشامل لاستخدام نظام سجلات الطلاب</p>
+        <div class="logo-container">
+            <img src="assets/logo.png" alt="شعار سما" class="site-logo">
+        </div>
+        <div class="controls">
+            <button id="theme-toggle" class="control-btn">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="index.html" class="control-btn">
+                <i class="fas fa-home"></i>
+            </a>
         </div>
     </header>
 
-    <main class="container main-content">
-        
-        <!-- قسم الأسئلة الشائعة -->
-        <section class="section faq-section">
-            <h2 class="section-title"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</h2>
+    <main class="help-container">
+        <div class="help-header">
+            <h1><i class="fas fa-headset"></i> المساعدة والدعم الفني</h1>
+            <p>دليلك الشامل لاستخدام نظام سجلات الطلاب</p>
+        </div>
+
+        <div class="faq-section">
+            <h2 class="faq-title"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</h2>
             
-            <div class="faq-container">
-                <!-- سؤال 1 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span><i class="fas fa-user-plus"></i> كيف أضيف طالب جديد؟</span>
-                        <i class="fas fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>انتقل إلى القائمة الرئيسية واختر <strong>"طالب جديد"</strong>. املأ جميع الحقول المطلوبة:</p>
-                        <ul>
-                            <li>اسم الطالب الرباعي</li>
-                            <li>رقم الهوية الوطنية</li>
-                            <li>رقم جوال ولي الأمر</li>
-                            <li>البريد الإلكتروني</li>
-                        </ul>
-                        <p>ثم اضغط على زر <strong>"حفظ"</strong> لإتمام العملية.</p>
+            <div class="accordion">
+                <!-- السؤال 1 -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="question-icon"><i class="fas fa-user-plus"></i></span>
+                        <span class="question-text">كيف أضيف طالب جديد؟</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>انتقل إلى القائمة الرئيسية واختر <strong>"طالب جديد"</strong></li>
+                            <li>املأ جميع الحقول المطلوبة:
+                                <ul>
+                                    <li>اسم الطالب الرباعي</li>                                    <li>رقم الهوية الوطنية</li>
+                                    <li>رقم جوال ولي الأمر</li>
+                                    <li>البريد الإلكتروني</li>
+                                </ul>
+                            </li>
+                            <li>ثم اضغط على زر <strong>"حفظ"</strong> لإتمام العملية</li>
+                        </ol>
                     </div>
                 </div>
 
-                <!-- سؤال 2 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span><i class="fas fa-edit"></i> كيف أعدل بيانات طالب؟</span>
-                        <i class="fas fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="faq-answer">
+                <!-- السؤال 2 -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="question-icon"><i class="fas fa-edit"></i></span>
+                        <span class="question-text">كيف أعدل بيانات طالب؟</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content">
                         <p>اتبع الخطوات التالية:</p>
                         <ol>
                             <li>اذهب إلى صفحة <strong>"الطلاب"</strong> من القائمة الرئيسية</li>
@@ -60,29 +76,30 @@
                     </div>
                 </div>
 
-                <!-- سؤال 3 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span><i class="fas fa-print"></i> كيف أطبع تقرير الطالب؟</span>
-                        <i class="fas fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>من صفحة <strong>"سجل الطالب"</strong>:</p>
-                        <ul>
+                <!-- السؤال 3 -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="question-icon"><i class="fas fa-print"></i></span>
+                        <span class="question-text">كيف أطبع تقرير الطالب؟</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <ol>
+                            <li>من صفحة <strong>"سجل الطالب"</strong></li>
                             <li>اضغط على زر <strong>"طباعة"</strong> في الزاوية العلوية</li>
                             <li>ستفتح نافذة الطباعة تلقائياً</li>
                             <li>اختر الطابعة واضغط <strong>"طباعة"</strong></li>
-                        </ul>
+                        </ol>
                     </div>
                 </div>
 
-                <!-- سؤال 4 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span><i class="fas fa-user-friends"></i> كيف أضيف ولي أمر جديد؟</span>
-                        <i class="fas fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="faq-answer">
+                <!-- السؤال 4 -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="question-icon"><i class="fas fa-users"></i></span>                        <span class="question-text">كيف أضيف ولي أمر جديد؟</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content">
                         <p>انتقل إلى صفحة <strong>"أولياء الأمور"</strong> واضغط على زر <strong>"إضافة ولي أمر"</strong>. أدخل البيانات التالية:</p>
                         <ul>
                             <li>الاسم الكامل</li>
@@ -94,108 +111,50 @@
                     </div>
                 </div>
 
-                <!-- سؤال 5 -->
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span><i class="fas fa-chart-line"></i> كيف أدخل التقييمات والمهارات؟</span>
-                        <i class="fas fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>من سجل الطالب:</p>
+                <!-- السؤال 5 -->
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="question-icon"><i class="fas fa-clipboard-check"></i></span>
+                        <span class="question-text">كيف أدخل التقييمات والمهارات؟</span>
+                        <i class="fas fa-chevron-down accordion-icon"></i>
+                    </button>
+                    <div class="accordion-content">
                         <ol>
+                            <li>من سجل الطالب:</li>
                             <li>انتقل إلى تبويب <strong>"المهارات"</strong> أو <strong>"التقييمات"</strong></li>
                             <li>اختر المهارة أو التقييم المطلوب</li>
-                            <li>أدخل الدرجة أو المستوى</li>
-                            <li>أضف ملاحظات إذا لزم الأمر</li>
+                            <li>أدخل الدرجة أو الملاحظة</li>
                             <li>اضغط <strong>"حفظ"</strong></li>
                         </ol>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- قسم التواصل والدعم -->
-        <section class="section contact-section">
-            <h2 class="section-title"><i class="fas fa-envelope"></i> تواصل معنا</h2>
-            
-            <div class="contact-grid">
-                <!-- كرت البريد -->
-                <a href="mailto:raa7240@gmail.com" class="contact-card">
-                    <div class="icon-box">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>البريد الإلكتروني</h3>
-                    <p class="contact-text">raa7240@gmail.com</p>
-                    <small>نرد خلال 24 ساعة</small>
-                </a>
-
-                <!-- كرت الهاتف -->
-                <a href="tel:0551764832" class="contact-card">
-                    <div class="icon-box">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3>الهاتف / واتساب</h3>
-                    <p class="contact-text" dir="ltr">0551764832</p>
-                    <small>متاح من الأحد إلى الخميس<br>8:00 ص - 4:00 م</small>
-                </a>
-
-                <!-- كرت الشروحات -->
-                <div class="contact-card">
-                    <div class="icon-box">
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                    <h3>شروحات فيديو</h3>
-                    <p class="contact-text">شاهد الدروس التعليمية</p>
-                    <small>خطوات مفصلة لاستخدام النظام</small>
+        <div class="contact-section">
+            <h2><i class="fas fa-envelope"></i> تواصل معنا</h2>
+            <p>إذا لم تجد إجابة لسؤالك، لا تتردد في التواصل معنا:</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>الدعم الفني: 9200XXXXX</span>
                 </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>البريد الإلكتروني: support@sama.edu</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <span>ساعات العمل: الأحد - الخميس 8 ص - 4 م</span>                </div>
             </div>
-        </section>
-
-        <!-- قسم المعلومات الإضافية -->
-        <section class="section info-section">
-            <h2 class="section-title"><i class="fas fa-info-circle"></i> معلومات إضافية</h2>
-            
-            <div class="info-grid">
-                <div class="info-card">
-                    <h4><i class="fas fa-book"></i> دليل المستخدم</h4>
-                    <p>يمكنك تحميل دليل المستخدم الكامل بصيغة PDF من خلال الضغط على زر "تحميل الدليل" في الصفحة الرئيسية.</p>
-                </div>
-                
-                <div class="info-card">
-                    <h4><i class="fas fa-video"></i> التدريب المباشر</h4>
-                    <p>نقدم جلسات تدريبية مباشرة عبر Zoom للمعلمين الجدد. للتسجيل تواصل معنا عبر البريد الإلكتروني.</p>
-                </div>
-            </div>
-        </section>
-
+        </div>
     </main>
 
-    <!-- الفوتر -->
     <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2026 سجل متابعة الطالب. جميع الحقوق محفوظة.</p>
-        </div>
+        <p>© 2026 سما - جميع الحقوق محفوظة</p>
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        // سكربت لفتح وإغلاق الأسئلة
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const isActive = faqItem.classList.contains('active');
-                
-                // إغلاق جميع الأسئلة
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // فتح السؤال الحالي إذا لم يكن نشطاً
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                }
-            });
-        });
-    </script>
+    <script src="help.js"></script>
 </body>
 </html>
