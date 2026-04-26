@@ -3,308 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="ns-page-title">سما | إنشاء سجل طالب جديد</title>
+    <title id="page-title">سما | إنشاء سجل طالب جديد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .form-container {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            border-top: 5px solid var(--gold);
-        }
-        .form-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .form-header h2 {
-            color: var(--dark-green);
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-        body.dark-mode .form-header h2 {
-            color: var(--gold);
-        }
-        .form-header p {
-            color: var(--text-sec);
-            font-size: 0.9rem;
-        }
-        .form-section {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid var(--light-green);
-        }
-        .form-section-title {
-            color: var(--med-green);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        body.dark-mode .form-section-title {
-            color: var(--light-gold);
-        }        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-        .form-group label .required {
-            color: #e74c3c;
-            margin-right: 3px;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--light-green);
-            border-radius: 8px;
-            background: var(--bg-color);
-            color: var(--text-main);
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 4px rgba(201, 162, 74, 0.15);
-            transform: translateY(-2px);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        @media (max-width: 600px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-        .btn-group {            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        .btn-primary {
-            flex: 2;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--med-green), var(--dark-green));
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(15, 76, 76, 0.3);
-        }
-        .btn-secondary {
-            flex: 1;
-            padding: 14px;
-            background: transparent;
-            color: var(--text-main);
-            border: 2px solid var(--light-green);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-secondary:hover {
-            background: var(--light-green);
-            color: white;
-            transform: translateY(-2px);
-        }
-        .success-message {
-            display: none;
-            background: linear-gradient(135deg, var(--light-green), var(--med-green));
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            text-align: center;
-            animation: slideIn 0.3s ease;        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .form-container { max-width: 600px; margin: 2rem auto; background: var(--card-bg); padding: 2.5rem; border-radius: 15px; box-shadow: var(--shadow); border-top: 5px solid var(--gold); }
+        .form-header { text-align: center; margin-bottom: 2rem; }
+        .form-header h2 { color: var(--dark-green); font-size: 1.8rem; margin-bottom: 0.5rem; }
+        body.dark-mode .form-header h2 { color: var(--gold); }
+        .form-header p { color: var(--text-sec); font-size: 0.9rem; }
+        .form-section { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--light-green); }
+        .form-section-title { color: var(--med-green); font-size: 1.2rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        body.dark-mode .form-section-title { color: var(--light-gold); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: var(--text-main); font-size: 0.95rem; }
+        .form-group label .required { color: #e74c3c; margin-right: 3px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 15px; border: 2px solid var(--light-green); border-radius: 8px; background: var(--bg-color); color: var(--text-main); font-size: 1rem; font-family: inherit; transition: all 0.3s ease; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(201, 162, 74, 0.15); transform: translateY(-2px); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+        .btn-group { display: flex; gap: 1rem; margin-top: 2rem; }
+        .btn-primary { flex: 2; padding: 14px; background: linear-gradient(135deg, var(--med-green), var(--dark-green)); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15, 76, 76, 0.3); }
+        .btn-secondary { flex: 1; padding: 14px; background: transparent; color: var(--text-main); border: 2px solid var(--light-green); border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+        .btn-secondary:hover { background: var(--light-green); color: white; transform: translateY(-2px); }
+        .success-message { display: none; background: linear-gradient(135deg, var(--light-green), var(--med-green)); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-
-    <!-- الهيدر -->
     <header class="main-header">
         <div class="logo-container">
-            <div class="logo-circle">
-                <i class="fas fa-graduation-cap"></i>
-            </div>
+            <div class="logo-circle"><i class="fas fa-graduation-cap"></i></div>
             <div class="titles">
-                <h1 class="site-name" id="ns-site-name">سما</h1>
-                <p class="site-subtitle" id="ns-site-subtitle">إنشاء سجل طالب جديد</p>
+                <h1 class="site-name" id="site-name">سما</h1>
+                <p class="site-subtitle" id="site-subtitle">إنشاء سجل طالب جديد</p>
             </div>
         </div>
         <div class="controls">
-            <button id="theme-toggle" class="control-btn" title="تبديل الوضع">
-                <i class="fas fa-moon"></i>
-            </button>
-            <a href="index.html" class="control-btn" style="text-decoration: none; display: inline-flex; align-items: center;">
-                <i class="fas fa-home"></i>
-            </a>
+            <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            <button id="lang-btn" class="control-btn">🇸🇦</button>
+            <a href="index.html" class="control-btn" style="text-decoration: none; display: inline-flex; align-items: center;"><i class="fas fa-home"></i></a>
         </div>
     </header>
-
-    <!-- محتوى الصفحة -->
     <main class="main-content">
         <div class="form-container">
             <div class="form-header">
                 <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--gold); margin-bottom: 1rem;"></i>
-                <h2 id="ns-form-title">بيانات الطالب الجديد</h2>
-                <p id="ns-form-desc">يرجى تعبئة جميع الحقول المطلوبة بدقة</p>
+                <h2 id="form-title">بيانات الطالب الجديد</h2>
+                <p id="form-desc">يرجى تعبئة جميع الحقول المطلوبة بدقة</p>
             </div>
-
-            <div id="ns-success-msg" class="success-message">
-                <i class="fas fa-check-circle"></i> <span id="ns-success-text">تم حفظ البيانات بنجاح!</span>
-            </div>
+            <div id="success-msg" class="success-message"><i class="fas fa-check-circle"></i> <span id="success-text">تم حفظ البيانات بنجاح!</span></div>
 
             <form id="new-student-form" novalidate>
-                <!-- قسم بيانات الطالب -->
                 <div class="form-section">
-                    <h3 class="form-section-title" id="ns-section-student">
-                        <i class="fas fa-user-graduate"></i>
-                        <span id="ns-title-student">بيانات الطالب</span>
-                    </h3>                    
+                    <h3 class="form-section-title" id="section-student"><i class="fas fa-user-graduate"></i> <span id="title-student">بيانات الطالب</span></h3>
                     <div class="form-group">
-                        <label for="student-name">
-                            <span id="ns-label-student-name">اسم الطالب الرباعي</span> <span class="required">*</span>
-                        </label>
-                        <input type="text" id="student-name" name="student-name" 
-                            data-ph="ns-ph-student-name" placeholder="مثال: أحمد محمد علي عبدالله" required>
+                        <label for="student-name"><span id="label-student-name">اسم الطالب الرباعي</span> <span class="required">*</span></label>
+                        <input type="text" id="student-name" name="student-name" placeholder="مثال: أحمد محمد علي عبدالله" required>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="student-id">
-                                <span id="ns-label-student-id">رقم الهوية / الإقامة</span> <span class="required">*</span>
-                            </label>
-                            <input type="text" id="student-id" name="student-id" 
-                                data-ph="ns-ph-student-id" placeholder="1xxxxxxxxx" required>
+                            <label for="student-id"><span id="label-student-id">رقم الهوية / الإقامة</span> <span class="required">*</span></label>
+                            <input type="text" id="student-id" name="student-id" placeholder="1xxxxxxxxx" required>
                         </div>
                         <div class="form-group">
-                            <label for="grade-level">
-                                <span id="ns-label-grade">المرحلة الدراسية</span> <span class="required">*</span>
-                            </label>
+                            <label for="grade-level"><span id="label-grade">المرحلة الدراسية</span> <span class="required">*</span></label>
                             <select id="grade-level" name="grade-level" required>
-                                <option value="" disabled selected id="ns-opt-select">اختر المرحلة...</option>
-                                <option value="primary" id="ns-opt-primary">ابتدائي</option>
-                                <option value="middle" id="ns-opt-middle">متوسط</option>
-                                <option value="high" id="ns-opt-high">ثانوي</option>
+                                <option value="" disabled selected id="opt-select">اختر المرحلة...</option>
+                                <option value="primary" id="opt-primary">ابتدائي</option>
+                                <option value="middle" id="opt-middle">متوسط</option>
+                                <option value="high" id="opt-high">ثانوي</option>
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label for="class-room">
-                            <span id="ns-label-class">الصف والفصل</span> <span class="required">*</span>
-                        </label>
-                        <input type="text" id="class-room" name="class-room" 
-                            data-ph="ns-ph-class" placeholder="مثال: الثالث أ" required>
+                        <label for="class-room"><span id="label-class">الصف والفصل</span> <span class="required">*</span></label>
+                        <input type="text" id="class-room" name="class-room" placeholder="مثال: الثالث أ" required>
                     </div>
                 </div>
 
-                <!-- قسم بيانات ولي الأمر -->
                 <div class="form-section">
-                    <h3 class="form-section-title" id="ns-section-parent">
-                        <i class="fas fa-user-shield"></i>
-                        <span id="ns-title-parent">بيانات ولي الأمر</span>
-                    </h3>
-                    
+                    <h3 class="form-section-title" id="section-parent"><i class="fas fa-user-shield"></i> <span id="title-parent">بيانات ولي الأمر</span></h3>
                     <div class="form-group">
-                        <label for="parent-name">
-                            <span id="ns-label-parent-name">اسم ولي الأمر الرباعي</span> <span class="required">*</span>
-                        </label>                        <input type="text" id="parent-name" name="parent-name" 
-                            data-ph="ns-ph-parent-name" placeholder="الاسم الرباعي لولي الأمر" required>
+                        <label for="parent-name"><span id="label-parent-name">اسم ولي الأمر الرباعي</span> <span class="required">*</span></label>
+                        <input type="text" id="parent-name" name="parent-name" placeholder="الاسم الرباعي لولي الأمر" required>
                     </div>
-
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="parent-phone">
-                                <span id="ns-label-phone">رقم الجوال</span> <span class="required">*</span>
-                            </label>
-                            <input type="tel" id="parent-phone" name="parent-phone" 
-                                data-ph="ns-ph-phone" placeholder="05xxxxxxxx" required>
+                            <label for="parent-phone"><span id="label-phone">رقم الجوال</span> <span class="required">*</span></label>
+                            <input type="tel" id="parent-phone" name="parent-phone" placeholder="05xxxxxxxx" required>
                         </div>
                         <div class="form-group">
-                            <label for="parent-email">
-                                <span id="ns-label-email">البريد الإلكتروني</span>
-                            </label>
-                            <input type="email" id="parent-email" name="parent-email" 
-                                data-ph="ns-ph-email" placeholder="example@email.com">
+                            <label for="parent-email"><span id="label-email">البريد الإلكتروني</span></label>                            <input type="email" id="parent-email" name="parent-email" placeholder="example@email.com">
                         </div>
                     </div>
                 </div>
 
-                <!-- ملاحظات إضافية -->
                 <div class="form-section" style="border-bottom: none;">
-                    <h3 class="form-section-title" id="ns-section-notes">
-                        <i class="fas fa-sticky-note"></i>
-                        <span id="ns-title-notes">معلومات إضافية</span>
-                    </h3>
+                    <h3 class="form-section-title" id="section-notes"><i class="fas fa-sticky-note"></i> <span id="title-notes">معلومات إضافية</span></h3>
                     <div class="form-group">
-                        <label for="notes"><span id="ns-label-notes">ملاحظات</span></label>
-                        <textarea id="notes" name="notes" data-ph="ns-ph-notes" 
-                            placeholder="أي معلومات إضافية عن الطالب (حالة صحية، ظروف خاصة، إلخ...)"></textarea>
+                        <label for="notes"><span id="label-notes">ملاحظات</span></label>
+                        <textarea id="notes" name="notes" placeholder="أي معلومات إضافية عن الطالب (حالة صحية، ظروف خاصة، إلخ...)"></textarea>
                     </div>
                 </div>
 
-                <!-- أزرار التحكم -->
                 <div class="btn-group">
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-save"></i>
-                        <span id="ns-btn-save">حفظ السجل</span>
-                    </button>
-                    <button type="reset" class="btn-secondary">
-                        <i class="fas fa-undo"></i>
-                        <span id="ns-btn-reset">إعادة تعيين</span>
-                    </button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> <span id="btn-save">حفظ السجل</span></button>
+                    <button type="reset" class="btn-secondary"><i class="fas fa-undo"></i> <span id="btn-reset">إعادة تعيين</span></button>
                 </div>
             </form>
         </div>
     </main>
-    <script src="script.js"></script>
+
     <script>
-        // ========== التحقق من صحة النموذج ==========
+        // ========== الترجمة المدمجة في الصفحة ==========
+        const translations = {
+            ar: {
+                pageTitle: 'سما | إنشاء سجل طالب جديد', siteName: 'سما', siteSubtitle: 'إنشاء سجل طالب جديد',
+                formTitle: 'بيانات الطالب الجديد', formDesc: 'يرجى تعبئة جميع الحقول المطلوبة بدقة',
+                successText: 'تم حفظ البيانات بنجاح!', sectionStudent: 'بيانات الطالب', titleStudent: 'بيانات الطالب',
+                labelStudentName: 'اسم الطالب الرباعي', phStudentName: 'مثال: أحمد محمد علي عبدالله',
+                labelStudentId: 'رقم الهوية / الإقامة', phStudentId: '1xxxxxxxxx',
+                labelGrade: 'المرحلة الدراسية', optSelect: 'اختر المرحلة...', optPrimary: 'ابتدائي',
+                optMiddle: 'متوسط', optHigh: 'ثانوي', labelClass: 'الصف والفصل', phClass: 'مثال: الثالث أ',
+                sectionParent: 'بيانات ولي الأمر', titleParent: 'بيانات ولي الأمر',
+                labelParentName: 'اسم ولي الأمر الرباعي', phParentName: 'الاسم الرباعي لولي الأمر',
+                labelPhone: 'رقم الجوال', phPhone: '05xxxxxxxx', labelEmail: 'البريد الإلكتروني',
+                phEmail: 'example@email.com', sectionNotes: 'معلومات إضافية', titleNotes: 'معلومات إضافية',
+                labelNotes: 'ملاحظات', phNotes: 'أي معلومات إضافية عن الطالب (حالة صحية، ظروف خاصة، إلخ...)',
+                btnSave: 'حفظ السجل', btnReset: 'إعادة تعيين'
+            },
+            en: {
+                pageTitle: 'Sama | New Student Record', siteName: 'Sama', siteSubtitle: 'Create New Student',
+                formTitle: 'New Student Information', formDesc: 'Please fill all required fields accurately',
+                successText: 'Data saved successfully!', sectionStudent: 'Student Information', titleStudent: 'Student Information',
+                labelStudentName: 'Student Full Name', phStudentName: 'Example: Ahmed Mohammed Ali',
+                labelStudentId: 'National ID / Residence', phStudentId: '1xxxxxxxxx',
+                labelGrade: 'Education Level', optSelect: 'Select level...', optPrimary: 'Primary',
+                optMiddle: 'Middle', optHigh: 'High School', labelClass: 'Class & Section', phClass: 'Example: Grade 3-A',
+                sectionParent: 'Parent Information', titleParent: 'Parent Information',
+                labelParentName: 'Parent Full Name', phParentName: 'Parent full name',
+                labelPhone: 'Mobile Number', phPhone: '05xxxxxxxx', labelEmail: 'Email Address',                phEmail: 'example@email.com', sectionNotes: 'Additional Info', titleNotes: 'Additional Info',
+                labelNotes: 'Notes', phNotes: 'Any additional info (health, special needs, etc.)',
+                btnSave: 'Save Record', btnReset: 'Reset'
+            },
+            tr: {
+                pageTitle: 'Sama | Yeni Öğrenci Kaydı', siteName: 'Sama', siteSubtitle: 'Yeni Öğrenci Oluştur',
+                formTitle: 'Yeni Öğrenci Bilgileri', formDesc: 'Lütfen tüm zorunlu alanları doldurun',
+                successText: 'Veriler başarıyla kaydedildi!', sectionStudent: 'Öğrenci Bilgileri', titleStudent: 'Öğrenci Bilgileri',
+                labelStudentName: 'Öğrenci Tam Adı', phStudentName: 'Örnek: Ahmet Mehmet Ali',
+                labelStudentId: 'TC Kimlik / İkamet', phStudentId: '1xxxxxxxxx',
+                labelGrade: 'Eğitim Seviyesi', optSelect: 'Seviye seçin...', optPrimary: 'İlkokul',
+                optMiddle: 'Ortaokul', optHigh: 'Lise', labelClass: 'Sınıf ve Şube', phClass: 'Örnek: 3-A',
+                sectionParent: 'Veli Bilgileri', titleParent: 'Veli Bilgileri',
+                labelParentName: 'Veli Tam Adı', phParentName: 'Velini tam adı',
+                labelPhone: 'Cep Telefonu', phPhone: '05xxxxxxxx', labelEmail: 'E-posta',
+                phEmail: 'ornek@email.com', sectionNotes: 'Ek Bilgiler', titleNotes: 'Ek Bilgiler',
+                labelNotes: 'Notlar', phNotes: 'Ek bilgiler (sağlık, özel durum, vb.)',
+                btnSave: 'Kaydı Kaydet', btnReset: 'Sıfırla'
+            },
+            es: {
+                pageTitle: 'Sama | Nuevo Registro', siteName: 'Sama', siteSubtitle: 'Crear Nuevo Estudiante',
+                formTitle: 'Información del Estudiante', formDesc: 'Completa todos los campos requeridos',
+                successText: '¡Datos guardados exitosamente!', sectionStudent: 'Información del Estudiante', titleStudent: 'Información del Estudiante',
+                labelStudentName: 'Nombre Completo', phStudentName: 'Ejemplo: Ahmed Mohammed',
+                labelStudentId: 'ID Nacional', phStudentId: '1xxxxxxxxx',
+                labelGrade: 'Nivel Educativo', optSelect: 'Seleccionar...', optPrimary: 'Primaria',
+                optMiddle: 'Secundaria', optHigh: 'Preparatoria', labelClass: 'Clase y Sección', phClass: 'Ejemplo: 3-A',
+                sectionParent: 'Información del Padre', titleParent: 'Información del Padre',
+                labelParentName: 'Nombre del Padre', phParentName: 'Nombre completo del padre',
+                labelPhone: 'Teléfono Móvil', phPhone: '05xxxxxxxx', labelEmail: 'Correo Electrónico',
+                phEmail: 'ejemplo@email.com', sectionNotes: 'Información Adicional', titleNotes: 'Información Adicional',
+                labelNotes: 'Notas', phNotes: 'Información adicional (salud, necesidades especiales, etc.)',
+                btnSave: 'Guardar Registro', btnReset: 'Reiniciar'
+            },
+            ko: {
+                pageTitle: '사마 | 새 학생 기록', siteName: '사마', siteSubtitle: '새 학생 생성',
+                formTitle: '새 학생 정보', formDesc: '모든 필수 필드를 입력하세요',
+                successText: '데이터가 저장되었습니다!', sectionStudent: '학생 정보', titleStudent: '학생 정보',
+                labelStudentName: '학생 전체 이름', phStudentName: '예: 아흐메드 모하메드',
+                labelStudentId: '주민등록번호', phStudentId: '1xxxxxxxxx',
+                labelGrade: '교육 단계', optSelect: '단계 선택...', optPrimary: '초등',
+                optMiddle: '중등', optHigh: '고등', labelClass: '학급 및 반', phClass: '예: 3학년 가반',
+                sectionParent: '학부모 정보', titleParent: '학부모 정보',
+                labelParentName: '학부모 이름', phParentName: '학부모 전체 이름',
+                labelPhone: '휴대전화', phPhone: '05xxxxxxxx', labelEmail: '이메일',
+                phEmail: 'example@email.com', sectionNotes: '추가 정보', titleNotes: '추가 정보',
+                labelNotes: '메모', phNotes: '추가 정보 (건강, 특수 요구 등)',
+                btnSave: '기록 저장', btnReset: '재설정'
+            },
+            ja: {                pageTitle: 'サマ | 新しい生徒記録', siteName: 'サマ', siteSubtitle: '新しい生徒を作成',
+                formTitle: '新しい生徒情報', formDesc: '必須項目をすべて入力してください',
+                successText: 'データが保存されました！', sectionStudent: '生徒情報', titleStudent: '生徒情報',
+                labelStudentName: '生徒氏名', phStudentName: '例: アフメド・モハメド',
+                labelStudentId: '国民ID', phStudentId: '1xxxxxxxxx',
+                labelGrade: '教育段階', optSelect: '選択...', optPrimary: '小学校',
+                optMiddle: '中学校', optHigh: '高校', labelClass: 'クラス・組', phClass: '例: 3年A組',
+                sectionParent: '保護者情報', titleParent: '保護者情報',
+                labelParentName: '保護者氏名', phParentName: '保護者の氏名',
+                labelPhone: '携帯電話', phPhone: '05xxxxxxxx', labelEmail: 'メール',
+                phEmail: 'example@email.com', sectionNotes: '追加情報', titleNotes: '追加情報',
+                labelNotes: 'メモ', phNotes: '追加情報（健康、特別なニーズなど）',
+                btnSave: '記録を保存', btnReset: 'リセット'
+            },
+            hi: {
+                pageTitle: 'समा | नया छात्र रिकॉर्ड', siteName: 'समा', siteSubtitle: 'नया छात्र बनाएं',
+                formTitle: 'नए छात्र की जानकारी', formDesc: 'कृपया सभी आवश्यक फ़ील्ड भरें',
+                successText: 'डेटा सफलतापूर्वक सहेजा गया!', sectionStudent: 'छात्र जानकारी', titleStudent: 'छात्र जानकारी',
+                labelStudentName: 'छात्र का पूरा नाम', phStudentName: 'उदाहरण: अहमद मोहम्मद',
+                labelStudentId: 'राष्ट्रीय आईडी', phStudentId: '1xxxxxxxxx',
+                labelGrade: 'शिक्षा स्तर', optSelect: 'चुनें...', optPrimary: 'प्राथमिक',
+                optMiddle: 'मध्य', optHigh: 'माध्यमिक', labelClass: 'कक्षा और अनुभाग', phClass: 'उदाहरण: कक्षा 3-अ',
+                sectionParent: 'अभिभावक जानकारी', titleParent: 'अभिभावक जानकारी',
+                labelParentName: 'अभिभावक का नाम', phParentName: 'अभिभावक का पूरा नाम',
+                labelPhone: 'मोबाइल नंबर', phPhone: '05xxxxxxxx', labelEmail: 'ईमेल',
+                phEmail: 'example@email.com', sectionNotes: 'अतिरिक्त जानकारी', titleNotes: 'अतिरिक्त जानकारी',
+                labelNotes: 'नोट्स', phNotes: 'अतिरिक्त जानकारी (स्वास्थ्य, विशेष आवश्यकताएं, आदि)',
+                btnSave: 'रिकॉर्ड सहेजें', btnReset: 'रीसेट'
+            },
+            fil: {
+                pageTitle: 'Sama | Bagong Record', siteName: 'Sama', siteSubtitle: 'Gumawa ng Bagong Mag-aaral',
+                formTitle: 'Impormasyon ng Mag-aaral', formDesc: 'Punan ang lahat ng required na fields',
+                successText: 'Nai-save ang data!', sectionStudent: 'Impormasyon ng Mag-aaral', titleStudent: 'Impormasyon ng Mag-aaral',
+                labelStudentName: 'Buong Pangalan', phStudentName: 'Hal: Ahmed Mohammed',
+                labelStudentId: 'National ID', phStudentId: '1xxxxxxxxx',
+                labelGrade: 'Antas ng Edukasyon', optSelect: 'Pumili...', optPrimary: 'Elementarya',
+                optMiddle: 'Junior High', optHigh: 'Senior High', labelClass: 'Klase at Seksyon', phClass: 'Hal: Grade 3-A',
+                sectionParent: 'Impormasyon ng Magulang', titleParent: 'Impormasyon ng Magulang',
+                labelParentName: 'Pangalan ng Magulang', phParentName: 'Buong pangalan ng magulang',
+                labelPhone: 'Mobile Number', phPhone: '05xxxxxxxx', labelEmail: 'Email',
+                phEmail: 'example@email.com', sectionNotes: 'Karagdagang Info', titleNotes: 'Karagdagang Info',
+                labelNotes: 'Mga Tala', phNotes: 'Karagdagang impormasyon (kalusugan, espesyal na pangangailangan, etc.)',
+                btnSave: 'I-save ang Record', btnReset: 'I-reset'
+            },
+            zh: {
+                pageTitle: '萨玛 | 新学生记录', siteName: '萨玛', siteSubtitle: '创建新学生',
+                formTitle: '新学生信息', formDesc: '请填写所有必填字段',
+                successText: '数据保存成功！', sectionStudent: '学生信息', titleStudent: '学生信息',
+                labelStudentName: '学生全名', phStudentName: '示例: 艾哈迈德·穆罕默德',
+                labelStudentId: '国民身份证号', phStudentId: '1xxxxxxxxx',                labelGrade: '教育阶段', optSelect: '选择阶段...', optPrimary: '小学',
+                optMiddle: '初中', optHigh: '高中', labelClass: '班级', phClass: '示例: 三年级一班',
+                sectionParent: '家长信息', titleParent: '家长信息',
+                labelParentName: '家长姓名', phParentName: '家长全名',
+                labelPhone: '手机号码', phPhone: '05xxxxxxxx', labelEmail: '电子邮件',
+                phEmail: 'example@email.com', sectionNotes: '附加信息', titleNotes: '附加信息',
+                labelNotes: '备注', phNotes: '附加信息（健康、特殊需求等）',
+                btnSave: '保存记录', btnReset: '重置'
+            }
+        };
+
+        const flags = { ar: '🇸🇦', en: '🇬🇧', tr: '🇹🇷', es: '🇪🇸', ko: '🇰🇷', ja: '🇯🇵', hi: '🇮🇳', fil: '🇵🇭', zh: '🇨🇳' };
+        let currentLang = localStorage.getItem('sama-lang') || 'ar';
+
+        function applyTranslation(lang) {
+            const t = translations[lang];
+            if (!t) return;
+
+            const elements = {
+                'page-title': t.pageTitle, 'site-name': t.siteName, 'site-subtitle': t.siteSubtitle,
+                'form-title': t.formTitle, 'form-desc': t.formDesc, 'success-text': t.successText,
+                'section-student': t.sectionStudent, 'title-student': t.titleStudent,
+                'label-student-name': t.labelStudentName, 'label-student-id': t.labelStudentId,
+                'label-grade': t.labelGrade, 'opt-select': t.optSelect, 'opt-primary': t.optPrimary,
+                'opt-middle': t.optMiddle, 'opt-high': t.optHigh, 'label-class': t.labelClass,
+                'section-parent': t.sectionParent, 'title-parent': t.titleParent,
+                'label-parent-name': t.labelParentName, 'label-phone': t.labelPhone,
+                'label-email': t.labelEmail, 'section-notes': t.sectionNotes,
+                'title-notes': t.titleNotes, 'label-notes': t.labelNotes,
+                'btn-save': t.btnSave, 'btn-reset': t.btnReset
+            };
+
+            for (const [id, text] of Object.entries(elements)) {
+                const el = document.getElementById(id);
+                if (el && text) el.textContent = text;
+            }
+
+            const placeholders = {
+                'student-name': t.phStudentName, 'student-id': t.phStudentId,
+                'class-room': t.phClass, 'parent-name': t.phParentName,
+                'parent-phone': t.phPhone, 'parent-email': t.phEmail,
+                'notes': t.phNotes
+            };
+
+            for (const [id, ph] of Object.entries(placeholders)) {
+                const el = document.getElementById(id);
+                if (el && ph) el.placeholder = ph;
+            }
+
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';            document.documentElement.lang = lang;
+        }
+
+        // زر اللغة
+        document.getElementById('lang-btn').addEventListener('click', function() {
+            const langs = [
+                {code: 'ar', name: 'العربية', flag: '🇸🇦'}, {code: 'en', name: 'English', flag: '🇬🇧'},
+                {code: 'tr', name: 'Türkçe', flag: '🇹🇷'}, {code: 'es', name: 'Español', flag: '🇪🇸'},
+                {code: 'ko', name: '한국어', flag: '🇰🇷'}, {code: 'ja', name: '日本語', flag: '🇯🇵'},
+                {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'}, {code: 'fil', name: 'Filipino', flag: '🇵🇭'},
+                {code: 'zh', name: '中文', flag: '🇨🇳'}
+            ];
+
+            const existingMenu = document.querySelector('.lang-menu');
+            if (existingMenu) { existingMenu.remove(); return; }
+
+            const menu = document.createElement('div');
+            menu.className = 'lang-menu';
+            menu.style.cssText = 'position: absolute; top: 100%; right: 0; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); padding: 10px; min-width: 180px; z-index: 10000; margin-top: 5px; border: 2px solid #1F6F6F;';
+
+            langs.forEach(l => {
+                const btn = document.createElement('button');
+                btn.textContent = l.flag + '  ' + l.name;
+                btn.style.cssText = 'width: 100%; padding: 10px 15px; margin: 3px 0; border: none; background: transparent; border-radius: 5px; cursor: pointer; text-align: right; font-family: Tajawal, sans-serif; font-size: 14px; transition: all 0.2s;';
+                btn.onmouseover = () => { btn.style.background = '#1F6F6F'; btn.style.color = 'white'; };
+                btn.onmouseout = () => { btn.style.background = 'transparent'; };
+                btn.onclick = () => {
+                    currentLang = l.code;
+                    localStorage.setItem('sama-lang', currentLang);
+                    document.getElementById('lang-btn').textContent = l.flag;
+                    menu.remove();
+                    applyTranslation(currentLang);
+                };
+                menu.appendChild(btn);
+            });
+
+            this.parentElement.style.position = 'relative';
+            this.parentElement.appendChild(menu);
+        });
+
+        // الوضع الليلي
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('sama-theme', next);
+            this.querySelector('i').className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        });
+
+        // تطبيق الترجمة عند التحميل        setTimeout(() => {
+            const savedLang = localStorage.getItem('sama-lang') || 'ar';
+            currentLang = savedLang;
+            document.getElementById('lang-btn').textContent = flags[savedLang] || '🇸🇦';
+            applyTranslation(savedLang);
+        }, 100);
+
+        // نموذج الطالب
         const form = document.getElementById('new-student-form');
-        const successMsg = document.getElementById('ns-success-msg');
+        const successMsg = document.getElementById('success-msg');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!form.checkValidity()) {
-                e.stopPropagation();
-                form.reportValidity();
-                return;
-            }
+            if (!form.checkValidity()) { e.stopPropagation(); form.reportValidity(); return; }
 
             const studentData = {
                 studentName: document.getElementById('student-name').value.trim(),
@@ -315,32 +365,25 @@
                 parentPhone: document.getElementById('parent-phone').value.trim(),
                 parentEmail: document.getElementById('parent-email').value.trim(),
                 notes: document.getElementById('notes').value.trim(),
-                createdAt: new Date().toISOString(),
-                createdDate: new Date().toLocaleDateString('ar-SA')
+                createdAt: new Date().toISOString()
             };
-
-            console.log('=== بيانات الطالب الجديد ===');
-            console.log(studentData);
 
             let students = JSON.parse(localStorage.getItem('students') || '[]');
             students.push(studentData);
             localStorage.setItem('students', JSON.stringify(students));
 
             successMsg.style.display = 'block';
-            setTimeout(() => {
-                successMsg.style.display = 'none';
-                window.location.href = 'students.html';
-            }, 2000);
+            setTimeout(() => { successMsg.style.display = 'none'; window.location.href = 'students.html'; }, 2000);
             form.reset();
         });
 
-        // تنسيق الأرقام
         ['parent-phone', 'student-id'].forEach(id => {
-            document.getElementById(id)?.addEventListener('input', function(e) {
+            document.getElementById(id).addEventListener('input', function(e) {
                 let value = e.target.value.replace(/\D/g, '');
                 if (value.length > 10) value = value.slice(0, 10);
                 e.target.value = value;
             });
-        });    </script>
+        });
+    </script>
 </body>
 </html>
