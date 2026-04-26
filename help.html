@@ -16,29 +16,30 @@
             <img src="logo.png" alt="شعار سما" class="site-logo">
         </div>
         <div class="controls">
-            <button id="theme-toggle" class="control-btn">
-                <i class="fas fa-moon"></i>
-            </button>
-            <a href="index.html" class="control-btn">
-                <i class="fas fa-home"></i>
-            </a>
+            <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
+            <a href="index.html" class="control-btn"><i class="fas fa-home"></i></a>
+            <!-- زر اللغة هنا -->
+            <button id="lang-toggle" class="control-btn">🇸</button>
         </div>
     </header>
 
     <main class="help-container">
         <div class="help-header">
-            <h1><i class="fas fa-headset"></i> المساعدة والدعم الفني</h1>
-            <p>دليلك الشامل لاستخدام نظام سجلات الطلاب</p>
+            <!-- أضفنا id هنا للترجمة -->
+            <h1 id="help-title"><i class="fas fa-headset"></i> المساعدة والدعم الفني</h1>
+            <p id="help-desc">دليلك الشامل لاستخدام نظام سجلات الطلاب</p>
         </div>
 
         <div class="faq-section">
-            <h2 class="faq-title"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</h2>
+            <!-- أضفنا id هنا للترجمة -->
+            <h2 class="faq-title" id="faq-title"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</h2>
             
             <div class="accordion">
+                <!-- السؤال 1 -->
                 <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <button class="accordion-header">
                         <span class="question-icon"><i class="fas fa-user-plus"></i></span>
-                        <span class="question-text">كيف أضيف طالب جديد؟</span>
+                        <span class="question-text" id="q1">كيف أضيف طالب جديد؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
                     <div class="accordion-content">
@@ -46,8 +47,7 @@
                             <li>انتقل إلى القائمة الرئيسية واختر <strong>"طالب جديد"</strong></li>
                             <li>املأ جميع الحقول المطلوبة:
                                 <ul>
-                                    <li>اسم الطالب الرباعي</li>
-                                    <li>رقم الهوية الوطنية</li>
+                                    <li>اسم الطالب الرباعي</li>                                    <li>رقم الهوية الوطنية</li>
                                     <li>رقم جوال ولي الأمر</li>
                                     <li>البريد الإلكتروني</li>
                                 </ul>
@@ -57,10 +57,11 @@
                     </div>
                 </div>
 
+                <!-- السؤال 2 -->
                 <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <button class="accordion-header">
                         <span class="question-icon"><i class="fas fa-edit"></i></span>
-                        <span class="question-text">كيف أعدل بيانات طالب؟</span>
+                        <span class="question-text" id="q2">كيف أعدل بيانات طالب؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
                     <div class="accordion-content">
@@ -75,10 +76,11 @@
                     </div>
                 </div>
 
+                <!-- السؤال 3 -->
                 <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <button class="accordion-header">
                         <span class="question-icon"><i class="fas fa-print"></i></span>
-                        <span class="question-text">كيف أطبع تقرير الطالب؟</span>
+                        <span class="question-text" id="q3">كيف أطبع تقرير الطالب؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
                     <div class="accordion-content">
@@ -91,10 +93,10 @@
                     </div>
                 </div>
 
+                <!-- السؤال 4 -->
                 <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        <span class="question-icon"><i class="fas fa-users"></i></span>
-                        <span class="question-text">كيف أضيف ولي أمر جديد؟</span>
+                    <button class="accordion-header">
+                        <span class="question-icon"><i class="fas fa-users"></i></span>                        <span class="question-text" id="q4">كيف أضيف ولي أمر جديد؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
                     <div class="accordion-content">
@@ -109,10 +111,11 @@
                     </div>
                 </div>
 
+                <!-- السؤال 5 -->
                 <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <button class="accordion-header">
                         <span class="question-icon"><i class="fas fa-clipboard-check"></i></span>
-                        <span class="question-text">كيف أدخل التقييمات والمهارات؟</span>
+                        <span class="question-text" id="q5">كيف أدخل التقييمات والمهارات؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
                     <div class="accordion-content">
@@ -128,10 +131,10 @@
             </div>
         </div>
 
-        <!-- قسم التواصل مرة واحدة فقط -->
+        <!-- قسم التواصل -->
         <div class="contact-section">
-            <h2><i class="fas fa-envelope"></i> تواصل معنا</h2>
-            <p>إذا لم تجد إجابة لسؤالك، لا تتردد في التواصل معنا:</p>
+            <h2 id="contact-title"><i class="fas fa-envelope"></i> تواصل معنا</h2>
+            <p id="contact-desc">إذا لم تجد إجابة لسؤالك، لا تتردد في التواصل معنا:</p>
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-phone"></i>
@@ -142,17 +145,17 @@
                     <a href="mailto:raa7240@gmail.com" class="contact-link">raa7240@gmail.com</a>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-clock"></i>
-                    <span>ساعات العمل: الأحد - الخميس 8 ص - 4 م</span>
+                    <i class="fas fa-clock"></i>                    <span id="work-hours">ساعات العمل: الأحد - الخميس 8 ص - 4 م</span>
                 </div>
             </div>
         </div>
     </main>
 
     <footer class="main-footer">
-        <p>© 2026 سما - جميع الحقوق محفوظة</p>
+        <p id="footer-text">© 2026 سما - جميع الحقوق محفوظة</p>
     </footer>
 
-    <script src="help.js"></script>
+    <!-- نربط ملف script.js الموحد هنا -->
+    <script src="script.js"></script>
 </body>
 </html>
