@@ -1,428 +1,294 @@
-// دالة الترجمة العالمية
-function translatePage(lang) {
-    console.log('🔄 جاري الترجمة إلى:', lang);
-    
-    const translations = {
-        ar: {
-            ns_pageTitle: 'سما | إنشاء سجل طالب جديد',
-            ns_siteName: 'سما',
-            ns_siteSubtitle: 'إنشاء سجل طالب جديد',
-            ns_formTitle: 'بيانات الطالب الجديد',
-            ns_formDesc: 'يرجى تعبئة جميع الحقول المطلوبة بدقة',
-            ns_sectionStudent: 'بيانات الطالب',
-            ns_labelStudentName: 'اسم الطالب الرباعي',
-            ns_phStudentName: 'مثال: أحمد محمد علي عبدالله',
-            ns_labelStudentId: 'رقم الهوية / الإقامة',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: 'المرحلة الدراسية',
-            ns_optSelect: 'اختر المرحلة...',
-            ns_optPrimary: 'ابتدائي',
-            ns_optMiddle: 'متوسط',
-            ns_optHigh: 'ثانوي',
-            ns_labelClass: 'الصف والفصل',
-            ns_phClass: 'مثال: الثالث أ',
-            ns_sectionParent: 'بيانات ولي الأمر',
-            ns_labelParentName: 'اسم ولي الأمر الرباعي',
-            ns_phParentName: 'الاسم الرباعي لولي الأمر',
-            ns_labelPhone: 'رقم الجوال',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: 'البريد الإلكتروني',
-            ns_phEmail: 'example@email.com',
-            ns_sectionNotes: 'معلومات إضافية',
-            ns_labelNotes: 'ملاحظات',
-            ns_phNotes: 'أي معلومات إضافية عن الطالب (حالة صحية، ظروف خاصة، إلخ...)',
-            ns_btnSave: 'حفظ السجل',
-            ns_btnReset: 'إعادة تعيين'
-        },
-        en: {
-            ns_pageTitle: 'Sama | New Student Record',
-            ns_siteName: 'Sama',
-            ns_siteSubtitle: 'Create New Student',
-            ns_formTitle: 'New Student Information',
-            ns_formDesc: 'Please fill all required fields accurately',
-            ns_sectionStudent: 'Student Information',
-            ns_labelStudentName: 'Student Full Name',
-            ns_phStudentName: 'Example: Ahmed Mohammed Ali',
-            ns_labelStudentId: 'National ID / Residence',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: 'Education Level',
-            ns_optSelect: 'Select level...',
-            ns_optPrimary: 'Primary',            ns_optMiddle: 'Middle',
-            ns_optHigh: 'High School',
-            ns_labelClass: 'Class & Section',
-            ns_phClass: 'Example: Grade 3-A',
-            ns_sectionParent: 'Parent Information',
-            ns_labelParentName: 'Parent Full Name',
-            ns_phParentName: 'Parent full name',
-            ns_labelPhone: 'Mobile Number',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: 'Email Address',
-            ns_phEmail: 'example@email.com',
-            ns_sectionNotes: 'Additional Info',
-            ns_labelNotes: 'Notes',
-            ns_phNotes: 'Any additional info (health, special needs, etc.)',
-            ns_btnSave: 'Save Record',
-            ns_btnReset: 'Reset'
-        },
-        tr: {
-            ns_pageTitle: 'Sama | Yeni Öğrenci Kaydı',
-            ns_siteName: 'Sama',
-            ns_siteSubtitle: 'Yeni Öğrenci Oluştur',
-            ns_formTitle: 'Yeni Öğrenci Bilgileri',
-            ns_formDesc: 'Lütfen tüm zorunlu alanları doldurun',
-            ns_sectionStudent: 'Öğrenci Bilgileri',
-            ns_labelStudentName: 'Öğrenci Tam Adı',
-            ns_phStudentName: 'Örnek: Ahmet Mehmet Ali',
-            ns_labelStudentId: 'TC Kimlik / İkamet',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: 'Eğitim Seviyesi',
-            ns_optSelect: 'Seviye seçin...',
-            ns_optPrimary: 'İlkokul',
-            ns_optMiddle: 'Ortaokul',
-            ns_optHigh: 'Lise',
-            ns_labelClass: 'Sınıf ve Şube',
-            ns_phClass: 'Örnek: 3-A',
-            ns_sectionParent: 'Veli Bilgileri',
-            ns_labelParentName: 'Veli Tam Adı',
-            ns_phParentName: 'Velini tam adı',
-            ns_labelPhone: 'Cep Telefonu',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: 'E-posta',
-            ns_phEmail: 'ornek@email.com',
-            ns_sectionNotes: 'Ek Bilgiler',
-            ns_labelNotes: 'Notlar',
-            ns_phNotes: 'Ek bilgiler (sağlık, özel durum, vb.)',
-            ns_btnSave: 'Kaydı Kaydet',
-            ns_btnReset: 'Sıfırla'
-        },
-        es: {
-            ns_pageTitle: 'Sama | Nuevo Registro',            ns_siteName: 'Sama',
-            ns_siteSubtitle: 'Crear Nuevo Estudiante',
-            ns_formTitle: 'Información del Estudiante',
-            ns_formDesc: 'Completa todos los campos requeridos',
-            ns_sectionStudent: 'Información del Estudiante',
-            ns_labelStudentName: 'Nombre Completo',
-            ns_phStudentName: 'Ejemplo: Ahmed Mohammed',
-            ns_labelStudentId: 'ID Nacional',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: 'Nivel Educativo',
-            ns_optSelect: 'Seleccionar...',
-            ns_optPrimary: 'Primaria',
-            ns_optMiddle: 'Secundaria',
-            ns_optHigh: 'Preparatoria',
-            ns_labelClass: 'Clase y Sección',
-            ns_phClass: 'Ejemplo: 3-A',
-            ns_sectionParent: 'Información del Padre',
-            ns_labelParentName: 'Nombre del Padre',
-            ns_phParentName: 'Nombre completo del padre',
-            ns_labelPhone: 'Teléfono Móvil',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: 'Correo Electrónico',
-            ns_phEmail: 'ejemplo@email.com',
-            ns_sectionNotes: 'Información Adicional',
-            ns_labelNotes: 'Notas',
-            ns_phNotes: 'Información adicional (salud, necesidades especiales, etc.)',
-            ns_btnSave: 'Guardar Registro',
-            ns_btnReset: 'Reiniciar'
-        },
-        ko: {
-            ns_pageTitle: '사마 | 새 학생 기록',
-            ns_siteName: '사마',
-            ns_siteSubtitle: '새 학생 생성',
-            ns_formTitle: '새 학생 정보',
-            ns_formDesc: '모든 필수 필드를 입력하세요',
-            ns_sectionStudent: '학생 정보',
-            ns_labelStudentName: '학생 전체 이름',
-            ns_phStudentName: '예: 아흐메드 모하메드',
-            ns_labelStudentId: '주민등록번호',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: '교육 단계',
-            ns_optSelect: '단계 선택...',
-            ns_optPrimary: '초등',
-            ns_optMiddle: '중등',
-            ns_optHigh: '고등',
-            ns_labelClass: '학급 및 반',
-            ns_phClass: '예: 3학년 가반',
-            ns_sectionParent: '학부모 정보',
-            ns_labelParentName: '학부모 이름',
-            ns_phParentName: '학부모 전체 이름',            ns_labelPhone: '휴대전화',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: '이메일',
-            ns_phEmail: 'example@email.com',
-            ns_sectionNotes: '추가 정보',
-            ns_labelNotes: '메모',
-            ns_phNotes: '추가 정보 (건강, 특수 요구 등)',
-            ns_btnSave: '기록 저장',
-            ns_btnReset: '재설정'
-        },
-        ja: {
-            ns_pageTitle: 'サマ | 新しい生徒記録',
-            ns_siteName: 'サマ',
-            ns_siteSubtitle: '新しい生徒を作成',
-            ns_formTitle: '新しい生徒情報',
-            ns_formDesc: '必須項目をすべて入力してください',
-            ns_sectionStudent: '生徒情報',
-            ns_labelStudentName: '生徒氏名',
-            ns_phStudentName: '例: アフメド・モハメド',
-            ns_labelStudentId: '国民ID',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: '教育段階',
-            ns_optSelect: '選択...',
-            ns_optPrimary: '小学校',
-            ns_optMiddle: '中学校',
-            ns_optHigh: '高校',
-            ns_labelClass: 'クラス・組',
-            ns_phClass: '例: 3年A組',
-            ns_sectionParent: '保護者情報',
-            ns_labelParentName: '保護者氏名',
-            ns_phParentName: '保護者の氏名',
-            ns_labelPhone: '携帯電話',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: 'メール',
-            ns_phEmail: 'example@email.com',
-            ns_sectionNotes: '追加情報',
-            ns_labelNotes: 'メモ',
-            ns_phNotes: '追加情報（健康、特別なニーズなど）',
-            ns_btnSave: '記録を保存',
-            ns_btnReset: 'リセット'
-        },
-        hi: {
-            ns_pageTitle: 'समा | नया छात्र रिकॉर्ड',
-            ns_siteName: 'समा',
-            ns_siteSubtitle: 'नया छात्र बनाएं',
-            ns_formTitle: 'नए छात्र की जानकारी',
-            ns_formDesc: 'कृपया सभी आवश्यक फ़ील्ड भरें',
-            ns_sectionStudent: 'छात्र जानकारी',
-            ns_labelStudentName: 'छात्र का पूरा नाम',
-            ns_phStudentName: 'उदाहरण: अहमद मोहम्मद',            ns_labelStudentId: 'राष्ट्रीय आईडी',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: 'शिक्षा स्तर',
-            ns_optSelect: 'चुनें...',
-            ns_optPrimary: 'प्राथमिक',
-            ns_optMiddle: 'मध्य',
-            ns_optHigh: 'माध्यमिक',
-            ns_labelClass: 'कक्षा और अनुभाग',
-            ns_phClass: 'उदाहरण: कक्षा 3-अ',
-            ns_sectionParent: 'अभिभावक जानकारी',
-            ns_labelParentName: 'अभिभावक का नाम',
-            ns_phParentName: 'अभिभावक का पूरा नाम',
-            ns_labelPhone: 'मोबाइल नंबर',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: 'ईमेल',
-            ns_phEmail: 'example@email.com',
-            ns_sectionNotes: 'अतिरिक्त जानकारी',
-            ns_labelNotes: 'नोट्स',
-            ns_phNotes: 'अतिरिक्त जानकारी (स्वास्थ्य, विशेष आवश्यकताएं, आदि)',
-            ns_btnSave: 'रिकॉर्ड सहेजें',
-            ns_btnReset: 'रीसेट'
-        },
-        fil: {
-            ns_pageTitle: 'Sama | Bagong Record',
-            ns_siteName: 'Sama',
-            ns_siteSubtitle: 'Gumawa ng Bagong Mag-aaral',
-            ns_formTitle: 'Impormasyon ng Mag-aaral',
-            ns_formDesc: 'Punan ang lahat ng required na fields',
-            ns_sectionStudent: 'Impormasyon ng Mag-aaral',
-            ns_labelStudentName: 'Buong Pangalan',
-            ns_phStudentName: 'Hal: Ahmed Mohammed',
-            ns_labelStudentId: 'National ID',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: 'Antas ng Edukasyon',
-            ns_optSelect: 'Pumili...',
-            ns_optPrimary: 'Elementarya',
-            ns_optMiddle: 'Junior High',
-            ns_optHigh: 'Senior High',
-            ns_labelClass: 'Klase at Seksyon',
-            ns_phClass: 'Hal: Grade 3-A',
-            ns_sectionParent: 'Impormasyon ng Magulang',
-            ns_labelParentName: 'Pangalan ng Magulang',
-            ns_phParentName: 'Buong pangalan ng magulang',
-            ns_labelPhone: 'Mobile Number',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: 'Email',
-            ns_phEmail: 'example@email.com',
-            ns_sectionNotes: 'Karagdagang Info',
-            ns_labelNotes: 'Mga Tala',
-            ns_phNotes: 'Karagdagang impormasyon (kalusugan, espesyal na pangangailangan, etc.)',            ns_btnSave: 'I-save ang Record',
-            ns_btnReset: 'I-reset'
-        },
-        zh: {
-            ns_pageTitle: '萨玛 | 新学生记录',
-            ns_siteName: '萨玛',
-            ns_siteSubtitle: '创建新学生',
-            ns_formTitle: '新学生信息',
-            ns_formDesc: '请填写所有必填字段',
-            ns_sectionStudent: '学生信息',
-            ns_labelStudentName: '学生全名',
-            ns_phStudentName: '示例: 艾哈迈德·穆罕默德',
-            ns_labelStudentId: '国民身份证号',
-            ns_phStudentId: '1xxxxxxxxx',
-            ns_labelGrade: '教育阶段',
-            ns_optSelect: '选择阶段...',
-            ns_optPrimary: '小学',
-            ns_optMiddle: '初中',
-            ns_optHigh: '高中',
-            ns_labelClass: '班级',
-            ns_phClass: '示例: 三年级一班',
-            ns_sectionParent: '家长信息',
-            ns_labelParentName: '家长姓名',
-            ns_phParentName: '家长全名',
-            ns_labelPhone: '手机号码',
-            ns_phPhone: '05xxxxxxxx',
-            ns_labelEmail: '电子邮件',
-            ns_phEmail: 'example@email.com',
-            ns_sectionNotes: '附加信息',
-            ns_labelNotes: '备注',
-            ns_phNotes: '附加信息（健康、特殊需求等）',
-            ns_btnSave: '保存记录',
-            ns_btnReset: '重置'
-        }
-    };
-
-    const t = translations[lang];
-    if (!t) return;
-
-    // تحديث كل العناصر
-    const elements = {
-        'ns-page-title': t.ns_pageTitle,
-        'ns-site-name': t.ns_siteName,
-        'ns-site-subtitle': t.ns_siteSubtitle,
-        'ns-form-title': t.ns_formTitle,
-        'ns-form-desc': t.ns_formDesc,
-        'ns-section-student': t.ns_sectionStudent,
-        'ns-label-student-name': t.ns_labelStudentName,
-        'ns-label-student-id': t.ns_labelStudentId,
-        'ns-label-grade': t.ns_labelGrade,        'ns-opt-select': t.ns_optSelect,
-        'ns-opt-primary': t.ns_optPrimary,
-        'ns-opt-middle': t.ns_optMiddle,
-        'ns-opt-high': t.ns_optHigh,
-        'ns-label-class': t.ns_labelClass,
-        'ns-section-parent': t.ns_sectionParent,
-        'ns-label-parent-name': t.ns_labelParentName,
-        'ns-label-phone': t.ns_labelPhone,
-        'ns-label-email': t.ns_labelEmail,
-        'ns-section-notes': t.ns_sectionNotes,
-        'ns-label-notes': t.ns_labelNotes,
-        'ns-btn-save': t.ns_btnSave,
-        'ns-btn-reset': t.ns_btnReset
-    };
-
-    for (const [id, text] of Object.entries(elements)) {
-        const el = document.getElementById(id);
-        if (el && text) {
-            el.textContent = text;
-        }
-    }
-
-    // تحديث الـ placeholders
-    const placeholders = {
-        'student-name': t.ns_phStudentName,
-        'student-id': t.ns_phStudentId,
-        'class-room': t.ns_phClass,
-        'parent-name': t.ns_phParentName,
-        'parent-phone': t.ns_phPhone,
-        'parent-email': t.ns_phEmail,
-        'notes': t.ns_phNotes
-    };
-
-    for (const [id, ph] of Object.entries(placeholders)) {
-        const el = document.getElementById(id);
-        if (el && ph) {
-            el.placeholder = ph;
-        }
-    }
-
-    // تحديث الاتجاه
-    document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-    document.documentElement.lang = lang;
-    
-    console.log('✅ تمت الترجمة بنجاح');
-}
-
-// ========== الآن باقي الكود الأصلي ==========
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ سما بدأ التحميل');
-    // الوضع الليلي
+    console.log('=== سما بدأ التحميل ===');
+    
+    // ========== 1. الوضع الليلي ==========
     const themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) {
         const savedTheme = localStorage.getItem('sama-theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        const icon = themeBtn.querySelector('i');
-        if(icon) icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-
+        updateThemeIcon(savedTheme);
+        
         themeBtn.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
+            const next = savedTheme === 'light' ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('sama-theme', next);
-            if(icon) icon.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            updateThemeIcon(next);
         });
+        
+        function updateThemeIcon(theme) {
+            const icon = themeBtn.querySelector('i');
+            if (icon) {
+                icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+        }
     }
-
-    // اللغة
+    
+    // ========== 2. اللغة ==========
     const langBtn = document.getElementById('lang-toggle');
     let currentLang = localStorage.getItem('sama-lang') || 'ar';
-
-    const flags = { ar: '🇸🇦', en: '🇬🇧', tr: '🇹🇷', es: '🇪🇸', ko: '🇰🇷', ja: '🇯🇵', hi: '🇮🇳', fil: '🇵🇭', zh: '🇨🇳' };
-
+    
+    const translations = {
+        ar: {
+            greeting: 'أهلاً،',
+            question: 'ماذا تريد أن تفعل اليوم؟',
+            newStudent: 'إنشاء سجل لطالب جديد',
+            followStudents: 'متابعة سجل طلابي',
+            uploadParents: 'رفع لأولياء الأمور',
+            helpSupport: 'المساعدة والدعم',
+            footer: '© 2026 سما - جميع الحقوق محفوظة | تطوير خاص للمعلمات'
+        },
+        en: {
+            greeting: 'Welcome,',
+            question: 'What would you like to do?',
+            newStudent: 'New Student Record',
+            followStudents: 'Follow Students',
+            uploadParents: 'Upload for Parents',
+            helpSupport: 'Help & Support',
+            footer: '© 2026 Sama - All Rights Reserved'
+        },
+        tr: {
+            greeting: 'Merhaba,',
+            question: 'Bugün ne yapmak istersiniz?',
+            newStudent: 'Yeni Öğrenci Kaydı',
+            followStudents: 'Öğrencileri Takip Et',
+            uploadParents: 'Veliler İçin Yükle',
+            helpSupport: 'Yardım ve Destek',
+            footer: '© 2026 Sama - Tüm Hakları Saklıdır'
+        },
+        es: {
+            greeting: 'Bienvenida,',
+            question: '¿Qué te gustaría hacer?',
+            newStudent: 'Nuevo Registro',
+            followStudents: 'Seguir Estudiantes',
+            uploadParents: 'Subir para Padres',
+            helpSupport: 'Ayuda y Soporte',
+            footer: '© 2026 Sama - Todos los Derechos Reservados'
+        },
+        ko: {
+            greeting: '안녕하세요,',
+            question: '오늘 무엇을 하시겠습니까?',
+            newStudent: '새 학생 기록',
+            followStudents: '학생 따라가기',
+            uploadParents: '학부모용 업로드',
+            helpSupport: '도움말 및 지원',
+            footer: '© 2026 Sama - 모든 권리 보유'
+        },
+        ja: {
+            greeting: 'こんにちは、',
+            question: '今日は何をしますか？',
+            newStudent: '新しい生徒記録',
+            followStudents: '生徒をフォロー',
+            uploadParents: '保護者用アップロード',
+            helpSupport: 'ヘルプ＆サポート',
+            footer: '© 2026 Sama - 全著作権所有'
+        },
+        hi: {
+            greeting: 'नमस्ते,',
+            question: 'आज आप क्या करना चाहेंगी?',
+            newStudent: 'नया छात्र रिकॉर्ड',
+            followStudents: 'छात्रों को फॉलो करें',
+            uploadParents: 'अभिभावकों के लिए',
+            helpSupport: 'सहायता और समर्थन',
+            footer: '© 2026 Sama - सभी अधिकार सुरक्षित'
+        },
+        fil: {
+            greeting: 'Kumusta,',
+            question: 'Ano ang gusto mong gawin?',
+            newStudent: 'Bagong Record',
+            followStudents: 'Subaybayan',
+            uploadParents: 'I-upload para sa Parents',
+            helpSupport: 'Tulong at Suporta',
+            footer: '© 2026 Sama - Lahat ng Karapatan ay Nakalaan'
+        },
+        zh: {
+            greeting: '您好，',
+            question: '今天您想做什么？',
+            newStudent: '新学生记录',
+            followStudents: '跟进学生',
+            uploadParents: '为家长上传',
+            helpSupport: '帮助与支持',
+            footer: '© 2026 Sama - 版权所有'
+        }
+    };
+    
+    const flags = {
+        ar: '🇸🇦', en: '🇬🇧', tr: '🇹🇷', es: '🇪🇸',
+        ko: '🇰🇷', ja: '🇯🇵', hi: '🇮🇳', fil: '🇵🇭', zh: '🇨🇳'
+    };
+    
+    // دالة الترجمة الرئيسية
+    function applyTranslation(lang) {
+        console.log('🔄 تطبيق اللغة:', lang);
+        
+        const t = translations[lang];
+        if (!t) {
+            console.error('❌ اللغة غير موجودة:', lang);
+            return;
+        }
+        
+        const teacherName = localStorage.getItem('sama-teacher') || 'معلمة';
+        
+        // تحديث كل عنصر على حدة
+        const greetingEl = document.getElementById('teacher-greeting');
+        if (greetingEl && t.greeting) {
+            greetingEl.textContent = t.greeting + ' ' + teacherName + ' 👋';
+            console.log('✓ تم تحديث الترحيب');
+        }
+        
+        const questionEl = document.getElementById('question');
+        if (questionEl && t.question) {
+            questionEl.textContent = t.question;
+            console.log('✓ تم تحديث السؤال');
+        }
+        
+        const newStudentEl = document.getElementById('newStudent');
+        if (newStudentEl && t.newStudent) {
+            newStudentEl.textContent = t.newStudent;
+            console.log('✓ تم تحديث إنشاء طالب');
+        }
+        
+        const followEl = document.getElementById('followStudents');
+        if (followEl && t.followStudents) {
+            followEl.textContent = t.followStudents;
+            console.log('✓ تم تحديث متابعة الطلاب');
+        }
+        
+        const uploadEl = document.getElementById('uploadParents');
+        if (uploadEl && t.uploadParents) {
+            uploadEl.textContent = t.uploadParents;
+            console.log('✓ تم تحديث رفع لأولياء الأمور');
+        }
+        
+        const helpEl = document.getElementById('helpSupport');
+        if (helpEl && t.helpSupport) {
+            helpEl.textContent = t.helpSupport;
+            console.log('✓ تم تحديث المساعدة');
+        }
+        
+        const footerEl = document.getElementById('footer-text');
+        if (footerEl && t.footer) {
+            footerEl.textContent = t.footer;
+            console.log('✓ تم تحديث الفوتر');
+        }
+        
+        // تحديث الاتجاه
+        document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+        document.documentElement.lang = lang;
+        
+        console.log('✅ تمت الترجمة بنجاح!');
+    }
+    
+    // زر اللغة
     if (langBtn) {
         langBtn.textContent = flags[currentLang] || '🇸🇦';
         langBtn.style.cursor = 'pointer';
         
-        // تطبيق الترجمة فوراً
-        setTimeout(() => translatePage(currentLang), 100);
-        setTimeout(() => translatePage(currentLang), 500); // محاولة ثانية للتأكد
-
         langBtn.addEventListener('click', (e) => {
-            e.preventDefault(); e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('🌐 نقر على زر اللغة');
             
             const langs = [
-                {code: 'ar', name: 'العربية', flag: '🇸🇦'}, {code: 'en', name: 'English', flag: '🇬'},
-                {code: 'tr', name: 'Türkçe', flag: '🇹🇷'}, {code: 'es', name: 'Español', flag: '🇪🇸'},
-                {code: 'ko', name: '한국어', flag: '🇰🇷'}, {code: 'ja', name: '日本語', flag: '🇯🇵'},
-                {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'}, {code: 'fil', name: 'Filipino', flag: '🇵🇭'},
+                {code: 'ar', name: 'العربية', flag: '🇸🇦'},
+                {code: 'en', name: 'English', flag: '🇬🇧'},
+                {code: 'tr', name: 'Türkçe', flag: '🇹🇷'},
+                {code: 'es', name: 'Español', flag: '🇪'},
+                {code: 'ko', name: '한국어', flag: '🇰🇷'},
+                {code: 'ja', name: '日本語', flag: '🇯'},
+                {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'},
+                {code: 'fil', name: 'Filipino', flag: '🇵🇭'},
                 {code: 'zh', name: '中文', flag: '🇨'}
             ];
-
+            
+            // إزالة أي قائمة موجودة
             const existingMenu = document.querySelector('.lang-menu');
-            if (existingMenu) { existingMenu.remove(); return; }
-
+            if (existingMenu) {
+                existingMenu.remove();
+                return;
+            }
+            
+            // إنشاء القائمة
             const menu = document.createElement('div');
             menu.className = 'lang-menu';
-            menu.style.cssText = `position: absolute; top: 100%; right: 0; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); padding: 10px; min-width: 180px; z-index: 10000; margin-top: 5px; border: 2px solid #1F6F6F;`;
+            menu.style.cssText = `
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+                padding: 10px;
+                min-width: 180px;
+                z-index: 10000;
+                margin-top: 5px;
+                border: 2px solid #1F6F6F;
+            `;
+            
             langs.forEach(l => {
                 const btn = document.createElement('button');
                 btn.textContent = l.flag + '  ' + l.name;
-                btn.style.cssText = `width: 100%; padding: 10px 15px; margin: 3px 0; border: none; background: transparent; border-radius: 5px; cursor: pointer; text-align: right; font-family: 'Tajawal', sans-serif; font-size: 14px; transition: all 0.2s; display: flex; align-items: center; gap: 10px;`;
-                btn.onmouseover = () => { btn.style.background = '#1F6F6F'; btn.style.color = 'white'; };
-                btn.onmouseout = () => { btn.style.background = 'transparent'; btn.style.color = 'inherit'; };
-                btn.onclick = (ev) => {
-                    ev.preventDefault(); ev.stopPropagation();
+                btn.style.cssText = `
+                    width: 100%;
+                    padding: 10px 15px;
+                    margin: 3px 0;
+                    border: none;
+                    background: transparent;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    text-align: right;
+                    font-family: 'Tajawal', sans-serif;
+                    font-size: 14px;
+                    transition: all 0.2s;
+                `;
+                
+                btn.onmouseover = () => {
+                    btn.style.background = '#1F6F6F';
+                    btn.style.color = 'white';
+                };
+                btn.onmouseout = () => {
+                    btn.style.background = 'transparent';
+                    btn.style.color = 'inherit';
+                };
+                
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    console.log('✅ اختيار اللغة:', l.name);
                     currentLang = l.code;
                     localStorage.setItem('sama-lang', currentLang);
                     langBtn.textContent = l.flag;
                     menu.remove();
-                    translatePage(currentLang);
+                    applyTranslation(currentLang);
                 };
+                
                 menu.appendChild(btn);
             });
-
-            if (langBtn.parentElement) {
-                langBtn.parentElement.style.position = 'relative';
-                langBtn.parentElement.appendChild(menu);
-            }
+            
+            langBtn.parentElement.style.position = 'relative';
+            langBtn.parentElement.appendChild(menu);
+            console.log('📋 القائمة ظهرت');
         });
+        
+        // تطبيق الترجمة عند التحميل
+        setTimeout(() => {
+            applyTranslation(currentLang);
+        }, 100);
     }
-
-    // اسم المعلمة
+    
+    // ========== 3. اسم المعلمة ==========
     let teacherName = localStorage.getItem('sama-teacher');
     if (!teacherName) {
         teacherName = prompt('👋 أهلاً بكِ في سما!\n\nالرجاء إدخال اسم المعلمة:') || 'معلمة';
         localStorage.setItem('sama-teacher', teacherName.trim());
     }
-    const greetingEl = document.getElementById('teacher-greeting') || document.getElementById('greeting');
-    if (greetingEl) greetingEl.textContent = `أهلاً، ${teacherName} 👋`;
-
+    
+    const greetingEl = document.getElementById('teacher-greeting');
+    if (greetingEl) {
+        greetingEl.textContent = `أهلاً، ${teacherName} 👋`;
+    }
+    
     const accountBtn = document.getElementById('account-btn');
     if (accountBtn) {
         accountBtn.addEventListener('click', () => {
@@ -430,8 +296,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (newName && newName.trim()) {
                 teacherName = newName.trim();
                 localStorage.setItem('sama-teacher', teacherName);
-                if (greetingEl) greetingEl.textContent = `أهلاً، ${teacherName} 👋`;
+                if (greetingEl) {
+                    greetingEl.textContent = `أهلاً، ${teacherName} 👋`;
+                }
             }
         });
     }
+    
+    console.log('=== سما جاهز تماماً ===');
 });
