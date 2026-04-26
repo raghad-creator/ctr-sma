@@ -18,20 +18,17 @@
         <div class="controls">
             <button id="theme-toggle" class="control-btn"><i class="fas fa-moon"></i></button>
             <a href="index.html" class="control-btn"><i class="fas fa-home"></i></a>
-            <!-- زر اللغة هنا -->
-            <button id="lang-toggle" class="control-btn">🇸</button>
+            <button id="lang-toggle" class="control-btn">🇸🇦</button>
         </div>
     </header>
 
     <main class="help-container">
         <div class="help-header">
-            <!-- أضفنا id هنا للترجمة -->
             <h1 id="help-title"><i class="fas fa-headset"></i> المساعدة والدعم الفني</h1>
             <p id="help-desc">دليلك الشامل لاستخدام نظام سجلات الطلاب</p>
         </div>
 
         <div class="faq-section">
-            <!-- أضفنا id هنا للترجمة -->
             <h2 class="faq-title" id="faq-title"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</h2>
             
             <div class="accordion">
@@ -42,14 +39,15 @@
                         <span class="question-text" id="q1">كيف أضيف طالب جديد؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
-                    <div class="accordion-content">
+                    <!-- أضفنا id="a1" هنا -->
+                    <div class="accordion-content" id="a1">
                         <ol>
                             <li>انتقل إلى القائمة الرئيسية واختر <strong>"طالب جديد"</strong></li>
                             <li>املأ جميع الحقول المطلوبة:
                                 <ul>
-                                    <li>اسم الطالب الرباعي</li>                                    <li>رقم الهوية الوطنية</li>
-                                    <li>رقم جوال ولي الأمر</li>
-                                    <li>البريد الإلكتروني</li>
+                                    <li>اسم الطالب الرباعي</li>
+                                    <li>رقم الهوية الوطنية</li>
+                                    <li>رقم جوال ولي الأمر</li>                                    <li>البريد الإلكتروني</li>
                                 </ul>
                             </li>
                             <li>ثم اضغط على زر <strong>"حفظ"</strong> لإتمام العملية</li>
@@ -64,7 +62,8 @@
                         <span class="question-text" id="q2">كيف أعدل بيانات طالب؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
-                    <div class="accordion-content">
+                    <!-- أضفنا id="a2" هنا -->
+                    <div class="accordion-content" id="a2">
                         <p>اتبع الخطوات التالية:</p>
                         <ol>
                             <li>اذهب إلى صفحة <strong>"الطلاب"</strong> من القائمة الرئيسية</li>
@@ -83,7 +82,8 @@
                         <span class="question-text" id="q3">كيف أطبع تقرير الطالب؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
-                    <div class="accordion-content">
+                    <!-- أضفنا id="a3" هنا -->
+                    <div class="accordion-content" id="a3">
                         <ol>
                             <li>من صفحة <strong>"سجل الطالب"</strong></li>
                             <li>اضغط على زر <strong>"طباعة"</strong> في الزاوية العلوية</li>
@@ -99,7 +99,8 @@
                         <span class="question-icon"><i class="fas fa-users"></i></span>                        <span class="question-text" id="q4">كيف أضيف ولي أمر جديد؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
-                    <div class="accordion-content">
+                    <!-- أضفنا id="a4" هنا -->
+                    <div class="accordion-content" id="a4">
                         <p>انتقل إلى صفحة <strong>"أولياء الأمور"</strong> واضغط على زر <strong>"إضافة ولي أمر"</strong>. أدخل البيانات التالية:</p>
                         <ul>
                             <li>الاسم الكامل</li>
@@ -118,7 +119,8 @@
                         <span class="question-text" id="q5">كيف أدخل التقييمات والمهارات؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
-                    <div class="accordion-content">
+                    <!-- أضفنا id="a5" هنا -->
+                    <div class="accordion-content" id="a5">
                         <ol>
                             <li>من سجل الطالب:</li>
                             <li>انتقل إلى تبويب <strong>"المهارات"</strong> أو <strong>"التقييمات"</strong></li>
@@ -131,31 +133,20 @@
             </div>
         </div>
 
-        <!-- قسم التواصل -->
         <div class="contact-section">
             <h2 id="contact-title"><i class="fas fa-envelope"></i> تواصل معنا</h2>
             <p id="contact-desc">إذا لم تجد إجابة لسؤالك، لا تتردد في التواصل معنا:</p>
             <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <a href="tel:0551764832" class="contact-link">0551764832</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:raa7240@gmail.com" class="contact-link">raa7240@gmail.com</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-clock"></i>                    <span id="work-hours">ساعات العمل: الأحد - الخميس 8 ص - 4 م</span>
-                </div>
+                <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:0551764832" class="contact-link">0551764832</a></div>
+                <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:raa7240@gmail.com" class="contact-link">raa7240@gmail.com</a></div>
+                <div class="contact-item"><i class="fas fa-clock"></i><span id="work-hours">ساعات العمل: الأحد - الخميس 8 ص - 4 م</span></div>
             </div>
         </div>
     </main>
 
     <footer class="main-footer">
-        <p id="footer-text">© 2026 سما - جميع الحقوق محفوظة</p>
-    </footer>
+        <p id="footer-text">© 2026 سما - جميع الحقوق محفوظة</p>    </footer>
 
-    <!-- نربط ملف script.js الموحد هنا -->
     <script src="script.js"></script>
 </body>
 </html>
