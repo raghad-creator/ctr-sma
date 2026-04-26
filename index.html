@@ -4,74 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سما | سجل متابعة الطالب</title>
-    <meta name="description" content="سما - نظام إلكتروني منظم لمتابعة سجلات الطلاب">
-    
-    <!-- أيقونة الموقع -->
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
-    
-    <!-- الخطوط والأيقونات -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ملف التنسيقات -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- الهيدر الرئيسي -->
     <header class="main-header">
         <div class="logo-container">
             <img src="logo.png" alt="شعار سما" class="site-logo">
         </div>
-        
         <div class="controls">
-            <button id="theme-toggle" class="control-btn" aria-label="تبديل الوضع الليلي/النهاري">
+            <button id="theme-toggle" class="control-btn">
                 <i class="fas fa-moon"></i>
             </button>
-            <button id="lang-toggle" class="control-btn" aria-label="تغيير اللغة">
-                🇸🇦
-            </button>
-            <button id="account-btn" class="control-btn" aria-label="إدارة الحساب">
+            <button id="lang-toggle" class="control-btn">🇸🇦</button>
+            <button id="account-btn" class="control-btn">
                 <i class="fas fa-user-cog"></i>
             </button>
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
     <main class="welcome-container">
         <div class="welcome-box">
-            <h2 id="teacher-greeting">أهلاً، معلمة... 👋</h2>
-            <p class="question">ماذا تريد أن تفعل اليوم؟</p>
+            <h2 id="greeting">أهلاً، معلمة... 👋</h2>
+            <p id="question">ماذا تريد أن تفعل اليوم؟</p>
             
             <div class="options-grid">
                 <a href="new-student.html" class="option-card">
                     <i class="fas fa-user-plus"></i>
-                    <span data-key="newStudent">إنشاء سجل لطالب جديد</span>
+                    <span id="opt1">إنشاء سجل لطالب جديد</span>
                 </a>
                 <a href="students.html" class="option-card">
                     <i class="fas fa-clipboard-list"></i>
-                    <span data-key="followStudents">متابعة سجل طلابي</span>
+                    <span id="opt2">متابعة سجل طلابي</span>
                 </a>
                 <a href="parents.html" class="option-card">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <span data-key="uploadParents">رفع لأولياء الأمور</span>
+                    <span id="opt3">رفع لأولياء الأمور</span>
                 </a>
                 <a href="help.html" class="option-card">
                     <i class="fas fa-headset"></i>
-                    <span data-key="helpSupport">المساعدة والدعم</span>
+                    <span id="opt4">المساعدة والدعم</span>
                 </a>
             </div>
         </div>
     </main>
 
-    <!-- الفوتر -->
     <footer class="main-footer">
-        <p>© 2026 سما - جميع الحقوق محفوظة | تطوير خاص للمعلمات</p>
+        <p id="footer">© 2026 سما - جميع الحقوق محفوظة</p>
     </footer>
 
-    <!-- ملفات الجافاسكربت -->
     <script src="translation.js"></script>
     <script src="script.js"></script>
 </body>
