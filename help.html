@@ -13,7 +13,7 @@
 <body>
     <header class="main-header">
         <div class="logo-container">
-<img src="logo.png" alt="شعار سما" class="site-logo">
+            <img src="logo.png" alt="شعار سما" class="site-logo">
         </div>
         <div class="controls">
             <button id="theme-toggle" class="control-btn">
@@ -35,7 +35,6 @@
             <h2 class="faq-title"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</h2>
             
             <div class="accordion">
-                <!-- السؤال 1 -->
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <span class="question-icon"><i class="fas fa-user-plus"></i></span>
@@ -47,7 +46,8 @@
                             <li>انتقل إلى القائمة الرئيسية واختر <strong>"طالب جديد"</strong></li>
                             <li>املأ جميع الحقول المطلوبة:
                                 <ul>
-                                    <li>اسم الطالب الرباعي</li>                                    <li>رقم الهوية الوطنية</li>
+                                    <li>اسم الطالب الرباعي</li>
+                                    <li>رقم الهوية الوطنية</li>
                                     <li>رقم جوال ولي الأمر</li>
                                     <li>البريد الإلكتروني</li>
                                 </ul>
@@ -57,7 +57,6 @@
                     </div>
                 </div>
 
-                <!-- السؤال 2 -->
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <span class="question-icon"><i class="fas fa-edit"></i></span>
@@ -76,7 +75,6 @@
                     </div>
                 </div>
 
-                <!-- السؤال 3 -->
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <span class="question-icon"><i class="fas fa-print"></i></span>
@@ -93,10 +91,10 @@
                     </div>
                 </div>
 
-                <!-- السؤال 4 -->
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
-                        <span class="question-icon"><i class="fas fa-users"></i></span>                        <span class="question-text">كيف أضيف ولي أمر جديد؟</span>
+                        <span class="question-icon"><i class="fas fa-users"></i></span>
+                        <span class="question-text">كيف أضيف ولي أمر جديد؟</span>
                         <i class="fas fa-chevron-down accordion-icon"></i>
                     </button>
                     <div class="accordion-content">
@@ -111,7 +109,6 @@
                     </div>
                 </div>
 
-                <!-- السؤال 5 -->
                 <div class="accordion-item">
                     <button class="accordion-header" onclick="toggleAccordion(this)">
                         <span class="question-icon"><i class="fas fa-clipboard-check"></i></span>
@@ -131,7 +128,7 @@
             </div>
         </div>
 
-        <!-- ✅ قسم التواصل المحدث -->
+        <!-- قسم التواصل مرة واحدة فقط -->
         <div class="contact-section">
             <h2><i class="fas fa-envelope"></i> تواصل معنا</h2>
             <p>إذا لم تجد إجابة لسؤالك، لا تتردد في التواصل معنا:</p>
@@ -145,96 +142,9 @@
                     <a href="mailto:raa7240@gmail.com" class="contact-link">raa7240@gmail.com</a>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-clock"></i>                    <span>ساعات العمل: الأحد - الخميس 8 ص - 4 م</span>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="main-footer">
-        <p>© 2026 سما - جميع الحقوق محفوظة</p>
-    </footer>
-
-    <script src="script.js"></script>
-    <script src="help.js"></script>
-</body>
-</html>                            <li>اضغط على اسم الطالب لفتح سجله</li>
-                            <li>اضغط على زر <strong>"تعديل"</strong> في أعلى الصفحة</li>
-                            <li>قم بالتعديلات المطلوبة ثم اضغط <strong>"حفظ التغييرات"</strong></li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- السؤال 3 -->
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        <span class="question-icon"><i class="fas fa-print"></i></span>
-                        <span class="question-text">كيف أطبع تقرير الطالب؟</span>
-                        <i class="fas fa-chevron-down accordion-icon"></i>
-                    </button>
-                    <div class="accordion-content">
-                        <ol>
-                            <li>من صفحة <strong>"سجل الطالب"</strong></li>
-                            <li>اضغط على زر <strong>"طباعة"</strong> في الزاوية العلوية</li>
-                            <li>ستفتح نافذة الطباعة تلقائياً</li>
-                            <li>اختر الطابعة واضغط <strong>"طباعة"</strong></li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- السؤال 4 -->
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        <span class="question-icon"><i class="fas fa-users"></i></span>                        <span class="question-text">كيف أضيف ولي أمر جديد؟</span>
-                        <i class="fas fa-chevron-down accordion-icon"></i>
-                    </button>
-                    <div class="accordion-content">
-                        <p>انتقل إلى صفحة <strong>"أولياء الأمور"</strong> واضغط على زر <strong>"إضافة ولي أمر"</strong>. أدخل البيانات التالية:</p>
-                        <ul>
-                            <li>الاسم الكامل</li>
-                            <li>رقم الهوية</li>
-                            <li>رقم الجوال</li>
-                            <li>البريد الإلكتروني</li>
-                        </ul>
-                        <p>ثم اربطه بأبنائه الطلاب واضغط <strong>"حفظ"</strong>.</p>
-                    </div>
-                </div>
-
-                <!-- السؤال 5 -->
-                <div class="accordion-item">
-                    <button class="accordion-header" onclick="toggleAccordion(this)">
-                        <span class="question-icon"><i class="fas fa-clipboard-check"></i></span>
-                        <span class="question-text">كيف أدخل التقييمات والمهارات؟</span>
-                        <i class="fas fa-chevron-down accordion-icon"></i>
-                    </button>
-                    <div class="accordion-content">
-                        <ol>
-                            <li>من سجل الطالب:</li>
-                            <li>انتقل إلى تبويب <strong>"المهارات"</strong> أو <strong>"التقييمات"</strong></li>
-                            <li>اختر المهارة أو التقييم المطلوب</li>
-                            <li>أدخل الدرجة أو الملاحظة</li>
-                            <li>اضغط <strong>"حفظ"</strong></li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-section">
-            <h2><i class="fas fa-envelope"></i> تواصل معنا</h2>
-            <p>إذا لم تجد إجابة لسؤالك، لا تتردد في التواصل معنا:</p>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>الدعم الفني: 0551764832</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>البريد الإلكتروني: raa7240@gmail.com</span>
-                </div>
-                <div class="contact-item">
                     <i class="fas fa-clock"></i>
-                    <span>ساعات العمل: الأحد - الخميس 8 ص - 4 م</span>                </div>
+                    <span>ساعات العمل: الأحد - الخميس 8 ص - 4 م</span>
+                </div>
             </div>
         </div>
     </main>
@@ -243,7 +153,6 @@
         <p>© 2026 سما - جميع الحقوق محفوظة</p>
     </footer>
 
-    <script src="script.js"></script>
     <script src="help.js"></script>
 </body>
 </html>
