@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     console.log('=== سما بدأ التحميل ===');
     
     // ========== 1. الوضع الليلي ==========
@@ -6,21 +6,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeBtn) {
         const savedTheme = localStorage.getItem('sama-theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
         
-        themeBtn.addEventListener('click', () => {
-            const next = savedTheme === 'light' ? 'dark' : 'light';
+        const icon = themeBtn.querySelector('i');
+        if (icon) {
+            icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        themeBtn.addEventListener('click', function() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('sama-theme', next);
-            updateThemeIcon(next);
-        });
-        
-        function updateThemeIcon(theme) {
-            const icon = themeBtn.querySelector('i');
-            if (icon) {
-                icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            
+            const ic = this.querySelector('i');
+            if (ic) {
+                ic.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
             }
-        }
+        });
     }
     
     // ========== 2. اللغة ==========
@@ -116,131 +118,93 @@ document.addEventListener('DOMContentLoaded', () => {
         ko: '🇰🇷', ja: '🇯🇵', hi: '🇮🇳', fil: '🇵🇭', zh: '🇨🇳'
     };
     
-    // دالة الترجمة الرئيسية
-    function applyTranslation(lang) {
-        console.log('🔄 تطبيق اللغة:', lang);
+    // دالة الترجمة
+    function translatePage(lang) {
+        console.log('🔄 الترجمة إلى:', lang);
         
         const t = translations[lang];
         if (!t) {
-            console.error('❌ اللغة غير موجودة:', lang);
+            console.error('❌ اللغة غير موجودة');
             return;
         }
         
         const teacherName = localStorage.getItem('sama-teacher') || 'معلمة';
         
-        // تحديث كل عنصر على حدة
-        const greetingEl = document.getElementById('teacher-greeting');
-        if (greetingEl && t.greeting) {
-            greetingEl.textContent = t.greeting + ' ' + teacherName + ' 👋';
-            console.log('✓ تم تحديث الترحيب');
+        // العناصر
+        const elements = {
+            'teacher-greeting': t.greeting + ' ' + teacherName + ' 👋',
+            'question': t.question,
+            'newStudent': t.newStudent,
+            'followStudents': t.followStudents,
+            'uploadParents': t.uploadParents,
+            'helpSupport': t.helpSupport,
+            'footer-text': t.footer
+        };
+        
+        // التطبيق
+        let count = 0;
+        for (const [id, text] of Object.entries(elements)) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = text;
+                count++;
+                console.log('✓', id);
+            } else {
+                console.log('✗ لم يوجد:', id);
+            }
         }
         
-        const questionEl = document.getElementById('question');
-        if (questionEl && t.question) {
-            questionEl.textContent = t.question;
-            console.log('✓ تم تحديث السؤال');
-        }
+        console.log('✅ تم تحديث', count, 'عنصر');
         
-        const newStudentEl = document.getElementById('newStudent');
-        if (newStudentEl && t.newStudent) {
-            newStudentEl.textContent = t.newStudent;
-            console.log('✓ تم تحديث إنشاء طالب');
-        }
-        
-        const followEl = document.getElementById('followStudents');
-        if (followEl && t.followStudents) {
-            followEl.textContent = t.followStudents;
-            console.log('✓ تم تحديث متابعة الطلاب');
-        }
-        
-        const uploadEl = document.getElementById('uploadParents');
-        if (uploadEl && t.uploadParents) {
-            uploadEl.textContent = t.uploadParents;
-            console.log('✓ تم تحديث رفع لأولياء الأمور');
-        }
-        
-        const helpEl = document.getElementById('helpSupport');
-        if (helpEl && t.helpSupport) {
-            helpEl.textContent = t.helpSupport;
-            console.log('✓ تم تحديث المساعدة');
-        }
-        
-        const footerEl = document.getElementById('footer-text');
-        if (footerEl && t.footer) {
-            footerEl.textContent = t.footer;
-            console.log('✓ تم تحديث الفوتر');
-        }
-        
-        // تحديث الاتجاه
+        // الاتجاه
         document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
         document.documentElement.lang = lang;
-        
-        console.log('✅ تمت الترجمة بنجاح!');
     }
     
     // زر اللغة
     if (langBtn) {
-        langBtn.textContent = flags[currentLang] || '🇸🇦';
+        // تعيين العلم
+        langBtn.textContent = flags[currentLang] || '🇸';
         langBtn.style.cursor = 'pointer';
+        langBtn.style.fontSize = '20px';
         
-        langBtn.addEventListener('click', (e) => {
+        // التطبيق الأولي
+        setTimeout(() => translatePage(currentLang), 200);
+        
+        // النقر
+        langBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('🌐 نقر على زر اللغة');
+            console.log(' نقر على اللغة');
             
             const langs = [
                 {code: 'ar', name: 'العربية', flag: '🇸🇦'},
                 {code: 'en', name: 'English', flag: '🇬🇧'},
-                {code: 'tr', name: 'Türkçe', flag: '🇹🇷'},
-                {code: 'es', name: 'Español', flag: '🇪'},
+                {code: 'tr', name: 'Türkçe', flag: '🇹'},
+                {code: 'es', name: 'Español', flag: '🇪🇸'},
                 {code: 'ko', name: '한국어', flag: '🇰🇷'},
                 {code: 'ja', name: '日本語', flag: '🇯'},
                 {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'},
                 {code: 'fil', name: 'Filipino', flag: '🇵🇭'},
-                {code: 'zh', name: '中文', flag: '🇨'}
+                {code: 'zh', name: '中文', flag: '🇨🇳'}
             ];
             
-            // إزالة أي قائمة موجودة
-            const existingMenu = document.querySelector('.lang-menu');
-            if (existingMenu) {
-                existingMenu.remove();
-                return;
+            // إزالة القائمة القديمة
+            const oldMenu = document.querySelector('.lang-dropdown');
+            if (oldMenu) {
+                oldMenu.remove();
             }
             
             // إنشاء القائمة
             const menu = document.createElement('div');
-            menu.className = 'lang-menu';
-            menu.style.cssText = `
-                position: absolute;
-                top: 100%;
-                right: 0;
-                background: white;
-                border-radius: 10px;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-                padding: 10px;
-                min-width: 180px;
-                z-index: 10000;
-                margin-top: 5px;
-                border: 2px solid #1F6F6F;
-            `;
+            menu.className = 'lang-dropdown';
+            menu.style.cssText = 'position:absolute;top:100%;right:0;background:white;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.3);padding:10px;min-width:180px;z-index:9999;margin-top:5px;border:2px solid #1F6F6F;';
             
             langs.forEach(l => {
                 const btn = document.createElement('button');
                 btn.textContent = l.flag + '  ' + l.name;
-                btn.style.cssText = `
-                    width: 100%;
-                    padding: 10px 15px;
-                    margin: 3px 0;
-                    border: none;
-                    background: transparent;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    text-align: right;
-                    font-family: 'Tajawal', sans-serif;
-                    font-size: 14px;
-                    transition: all 0.2s;
-                `;
+                btn.style.cssText = 'width:100%;padding:10px 15px;margin:3px 0;border:none;background:transparent;border-radius:5px;cursor:pointer;text-align:right;font-family:Tajawal,sans-serif;font-size:14px;transition:all 0.2s;';
                 
                 btn.onmouseover = () => {
                     btn.style.background = '#1F6F6F';
@@ -251,30 +215,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.style.color = 'inherit';
                 };
                 
-                btn.onclick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
+                btn.onclick = function(ev) {
+                    ev.preventDefault();
+                    ev.stopPropagation();
                     
-                    console.log('✅ اختيار اللغة:', l.name);
+                    console.log('✅ اختيار:', l.name);
                     currentLang = l.code;
                     localStorage.setItem('sama-lang', currentLang);
                     langBtn.textContent = l.flag;
                     menu.remove();
-                    applyTranslation(currentLang);
+                    translatePage(currentLang);
                 };
                 
                 menu.appendChild(btn);
             });
             
-            langBtn.parentElement.style.position = 'relative';
-            langBtn.parentElement.appendChild(menu);
+            // إضافة القائمة
+            this.parentElement.style.position = 'relative';
+            this.parentElement.appendChild(menu);
             console.log('📋 القائمة ظهرت');
         });
-        
-        // تطبيق الترجمة عند التحميل
-        setTimeout(() => {
-            applyTranslation(currentLang);
-        }, 100);
     }
     
     // ========== 3. اسم المعلمة ==========
@@ -303,5 +263,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    console.log('=== سما جاهز تماماً ===');
+    console.log('=== سما جاهز ===');
 });
