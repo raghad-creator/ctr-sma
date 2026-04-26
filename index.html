@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="pageTitleMain">سما | سجل متابعة الطالب</title>
+    <title>سما | سجل متابعة الطالب</title>
     <meta name="description" content="سما - نظام إلكتروني منظم لمتابعة سجلات الطلاب">
     
     <!-- أيقونة الموقع -->
@@ -19,21 +19,21 @@
     <!-- ملف التنسيقات -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body data-page="Main">
+<body>
     <!-- الهيدر الرئيسي -->
     <header class="main-header">
         <div class="logo-container">
-            <img src="logo.png" alt="شعار سما" class="site-logo" data-translate="siteLogoAlt">
+            <img src="logo.png" alt="شعار سما" class="site-logo">
         </div>
         
         <div class="controls">
-            <button id="theme-toggle" class="control-btn" data-translate="toggleTheme" aria-label="تبديل الوضع الليلي/النهاري">
+            <button id="theme-toggle" class="control-btn" aria-label="تبديل الوضع الليلي/النهاري">
                 <i class="fas fa-moon"></i>
             </button>
-            <button id="lang-toggle" class="control-btn" data-translate="toggleLang" aria-label="تغيير اللغة">
+            <button id="lang-toggle" class="control-btn" aria-label="تغيير اللغة">
                 🇸🇦
             </button>
-            <button id="account-btn" class="control-btn" data-translate="manageAccount" aria-label="إدارة الحساب">
+            <button id="account-btn" class="control-btn" aria-label="إدارة الحساب">
                 <i class="fas fa-user-cog"></i>
             </button>
         </div>
@@ -42,25 +42,25 @@
     <!-- المحتوى الرئيسي -->
     <main class="welcome-container">
         <div class="welcome-box">
-            <h2 id="teacher-greeting" data-translate="greeting">أهلاً، معلمة...</h2>
-            <p class="question" data-translate="question">ماذا تريد أن تفعل اليوم؟</p>
+            <h2 id="teacher-greeting">أهلاً، معلمة... 👋</h2>
+            <p class="question">ماذا تريد أن تفعل اليوم؟</p>
             
             <div class="options-grid">
                 <a href="new-student.html" class="option-card">
                     <i class="fas fa-user-plus"></i>
-                    <span data-translate="newStudent">إنشاء سجل لطالب جديد</span>
+                    <span data-key="newStudent">إنشاء سجل لطالب جديد</span>
                 </a>
                 <a href="students.html" class="option-card">
                     <i class="fas fa-clipboard-list"></i>
-                    <span data-translate="followStudents">متابعة سجل طلابي</span>
+                    <span data-key="followStudents">متابعة سجل طلابي</span>
                 </a>
                 <a href="parents.html" class="option-card">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <span data-translate="uploadParents">رفع لأولياء الأمور</span>
+                    <span data-key="uploadParents">رفع لأولياء الأمور</span>
                 </a>
                 <a href="help.html" class="option-card">
                     <i class="fas fa-headset"></i>
-                    <span data-translate="helpSupport">المساعدة والدعم</span>
+                    <span data-key="helpSupport">المساعدة والدعم</span>
                 </a>
             </div>
         </div>
@@ -68,11 +68,11 @@
 
     <!-- الفوتر -->
     <footer class="main-footer">
-        <p data-translate="footer">© 2026 سما - جميع الحقوق محفوظة | تطوير خاص للمعلمات</p>
+        <p>© 2026 سما - جميع الحقوق محفوظة | تطوير خاص للمعلمات</p>
     </footer>
 
-    <!-- ملفات الجافاسكربت (الترتيب مهم!) -->
-    <script src="translations.js"></script>
+    <!-- ملفات الجافاسكربت -->
+    <script src="translation.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
