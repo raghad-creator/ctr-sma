@@ -3,221 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة أولياء الأمور - سجل متابعة الطلاب</title>
+    <title>إدارة أولياء الأمور | سما</title>
+    <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* أنماط خاصة بصفحة أولياء الأمور */
+        .parents-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
         .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
-
+        
+        .page-header h2 {
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.8rem;
+        }
+        
         .search-bar {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
         }
-
-        .search-bar input, .search-bar select {
+        
+        .search-bar input,
+        .search-bar select {
             padding: 0.75rem 1rem;
             border: 2px solid var(--border-color, #e0e0e0);
             border-radius: 8px;
             font-size: 1rem;
-            flex: 1;
-            min-width: 200px;
-            background: var(--bg-card, #fff);
-            color: var(--text-color, #333);
+            background: var(--card-bg, #fff);
+            color: var(--text, #333);
+            font-family: 'Tajawal', sans-serif;
         }
-
+        
+        .search-bar input {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .search-bar select {
+            min-width: 180px;
+        }
+        
         .parents-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
         }
-
+        
         .parent-card {
-            background: var(--bg-card, #fff);
+            background: var(--card-bg, #fff);
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            border-top: 4px solid var(--primary-color, #0F4C4C);
+            box-shadow: 0 4px 12px var(--shadow);
+            border-top: 4px solid var(--primary-mid, #1F6F6F);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
+        
         .parent-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 25px var(--shadow);
         }
-
+        
         .parent-header {
             display: flex;
             align-items: center;
             gap: 1rem;
             margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color, #e0e0e0);
         }
-
+        
         .parent-avatar {
-            width: 50px;
-            height: 50px;
-            background: var(--secondary-color, #C9A24A);
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
+            font-size: 1.5rem;
+        }
+        
+        .parent-info h4 {
+            margin: 0 0 0.25rem 0;
+            color: var(--primary-dark);
             font-size: 1.2rem;
         }
-
-        .parent-info h4 { margin: 0; color: var(--text-color, #333); }
-        .linked-student { margin: 0.25rem 0 0; color: var(--text-light, #666); font-size: 0.9rem; }
-        .linked-student span { color: var(--primary-color, #0F4C4C); font-weight: bold; }
-
+        
+        .linked-student {
+            margin: 0;
+            color: var(--text-light, #666);
+            font-size: 0.9rem;
+        }
+        
+        .linked-student span {
+            color: var(--primary-mid);
+            font-weight: 600;
+        }
+        
         .parent-contact {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: var(--text-light, #666);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
         }
-
+        
+        .parent-contact span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text, #333);
+        }
+        
+        .parent-contact i {
+            color: var(--primary-mid);
+            width: 20px;
+        }
+        
         .parent-actions {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
         }
-
-        .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
-
-        /* Modal Styles */
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-mid), var(--primary-dark));
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        .btn-secondary {
+            background: var(--primary-light);
+            color: #fff;
+            flex: 1;
+        }
+        
+        .btn-warning {
+            background: var(--gold);
+            color: #fff;
+            flex: 1;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: #fff;
+            flex: 1;
+        }
+        
+        .btn-sm {
+            padding: 0.5rem 0.9rem;
+            font-size: 0.85rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 5rem;
+            color: var(--primary-light);
+            opacity: 0.3;
+            margin-bottom: 1.5rem;
+        }
+        
+        .empty-state p {
+            font-size: 1.2rem;
+            color: var(--text-light, #666);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(4px);
         }
-
+        
         .modal-content {
-            background: var(--bg-card, #fff);
-            padding: 2rem;
+            background: var(--card-bg, #fff);
+            padding: 2.5rem;
             border-radius: 16px;
             width: 90%;
-            max-width: 500px;
+            max-width: 550px;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             animation: slideIn 0.3s ease;
         }
-
+        
         @keyframes slideIn {
-            from { transform: translateY(-20px); opacity: 0; }
+            from { transform: translateY(-30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-
+        
         .close-modal {
             position: absolute;
-            top: 1rem; left: 1rem;
-            font-size: 1.5rem;
+            top: 1.25rem;
+            left: 1.25rem;
+            font-size: 1.75rem;
             cursor: pointer;
             color: var(--text-light, #666);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
         }
-
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-        .form-group input, .form-group select {
-            width: 100%; padding: 0.75rem;
+        
+        .close-modal:hover {
+            background: var(--bg, #f5f5f5);
+            color: var(--primary-dark);
+        }
+        
+        .modal-content h3 {
+            margin: 0 0 1.5rem 0;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.85rem;
             border: 2px solid var(--border-color, #e0e0e0);
             border-radius: 8px;
             font-size: 1rem;
-            background: var(--bg-input, #fff);
-            color: var(--text-color, #333);
+            background: var(--bg, #fff);
+            color: var(--text, #333);
+            font-family: 'Tajawal', sans-serif;
         }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light, #666);
-            grid-column: 1 / -1;
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-mid);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .form-actions .btn {
+            flex: 1;
+            padding: 0.9rem;
+            font-size: 1rem;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header class="main-header">
-        <div class="header-container">
-            <div class="header-right">
-                <button class="back-btn" onclick="window.location.href='index.html'">
-                    <i class="fas fa-arrow-right"></i>
-                    <span id="txt-main-menu">القائمة الرئيسية</span>
-                </button>
-            </div>
-            <div class="header-center">
-                <h1><i class="fas fa-users"></i> <span id="txt-page-title">سجل متابعة الطلاب</span></h1>
-            </div>
-            <div class="header-left">
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button id="lang-toggle" class="theme-toggle" style="margin-left:0.5rem;">🇸🇦</button>
-                <button class="help-btn" onclick="window.location.href='help.html'">
-                    <i class="fas fa-question-circle"></i>
-                </button>
-            </div>
+        <div class="logo-container">
+            <img src="logo.png" alt="شعار سما" class="site-logo">
+        </div>
+        <div class="controls">
+            <button id="theme-toggle" class="control-btn">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="lang-toggle" class="control-btn" style="font-size: 20px;">🇸🇦</button>
+            <a href="index.html" class="control-btn">
+                <i class="fas fa-home"></i>
+            </a>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <div class="page-header">
-                <h2><i class="fas fa-user-tie"></i> <span id="txt-manage-parents">إدارة أولياء الأمور</span></h2>
-                <button class="btn btn-primary" onclick="openModal('addParentModal')">
-                    <i class="fas fa-plus"></i> <span id="txt-add-parent">إضافة ولي أمر جديد</span>
-                </button>
-            </div>
-
-            <!-- Search & Filter -->
-            <div class="search-bar">
-                <input type="text" id="parentSearch" placeholder="🔍 بحث باسم ولي الأمر أو الطالب..." onkeyup="filterParents()">
-                <select id="filterClass" onchange="filterParents()">
-                    <option value="" id="txt-all-classes">جميع الصفوف</option>
-                </select>
-            </div>
-
-            <!-- Parents List -->
-            <div class="parents-grid" id="parentsList">
-                <!-- سيتم تعبئة البطاقات تلقائياً عبر JavaScript -->
-            </div>
+    <main class="parents-container">
+        <div class="page-header">
+            <h2>
+                <i class="fas fa-user-tie"></i>
+                <span id="txt-manage-parents">إدارة أولياء الأمور</span>
+            </h2>
+            <button class="btn btn-primary" onclick="openModal()">
+                <i class="fas fa-plus"></i>
+                <span id="txt-add-parent">إضافة ولي أمر جديد</span>
+            </button>
         </div>
+
+        <!-- Search & Filter -->
+        <div class="search-bar">
+            <input type="text" id="parentSearch" placeholder="🔍 بحث باسم ولي الأمر أو الطالب..." onkeyup="filterParents()">
+            <select id="filterClass" onchange="filterParents()">
+                <option value="" id="txt-all-classes">جميع الصفوف</option>
+            </select>
+        </div>
+
+        <!-- Parents List -->
+        <div class="parents-grid" id="parentsList"></div>
     </main>
 
     <!-- Add/Edit Parent Modal -->
-    <div id="addParentModal" class="modal">
+    <div id="parentModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('addParentModal')">&times;</span>
-            <h3 id="modalTitle"><i class="fas fa-user-plus"></i> <span id="txt-new-parent">إضافة ولي أمر جديد</span></h3>
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">
+                <i class="fas fa-user-plus"></i>
+                <span id="txt-new-parent">إضافة ولي أمر جديد</span>
+            </h3>
             <form id="parentForm">
                 <input type="hidden" id="parentId">
                 <div class="form-group">
                     <label id="lbl-parent-name">اسم ولي الأمر الكامل</label>
-                    <input type="text" id="parentName" required placeholder="مثال: أحمد محمد العلي">
+                    <input type="text" id="parentName" required>
                 </div>
                 <div class="form-group">
                     <label id="lbl-phone">رقم الهاتف</label>
-                    <input type="tel" id="parentPhone" required placeholder="05xxxxxxxx">
+                    <input type="tel" id="parentPhone" required>
                 </div>
                 <div class="form-group">
                     <label id="lbl-email">البريد الإلكتروني (اختياري)</label>
-                    <input type="email" id="parentEmail" placeholder="example@email.com">
+                    <input type="email" id="parentEmail">
                 </div>
                 <div class="form-group">
                     <label id="lbl-link-student">ربط بالطالب</label>
@@ -225,11 +381,12 @@
                         <option value="" id="txt-select-student">اختر الطالب المراد ربطه...</option>
                     </select>
                 </div>
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    <button type="submit" class="btn btn-success" style="flex: 1;">
-                        <i class="fas fa-save"></i> <span id="txt-save">حفظ البيانات</span>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span id="txt-save">حفظ البيانات</span>
                     </button>
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('addParentModal')">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">
                         <span id="txt-cancel">إلغاء</span>
                     </button>
                 </div>
@@ -239,7 +396,7 @@
 
     <!-- Footer -->
     <footer class="main-footer">
-        <p id="txt-footer">جميع الحقوق محفوظة &copy; 2026 - سجل متابعة الطلاب</p>
+        <p id="txt-footer">© 2026 سما - جميع الحقوق محفوظة</p>
     </footer>
 
     <script src="script.js"></script>
@@ -249,8 +406,6 @@
         
         const translations = {
             ar: {
-                mainMenu: 'القائمة الرئيسية',
-                pageTitle: 'سجل متابعة الطلاب',
                 manageParents: 'إدارة أولياء الأمور',
                 addParent: 'إضافة ولي أمر جديد',
                 allClasses: 'جميع الصفوف',
@@ -264,7 +419,7 @@
                 selectStudent: 'اختر الطالب المراد ربطه...',
                 save: 'حفظ البيانات',
                 cancel: 'إلغاء',
-                footer: 'جميع الحقوق محفوظة © 2026 - سجل متابعة الطلاب',
+                footer: '© 2026 سما - جميع الحقوق محفوظة',
                 noParents: 'لا يوجد أولياء أمور مسجلين حالياً',
                 addFirstParent: 'إضافة أول ولي أمر',
                 linkedStudent: 'الطالب المرتبط',
@@ -272,15 +427,13 @@
                 viewRecord: 'عرض السجل',
                 edit: 'تعديل',
                 delete: 'حذف',
-                confirmDelete: 'هل أنت متأكد من حذف هذا الولي؟ لا يمكن التراجع عن هذا الإجراء.',
-                noStudentLinked: '⚠️ لم يتم ربط هذا الولي بأي طالب بعد. يرجى تعديل البيانات وربطه بطالب.',
+                confirmDelete: 'هل أنت متأكد من حذف هذا الولي؟',
+                noStudentLinked: '⚠️ لم يتم ربط هذا الولي بأي طالب',
                 placeholderName: 'مثال: أحمد محمد العلي',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'example@email.com'
             },
             en: {
-                mainMenu: 'Main Menu',
-                pageTitle: 'Student Records',
                 manageParents: 'Parents Management',
                 addParent: 'Add New Parent',
                 allClasses: 'All Classes',
@@ -294,7 +447,7 @@
                 selectStudent: 'Select student to link...',
                 save: 'Save Data',
                 cancel: 'Cancel',
-                footer: 'All Rights Reserved © 2026 - Student Records',
+                footer: '© 2026 Sama - All Rights Reserved',
                 noParents: 'No parents registered yet',
                 addFirstParent: 'Add First Parent',
                 linkedStudent: 'Linked Student',
@@ -302,15 +455,13 @@
                 viewRecord: 'View Record',
                 edit: 'Edit',
                 delete: 'Delete',
-                confirmDelete: 'Are you sure you want to delete this parent? This action cannot be undone.',
-                noStudentLinked: '⚠️ This parent is not linked to any student yet. Please edit and link to a student.',
+                confirmDelete: 'Are you sure you want to delete this parent?',
+                noStudentLinked: '⚠️ This parent is not linked to any student',
                 placeholderName: 'Example: Ahmed Mohammed Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'example@email.com'
             },
             tr: {
-                mainMenu: 'Ana Menü',
-                pageTitle: 'Öğrenci Kayıtları',
                 manageParents: 'Veli Yönetimi',
                 addParent: 'Yeni Veli Ekle',
                 allClasses: 'Tüm Sınıflar',
@@ -324,7 +475,7 @@
                 selectStudent: 'Bağlanacak öğrenciyi seçin...',
                 save: 'Bilgileri Kaydet',
                 cancel: 'İptal',
-                footer: 'Tüm Hakları Saklıdır © 2026 - Öğrenci Kayıtları',
+                footer: '© 2026 Sama - Tüm Hakları Saklıdır',
                 noParents: 'Henüz kayıtlı veli yok',
                 addFirstParent: 'İlk Veliyi Ekle',
                 linkedStudent: 'Bağlı Öğrenci',
@@ -332,45 +483,41 @@
                 viewRecord: 'Kaydı Görüntüle',
                 edit: 'Düzenle',
                 delete: 'Sil',
-                confirmDelete: 'Bu veliyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.',
-                noStudentLinked: '⚠️ Bu veli henüz hiçbir öğrenciyle bağlantılı değil. Lütfen düzenleyin ve bir öğrenciyle bağlantı kurun.',
+                confirmDelete: 'Bu veliyi silmek istediğinizden emin misiniz?',
+                noStudentLinked: '⚠️ Bu veli henüz hiçbir öğrenciyle bağlantılı değil',
                 placeholderName: 'Örnek: Ahmet Mehmet Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'ornek@email.com'
             },
             es: {
-                mainMenu: 'Menú Principal',
-                pageTitle: 'Registros Estudiantiles',
                 manageParents: 'Gestión de Padres',
-                addParent: 'Agregar Nuevo Padre/Tutor',
+                addParent: 'Agregar Nuevo Padre',
                 allClasses: 'Todas las Clases',
                 searchPlaceholder: '🔍 Buscar por nombre de padre o estudiante...',
-                newParent: 'Agregar Nuevo Padre/Tutor',
-                editParent: 'Editar Datos del Padre/Tutor',
-                lblParentName: 'Nombre Completo del Padre/Tutor',
+                newParent: 'Agregar Nuevo Padre',
+                editParent: 'Editar Datos del Padre',
+                lblParentName: 'Nombre Completo del Padre',
                 lblPhone: 'Número de Teléfono',
                 lblEmail: 'Correo Electrónico (Opcional)',
                 lblLinkStudent: 'Vincular con Estudiante',
                 selectStudent: 'Seleccionar estudiante para vincular...',
                 save: 'Guardar Datos',
                 cancel: 'Cancelar',
-                footer: 'Todos los Derechos Reservados © 2026 - Registros Estudiantiles',
-                noParents: 'No hay padres/tutores registrados aún',
-                addFirstParent: 'Agregar Primer Padre/Tutor',
+                footer: '© 2026 Sama - Todos los Derechos Reservados',
+                noParents: 'No hay padres registrados aún',
+                addFirstParent: 'Agregar Primer Padre',
                 linkedStudent: 'Estudiante Vinculado',
                 unspecified: 'No especificado',
                 viewRecord: 'Ver Registro',
                 edit: 'Editar',
                 delete: 'Eliminar',
-                confirmDelete: '¿Estás seguro de eliminar este padre/tutor? Esta acción no se puede deshacer.',
-                noStudentLinked: '⚠️ Este padre/tutor no está vinculado a ningún estudiante aún. Por favor edita y vincula con un estudiante.',
+                confirmDelete: '¿Estás seguro de eliminar este padre?',
+                noStudentLinked: '⚠️ Este padre no está vinculado a ningún estudiante',
                 placeholderName: 'Ejemplo: Ahmed Mohammed Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'ejemplo@email.com'
             },
             ko: {
-                mainMenu: '메인 메뉴',
-                pageTitle: '학생 기록',
                 manageParents: '학부모 관리',
                 addParent: '새 학부모 추가',
                 allClasses: '모든 학급',
@@ -384,7 +531,7 @@
                 selectStudent: '연결할 학생 선택...',
                 save: '정보 저장',
                 cancel: '취소',
-                footer: '모든 권리 보유 © 2026 - 학생 기록',
+                footer: '© 2026 Sama - 모든 권리 보유',
                 noParents: '아직 등록된 학부모가 없습니다',
                 addFirstParent: '첫 번째 학부모 추가',
                 linkedStudent: '연결된 학생',
@@ -392,15 +539,13 @@
                 viewRecord: '기록 보기',
                 edit: '수정',
                 delete: '삭제',
-                confirmDelete: '이 학부모를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.',
-                noStudentLinked: '⚠️ 이 학부모는 아직 어떤 학생과도 연결되지 않았습니다. 수정하여 학생과 연결하세요.',
+                confirmDelete: '이 학부모를 삭제하시겠습니까?',
+                noStudentLinked: '⚠️ 이 학부모는 아직 어떤 학생과도 연결되지 않았습니다',
                 placeholderName: '예: Ahmed Mohammed Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'example@email.com'
             },
             ja: {
-                mainMenu: 'メインメニュー',
-                pageTitle: '生徒記録',
                 manageParents: '保護者管理',
                 addParent: '新しい保護者を追加',
                 allClasses: 'すべてのクラス',
@@ -414,7 +559,7 @@
                 selectStudent: 'リンクする生徒を選択...',
                 save: '情報を保存',
                 cancel: 'キャンセル',
-                footer: '全著作権所有 © 2026 - 生徒記録',
+                footer: '© 2026 Sama - 全著作権所有',
                 noParents: 'まだ登録されている保護者はいません',
                 addFirstParent: '最初の保護者を追加',
                 linkedStudent: 'リンクされた生徒',
@@ -422,15 +567,13 @@
                 viewRecord: '記録を表示',
                 edit: '編集',
                 delete: '削除',
-                confirmDelete: 'この保護者を削除してもよろしいですか？この操作は元に戻せません。',
-                noStudentLinked: '⚠️ この保護者はまだどの生徒ともリンクされていません。編集して生徒とリンクしてください。',
+                confirmDelete: 'この保護者を削除してもよろしいですか？',
+                noStudentLinked: '⚠️ この保護者はまだどの生徒ともリンクされていません',
                 placeholderName: '例：Ahmed Mohammed Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'example@email.com'
             },
             hi: {
-                mainMenu: 'मुख्य मेनू',
-                pageTitle: 'छात्र रिकॉर्ड',
                 manageParents: 'अभिभावक प्रबंधन',
                 addParent: 'नया अभिभावक जोड़ें',
                 allClasses: 'सभी कक्षाएं',
@@ -444,7 +587,7 @@
                 selectStudent: 'लिंक करने के लिए छात्र चुनें...',
                 save: 'डेटा सहेजें',
                 cancel: 'रद्द करें',
-                footer: 'सभी अधिकार सुरक्षित © 2026 - छात्र रिकॉर्ड',
+                footer: '© 2026 Sama - सभी अधिकार सुरक्षित',
                 noParents: 'अभी तक कोई अभिभावक पंजीकृत नहीं हैं',
                 addFirstParent: 'पहला अभिभावक जोड़ें',
                 linkedStudent: 'लिंक किया गया छात्र',
@@ -452,15 +595,13 @@
                 viewRecord: 'रिकॉर्ड देखें',
                 edit: 'संपादित करें',
                 delete: 'हटाएं',
-                confirmDelete: 'क्या आप इस अभिभावक को हटाना चाहते हैं? यह कार्रवाई पूर्ववत नहीं की जा सकती।',
-                noStudentLinked: '⚠️ यह अभिभावक अभी तक किसी भी छात्र से लिंक नहीं है। कृपया संपादित करें और किसी छात्र से लिंक करें।',
+                confirmDelete: 'क्या आप इस अभिभावक को हटाना चाहते हैं?',
+                noStudentLinked: '⚠️ यह अभिभावक अभी तक किसी भी छात्र से लिंक नहीं है',
                 placeholderName: 'उदाहरण: Ahmed Mohammed Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'example@email.com'
             },
             fil: {
-                mainMenu: 'Main Menu',
-                pageTitle: 'Student Records',
                 manageParents: 'Parents Management',
                 addParent: 'Magdagdag ng Bagong Magulang',
                 allClasses: 'Lahat ng Klase',
@@ -474,7 +615,7 @@
                 selectStudent: 'Pumili ng mag-aaral na i-link...',
                 save: 'I-save ang Data',
                 cancel: 'Kanselahin',
-                footer: 'Lahat ng Karapatan ay Nakalaan © 2026 - Student Records',
+                footer: '© 2026 Sama - Lahat ng Karapatan ay Nakalaan',
                 noParents: 'Walang mga magulang na nakarehistro pa',
                 addFirstParent: 'Magdagdag ng Unang Magulang',
                 linkedStudent: 'Naka-link na Mag-aaral',
@@ -482,15 +623,13 @@
                 viewRecord: 'Tingnan ang Record',
                 edit: 'I-edit',
                 delete: 'Tanggalin',
-                confirmDelete: 'Sigurado ka bang gusto mong tanggalin ang magulang na ito? Hindi ma-undo ang aksyong ito.',
-                noStudentLinked: '⚠️ Ang magulang na ito ay hindi pa naka-link sa anumang mag-aaral. Paki-edit at i-link sa isang mag-aaral.',
+                confirmDelete: 'Sigurado ka bang gusto mong tanggalin ang magulang na ito?',
+                noStudentLinked: '⚠️ Ang magulang na ito ay hindi pa naka-link sa anumang mag-aaral',
                 placeholderName: 'Halimbawa: Ahmed Mohammed Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'example@email.com'
             },
             zh: {
-                mainMenu: '主菜单',
-                pageTitle: '学生记录',
                 manageParents: '家长管理',
                 addParent: '添加新家长',
                 allClasses: '所有班级',
@@ -504,7 +643,7 @@
                 selectStudent: '选择要关联的学生...',
                 save: '保存信息',
                 cancel: '取消',
-                footer: '版权所有 © 2026 - 学生记录',
+                footer: '© 2026 Sama - 版权所有',
                 noParents: '暂无已注册的家长',
                 addFirstParent: '添加第一位家长',
                 linkedStudent: '关联的学生',
@@ -512,8 +651,8 @@
                 viewRecord: '查看记录',
                 edit: '编辑',
                 delete: '删除',
-                confirmDelete: '您确定要删除这位家长吗？此操作无法撤销。',
-                noStudentLinked: '⚠️ 这位家长尚未与任何学生关联。请编辑并与学生关联。',
+                confirmDelete: '您确定要删除这位家长吗？',
+                noStudentLinked: '⚠️ 这位家长尚未与任何学生关联',
                 placeholderName: '示例：Ahmed Mohammed Ali',
                 placeholderPhone: '05xxxxxxxx',
                 placeholderEmail: 'example@email.com'
@@ -530,8 +669,6 @@
             if (!t) return;
             
             const elements = {
-                'txt-main-menu': t.mainMenu,
-                'txt-page-title': t.pageTitle,
                 'txt-manage-parents': t.manageParents,
                 'txt-add-parent': t.addParent,
                 'txt-all-classes': t.allClasses,
@@ -551,18 +688,8 @@
                 if (el) el.textContent = text;
             }
             
-            // Placeholders
             const searchInput = document.getElementById('parentSearch');
             if (searchInput) searchInput.placeholder = t.searchPlaceholder;
-            
-            const nameInput = document.getElementById('parentName');
-            if (nameInput) nameInput.placeholder = t.placeholderName;
-            
-            const phoneInput = document.getElementById('parentPhone');
-            if (phoneInput) phoneInput.placeholder = t.placeholderPhone;
-            
-            const emailInput = document.getElementById('parentEmail');
-            if (emailInput) emailInput.placeholder = t.placeholderEmail;
             
             document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
@@ -572,22 +699,21 @@
         const langBtn = document.getElementById('lang-toggle');
         if (langBtn) {
             langBtn.textContent = flags[currentLang] || '🇸🇦';
-            langBtn.style.cursor = 'pointer';
             
             langBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 
                 const langs = [
-                    {code: 'ar', name: 'العربية', flag: '🇸🇦'},
+                    {code: 'ar', name: 'العربية', flag: '🇸'},
                     {code: 'en', name: 'English', flag: '🇬🇧'},
-                    {code: 'tr', name: 'Türkçe', flag: '🇹🇷'},
+                    {code: 'tr', name: 'Türkçe', flag: '🇹'},
                     {code: 'es', name: 'Español', flag: '🇪🇸'},
                     {code: 'ko', name: '한국어', flag: '🇰🇷'},
-                    {code: 'ja', name: '日本語', flag: '🇯🇵'},
+                    {code: 'ja', name: '日本語', flag: '🇯'},
                     {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'},
                     {code: 'fil', name: 'Filipino', flag: '🇵🇭'},
-                    {code: 'zh', name: '中文', flag: '🇨🇳'}
+                    {code: 'zh', name: '中文', flag: '🇨'}
                 ];
                 
                 const oldMenu = document.querySelector('.lang-menu');
@@ -619,6 +745,7 @@
                         langBtn.textContent = l.flag;
                         menu.remove();
                         applyTranslation(currentLang);
+                        loadParents();
                     };
                     
                     menu.appendChild(btn);
@@ -628,45 +755,40 @@
                 this.parentElement.appendChild(menu);
             });
             
-            // التطبيق الأولي
             setTimeout(() => applyTranslation(currentLang), 200);
         }
         
-        // ========== الوظائف الأصلية (بدون تغيير) ==========
+        // ========== الوظائف الأصلية ==========
         
-        // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', () => {
             loadParents();
             populateStudentDropdown();
             populateClassFilter();
             initTheme();
         });
-
-        // تحميل وعرض أولياء الأمور
+        
         function loadParents() {
             const parents = JSON.parse(localStorage.getItem('parents')) || [];
             const container = document.getElementById('parentsList');
             container.innerHTML = '';
-
+            
+            const t = translations[currentLang];
+            
             if (parents.length === 0) {
-                const t = translations[currentLang];
                 container.innerHTML = `
                     <div class="empty-state">
-                        <i class="fas fa-users" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                        <i class="fas fa-users"></i>
                         <p>${t.noParents}</p>
-                        <button class="btn btn-primary" onclick="openModal('addParentModal')" style="margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="openModal()">
                             <i class="fas fa-plus"></i> ${t.addFirstParent}
                         </button>
                     </div>`;
                 return;
             }
-
+            
             parents.forEach(parent => {
                 const card = document.createElement('div');
                 card.className = 'parent-card';
-                card.dataset.name = parent.name.toLowerCase();
-                card.dataset.student = (parent.studentName || '').toLowerCase();
-                const t = translations[currentLang];
                 card.innerHTML = `
                     <div class="parent-header">
                         <div class="parent-avatar"><i class="fas fa-user-tie"></i></div>
@@ -694,39 +816,40 @@
                 container.appendChild(card);
             });
         }
-
-        // تعبئة قائمة الطلاب في المودال
+        
         function populateStudentDropdown() {
             const students = JSON.parse(localStorage.getItem('students')) || [];
             const select = document.getElementById('linkStudent');
-            select.innerHTML = '<option value="">' + translations[currentLang].selectStudent + '</option>';
+            const t = translations[currentLang];
+            select.innerHTML = '<option value="">' + t.selectStudent + '</option>';
             students.forEach(s => {
                 select.innerHTML += `<option value="${s.id}">${s.name} - ${s.class || ''}</option>`;
             });
         }
-
-        // تعبئة فلتر الصفوف
+        
         function populateClassFilter() {
             const students = JSON.parse(localStorage.getItem('students')) || [];
             const classes = [...new Set(students.map(s => s.class).filter(Boolean))];
             const select = document.getElementById('filterClass');
-            select.innerHTML = '<option value="">' + translations[currentLang].allClasses + '</option>';
+            const t = translations[currentLang];
+            select.innerHTML = '<option value="">' + t.allClasses + '</option>';
             classes.forEach(c => {
                 select.innerHTML += `<option value="${c}">${c}</option>`;
             });
         }
-
-        // التحكم في المودال
-        function openModal(id) { 
-            document.getElementById(id).style.display = 'flex'; 
+        
+        function openModal() {
+            document.getElementById('parentModal').style.display = 'flex';
             document.getElementById('parentForm').reset();
             document.getElementById('parentId').value = '';
             const t = translations[currentLang];
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus"></i> ' + t.newParent;
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus"></i> <span>' + t.newParent + '</span>';
         }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        // حفظ بيانات ولي الأمر
+        
+        function closeModal() {
+            document.getElementById('parentModal').style.display = 'none';
+        }
+        
         document.getElementById('parentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const id = document.getElementById('parentId').value || Date.now().toString();
@@ -734,15 +857,16 @@
             const phone = document.getElementById('parentPhone').value.trim();
             const email = document.getElementById('parentEmail').value.trim();
             const studentId = document.getElementById('linkStudent').value;
-
+            
             const students = JSON.parse(localStorage.getItem('students')) || [];
             const student = students.find(s => s.id == studentId);
-
-            const parentData = { 
-                id, name, phone, email, studentId, 
-                studentName: student ? student.name : translations[currentLang].unspecified
+            const t = translations[currentLang];
+            
+            const parentData = {
+                id, name, phone, email, studentId,
+                studentName: student ? student.name : t.unspecified
             };
-
+            
             let parents = JSON.parse(localStorage.getItem('parents')) || [];
             const existingIndex = parents.findIndex(p => p.id == id);
             if (existingIndex > -1) {
@@ -750,29 +874,29 @@
             } else {
                 parents.push(parentData);
             }
-
+            
             localStorage.setItem('parents', JSON.stringify(parents));
-            closeModal('addParentModal');
+            closeModal();
             loadParents();
+            populateStudentDropdown();
         });
-
-        // تعديل ولي أمر
+        
         function editParent(id) {
             const parents = JSON.parse(localStorage.getItem('parents')) || [];
             const parent = parents.find(p => p.id == id);
             if (!parent) return;
-
+            
             document.getElementById('parentId').value = parent.id;
             document.getElementById('parentName').value = parent.name;
             document.getElementById('parentPhone').value = parent.phone;
             document.getElementById('parentEmail').value = parent.email || '';
             document.getElementById('linkStudent').value = parent.studentId || '';
+            
             const t = translations[currentLang];
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> ' + t.editParent;
-            openModal('addParentModal');
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> <span>' + t.editParent + '</span>';
+            openModal();
         }
-
-        // حذف ولي أمر
+        
         function deleteParent(id) {
             const t = translations[currentLang];
             if (confirm(t.confirmDelete)) {
@@ -782,8 +906,7 @@
                 loadParents();
             }
         }
-
-        // عرض سجل الطالب المرتبط
+        
         function viewStudentRecord(studentId) {
             const t = translations[currentLang];
             if (studentId) {
@@ -792,24 +915,44 @@
                 alert(t.noStudentLinked);
             }
         }
-
-        // فلترة والبحث
+        
         function filterParents() {
             const query = document.getElementById('parentSearch').value.toLowerCase();
             const classFilter = document.getElementById('filterClass').value;
             const cards = document.querySelectorAll('.parent-card');
-
+            
             cards.forEach(card => {
-                const matchSearch = card.dataset.name.includes(query) || card.dataset.student.includes(query);
-                const matchClass = classFilter === '' || card.dataset.student.includes(classFilter);
+                const name = card.querySelector('h4').textContent.toLowerCase();
+                const student = card.querySelector('.linked-student span').textContent.toLowerCase();
+                const matchSearch = name.includes(query) || student.includes(query);
+                const matchClass = classFilter === '' || student.includes(classFilter);
                 card.style.display = (matchSearch && matchClass) ? 'block' : 'none';
             });
         }
-
-        // إغلاق المودال عند الضغط خارجه
+        
         window.onclick = function(event) {
-            const modal = document.getElementById('addParentModal');
-            if (event.target == modal) closeModal('addParentModal');
+            const modal = document.getElementById('parentModal');
+            if (event.target == modal) closeModal();
+        }
+        
+        function initTheme() {
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) {
+                const savedTheme = localStorage.getItem('sama-theme') || 'light';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                
+                themeBtn.addEventListener('click', function() {
+                    const current = document.documentElement.getAttribute('data-theme');
+                    const next = current === 'light' ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', next);
+                    localStorage.setItem('sama-theme', next);
+                    
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+                    }
+                });
+            }
         }
     </script>
 </body>
