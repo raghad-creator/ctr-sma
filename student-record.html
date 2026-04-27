@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل الطالب | سما</title>
+    <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Student Profile Card */
+        .student-profile-card {
+            background: var(--card-bg, #fff);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px var(--shadow);
+            border-top: 4px solid var(--primary-mid, #1F6F6F);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color, #e0e0e0);
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+        }
+        
+        .profile-info h2 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+        
+        .profile-info p {
+            margin: 0.25rem 0;
+            color: var(--text-light, #666);
+            font-size: 0.95rem;
+        }
+        
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg, #f9f9f9);
+            border-radius: 8px;
+        }
+        
+        .detail-item i {
+            color: var(--primary-mid);
+            font-size: 1.2rem;
+        }
+        
+        .detail-item .label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-light, #666);
+        }
+        
+        .detail-item .value {
+            font-weight: 600;
+            color: var(--text, #333);
+        }
+        
+        /* Records Section */
+        .records-section {
+            background: var(--card-bg, #fff);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color, #e0e0e0);
+        }
+        
+        /* Tabs */
+        .records-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border-color, #e0e0e0);
+            padding-bottom: 1rem;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: 2px solid var(--primary-light);
+            border-radius: 10px;
+            color: var(--primary-dark);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--primary-mid);
+            color: #fff;
+            border-color: var(--primary-dark);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Records Grid */
+        .records-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+        
+        .record-card {
+            background: var(--bg, #f9f9f9);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 2px solid var(--border-color, #e0e0e0);
+            transition: transform 0.3s;
+        }
+        
+        .record-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-mid);
+        }
+        
+        .record-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .record-header i {
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .record-header h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .grade-display {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.25rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .grade {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-mid);
+        }
+        
+        .grade-label {
+            font-size: 0.9rem;
+            color: var(--text-light, #666);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--border-color, #e0e0e0);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-mid), var(--gold));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Exams Table */
+        .exams-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .exams-table th,
+        .exams-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color, #e0e0e0);
+        }
+        
+        .exams-table th {
+            background: var(--primary-mid);
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge.excellent {
+            background: #27ae60;
+            color: #fff;
+        }
+        
+        .badge.good {
+            background: #3498db;
+            color: #fff;
+        }
+        
+        .badge.average {
+            background: #f39c12;
+            color: #fff;
+        }
+        
+        /* Homework List */
+        .homework-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .homework-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg, #f9f9f9);
+            border-radius: 10px;
+            border-right: 4px solid var(--primary-light);
+        }
+        
+        .homework-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-mid);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        
+        .homework-info {
+            flex: 1;
+        }
+        
+        .homework-info h5 {
+            margin: 0 0 0.25rem 0;
+            color: var(--primary-dark);
+        }
+        
+        .homework-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-light, #666);
+        }
+        
+        .homework-status {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-badge.completed {
+            background: #27ae60;
+            color: #fff;
+        }
+        
+        .status-badge.pending {
+            background: #f39c12;
+            color: #fff;
+        }
+        
+        .grade-small {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-mid);
+        }
+        
+        /* Attendance */
+        .attendance-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .attendance-card {
+            background: var(--bg, #f9f9f9);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .attendance-card i {
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .attendance-info h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-light, #666);
+        }
+        
+        .attendance-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        
+        .attendance-label {
+            font-size: 0.85rem;
+            color: var(--text-light, #666);
+        }
+        
+        .monthly-attendance {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+        
+        .month-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .month-name {
+            font-size: 0.85rem;
+            color: var(--text-light, #666);
+        }
+        
+        .bar-container {
+            width: 40px;
+            height: 100px;
+            background: var(--border-color, #e0e0e0);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        
+        .bar-fill {
+            width: 100%;
+            transition: height 0.5s ease;
+        }
+        
+        .bar-fill.present {
+            background: var(--primary-mid);
+        }
+        
+        .bar-fill.absent {
+            background: #e74c3c;
+        }
+        
+        .month-value {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        /* Overall Performance */
+        .overall-performance {
+            background: var(--card-bg, #fff);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        .performance-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+        }
+        
+        .performance-card {
+            background: var(--bg, #f9f9f9);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 2px solid var(--border-color, #e0e0e0);
+        }
+        
+        .performance-card.main {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--primary-mid), var(--primary-dark));
+            color: #fff;
+            border: none;
+        }
+        
+        .performance-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .performance-card.main .performance-icon {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .performance-info h4 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1rem;
+        }
+        
+        .performance-grade {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .performance-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        /* Actions */
+        .student-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.85rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-mid), var(--primary-dark));
+            color: #fff;
+        }
+        
+        .btn-secondary {
+            background: var(--primary-light);
+            color: #fff;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: #fff;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .records-tabs {
+                justify-content: center;
+            }
+            
+            .tab-btn {
+                font-size: 0.85rem;
+                padding: 0.6rem 1rem;
+            }
+            
+            .student-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="logo.png" alt="شعار سما" class="site-logo">
+        </div>
+        <div class="controls">
+            <button id="theme-toggle" class="control-btn">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="lang-toggle" class="control-btn" style="font-size: 20px;">🇸🇦</button>
+            <a href="students.html" class="control-btn">
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Student Profile Card -->
+            <div class="student-profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h2 id="studentName">اسم الطالب</h2>
+                        <p class="student-id"><span id="lbl-id">رقم الهوية:</span> <span id="studentId">-</span></p>
+                        <p class="student-class"><span id="lbl-class">الصف:</span> <span id="studentClass">-</span></p>
+                    </div>
+                </div>
+                
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <span class="label" id="lbl-phone">الهاتف:</span>
+                            <span class="value" id="studentPhone">-</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <span class="label" id="lbl-email">البريد الإلكتروني:</span>
+                            <span class="value" id="studentEmail">-</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar"></i>
+                        <div>
+                            <span class="label" id="lbl-regdate">تاريخ التسجيل:</span>
+                            <span class="value" id="studentRegDate">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Academic Records Section -->
+            <div class="records-section">
+                <h3 class="section-title">
+                    <i class="fas fa-book-open"></i>
+                    <span id="txt-records">السجلات الأكاديمية</span>
+                </h3>
+
+                <!-- Tabs -->
+                <div class="records-tabs">
+                    <button class="tab-btn active" onclick="showTab('continuous')">
+                        <i class="fas fa-chart-line"></i>
+                        <span id="tab-continuous">التقييم المستمر</span>
+                    </button>
+                    <button class="tab-btn" onclick="showTab('exams')">
+                        <i class="fas fa-file-alt"></i>
+                        <span id="tab-exams">الاختبارات</span>
+                    </button>
+                    <button class="tab-btn" onclick="showTab('homework')">
+                        <i class="fas fa-tasks"></i>
+                        <span id="tab-homework">الواجبات</span>
+                    </button>
+                    <button class="tab-btn" onclick="showTab('attendance')">
+                        <i class="fas fa-calendar-check"></i>
+                        <span id="tab-attendance">الحضور</span>
+                    </button>
+                </div>
+
+                <!-- Tab: Continuous Assessment -->
+                <div id="continuous" class="tab-content active">
+                    <div class="records-grid">
+                        <div class="record-card">
+                            <div class="record-header">
+                                <i class="fas fa-flask"></i>
+                                <h4 id="rec-activities">الأنشطة العملية</h4>
+                            </div>
+                            <div class="record-body">
+                                <div class="grade-display">
+                                    <span class="grade">85</span>
+                                    <span class="grade-label" id="lbl-outof">من 100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="record-card">
+                            <div class="record-header">
+                                <i class="fas fa-comments"></i>
+                                <h4 id="rec-participation">المشاركة الصفية</h4>
+                            </div>
+                            <div class="record-body">
+                                <div class="grade-display">
+                                    <span class="grade">92</span>
+                                    <span class="grade-label" id="lbl-outof2">من 100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="record-card">
+                            <div class="record-header">
+                                <i class="fas fa-tasks"></i>
+                                <h4 id="rec-projects">الأبحاث والمشاريع</h4>
+                            </div>
+                            <div class="record-body">
+                                <div class="grade-display">
+                                    <span class="grade">88</span>
+                                    <span class="grade-label" id="lbl-outof3">من 100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="record-card">
+                            <div class="record-header">
+                                <i class="fas fa-clipboard-check"></i>
+                                <h4 id="rec-quizzes">الاختبارات القصيرة</h4>
+                            </div>
+                            <div class="record-body">
+                                <div class="grade-display">
+                                    <span class="grade">90</span>
+                                    <span class="grade-label" id="lbl-outof4">من 100</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 90%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Exams -->
+                <div id="exams" class="tab-content">
+                    <div class="exams-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th id="th-exam">الاختبار</th>
+                                    <th id="th-date">التاريخ</th>
+                                    <th id="th-score">الدرجة</th>
+                                    <th id="th-from">من</th>
+                                    <th id="th-percent">النسبة</th>
+                                    <th id="th-grade">التقدير</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="exam1-name">الاختبار الفصلي الأول</td>
+                                    <td>15/10/2025</td>
+                                    <td>45</td>
+                                    <td>50</td>
+                                    <td>90%</td>
+                                    <td><span class="badge excellent" id="grade1">ممتاز</span></td>
+                                </tr>
+                                <tr>
+                                    <td id="exam2-name">الاختبار الفصلي الثاني</td>
+                                    <td>20/12/2025</td>
+                                    <td>47</td>
+                                    <td>50</td>
+                                    <td>94%</td>
+                                    <td><span class="badge excellent" id="grade2">ممتاز</span></td>
+                                </tr>
+                                <tr>
+                                    <td id="exam3-name">الاختبار النهائي</td>
+                                    <td>15/03/2026</td>
+                                    <td>92</td>
+                                    <td>100</td>
+                                    <td>92%</td>
+                                    <td><span class="badge excellent" id="grade3">ممتاز</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab: Homework -->
+                <div id="homework" class="tab-content">
+                    <div class="homework-list">
+                        <div class="homework-item">
+                            <div class="homework-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="homework-info">
+                                <h5 id="hw1-title">حل تمارين الصفحة 45</h5>
+                                <p id="hw1-due"><span id="lbl-due">تاريخ التسليم:</span> 10/01/2026</p>
+                            </div>
+                            <div class="homework-status">
+                                <span class="status-badge completed" id="status1">تم التسليم</span>
+                                <span class="grade-small">95/100</span>
+                            </div>
+                        </div>
+
+                        <div class="homework-item">
+                            <div class="homework-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="homework-info">
+                                <h5 id="hw2-title">بحث عن الطاقة المتجددة</h5>
+                                <p id="hw2-due"><span id="lbl-due2">تاريخ التسليم:</span> 25/01/2026</p>
+                            </div>
+                            <div class="homework-status">
+                                <span class="status-badge completed" id="status2">تم التسليم</span>
+                                <span class="grade-small">88/100</span>
+                            </div>
+                        </div>
+
+                        <div class="homework-item">
+                            <div class="homework-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="homework-info">
+                                <h5 id="hw3-title">تحضير درس الكهرباء</h5>
+                                <p id="hw3-due"><span id="lbl-due3">تاريخ التسليم:</span> 05/05/2026</p>
+                            </div>
+                            <div class="homework-status">
+                                <span class="status-badge pending" id="status3">قيد الانتظار</span>
+                                <span class="grade-small">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Attendance -->
+                <div id="attendance" class="tab-content">
+                    <div class="attendance-summary">
+                        <div class="attendance-card">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="attendance-info">
+                                <h4 id="lbl-present">الحضور</h4>
+                                <p class="attendance-number">165</p>
+                                <p class="attendance-label" id="lbl-days">يوم</p>
+                            </div>
+                        </div>
+
+                        <div class="attendance-card">
+                            <i class="fas fa-times-circle"></i>
+                            <div class="attendance-info">
+                                <h4 id="lbl-absent">الغياب</h4>
+                                <p class="attendance-number">5</p>
+                                <p class="attendance-label" id="lbl-days2">يوم</p>
+                            </div>
+                        </div>
+
+                        <div class="attendance-card">
+                            <i class="fas fa-percentage"></i>
+                            <div class="attendance-info">
+                                <h4 id="lbl-rate">نسبة الحضور</h4>
+                                <p class="attendance-number">97%</p>
+                                <p class="attendance-label" id="lbl-excellent">ممتاز</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attendance-chart">
+                        <h4 id="lbl-monthly">سجل الحضور الشهري</h4>
+                        <div class="monthly-attendance">
+                            <div class="month-bar">
+                                <span class="month-name" id="month1">يناير</span>
+                                <div class="bar-container">
+                                    <div class="bar-fill present" style="height: 95%"></div>
+                                    <div class="bar-fill absent" style="height: 5%"></div>
+                                </div>
+                                <span class="month-value">19/20</span>
+                            </div>
+                            <div class="month-bar">
+                                <span class="month-name" id="month2">فبراير</span>
+                                <div class="bar-container">
+                                    <div class="bar-fill present" style="height: 100%"></div>
+                                </div>
+                                <span class="month-value">20/20</span>
+                            </div>
+                            <div class="month-bar">
+                                <span class="month-name" id="month3">مارس</span>
+                                <div class="bar-container">
+                                    <div class="bar-fill present" style="height: 90%"></div>
+                                    <div class="bar-fill absent" style="height: 10%"></div>
+                                </div>
+                                <span class="month-value">18/20</span>
+                            </div>
+                            <div class="month-bar">
+                                <span class="month-name" id="month4">أبريل</span>
+                                <div class="bar-container">
+                                    <div class="bar-fill present" style="height: 95%"></div>
+                                    <div class="bar-fill absent" style="height: 5%"></div>
+                                </div>
+                                <span class="month-value">19/20</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overall Performance -->
+            <div class="overall-performance">
+                <h3 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    <span id="txt-performance">الأداء العام</span>
+                </h3>
+                <div class="performance-cards">
+                    <div class="performance-card main">
+                        <div class="performance-icon">
+                            <i class="fas
