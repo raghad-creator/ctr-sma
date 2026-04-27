@@ -683,6 +683,28 @@
                 this.querySelector('i').className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
             });
         }
+        // دالة فتح وإغلاق الأسئلة المنسدلة
+function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('.accordion-icon');
+    
+    // تبديل الكلاس النشط
+    button.classList.toggle('active');
+    
+    // إظهار/إخفاء المحتوى
+    if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+        content.classList.remove('show');
+    } else {
+        content.classList.add('show');
+        content.style.maxHeight = content.scrollHeight + "px";
+    }
+    
+    // تدوير السهم
+    if (icon) {
+        icon.style.transform = button.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+}
     </script>
 </body>
 </html>
