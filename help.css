@@ -333,3 +333,29 @@
         font-size: 0.9rem;
     }
 }
+/* ==================== الأنماط المطلوبة للأكورديون ==================== */
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 1.5rem;
+}
+
+.accordion-content.show {
+    max-height: 1000px; /* قيمة كبيرة كافية */
+    padding: 1.5rem;
+}
+
+.accordion-header.active {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-mid));
+    border-bottom: 1px solid var(--gold);
+}
+
+.accordion-icon {
+    transition: transform 0.3s ease;
+}
+
+.accordion-header.active .accordion-icon {
+    transform: rotate(180deg);
+}
