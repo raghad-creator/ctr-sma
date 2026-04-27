@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سما | سجلات الطلاب</title>
+    <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -473,14 +474,15 @@
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <div class="titles">
-                <h1 class="site-name">سما</h1>
-                <p class="site-subtitle">سجل متابعة الطالب</p>
+                <h1 class="site-name" id="txt-site">سما</h1>
+                <p class="site-subtitle" id="txt-subtitle">سجل متابعة الطالب</p>
             </div>
         </div>
         <div class="controls">
             <button id="theme-toggle" class="control-btn" title="تبديل الوضع">
                 <i class="fas fa-moon"></i>
             </button>
+            <button id="lang-toggle" class="control-btn" style="font-size:20px;" title="تغيير اللغة">🇸🇦</button>
             <a href="index.html" class="control-btn" style="text-decoration: none; display: inline-flex; align-items: center;">
                 <i class="fas fa-home"></i>
             </a>
@@ -489,8 +491,8 @@
 
     <!-- رأس الصفحة -->
     <div class="page-header">
-        <h1><i class="fas fa-users"></i> قائمة الطلاب</h1>
-        <p>متابعة سجلات الطلاب وتقارير الأداء</p>
+        <h1><i class="fas fa-users"></i> <span id="txt-page-title">قائمة الطلاب</span></h1>
+        <p id="txt-page-desc">متابعة سجلات الطلاب وتقارير الأداء</p>
     </div>
 
     <!-- شريط التحكم -->
@@ -500,27 +502,25 @@
             <input type="text" id="searchInput" placeholder="ابحث عن طالب بالاسم أو رقم الهوية...">
         </div>
         <select class="filter-select" id="gradeFilter">
-            <option value="">جميع المراحل</option>
-            <option value="primary">ابتدائي</option>
-            <option value="middle">متوسط</option>
-            <option value="high">ثانوي</option>
+            <option value="" id="opt-all">جميع المراحل</option>
+            <option value="primary" id="opt-primary">ابتدائي</option>
+            <option value="middle" id="opt-middle">متوسط</option>
+            <option value="high" id="opt-high">ثانوي</option>
         </select>
         <a href="new-student.html" class="add-btn">
             <i class="fas fa-plus"></i>
-            طالب جديد
+            <span id="btn-add">طالب جديد</span>
         </a>
     </div>
 
     <!-- محتوى الصفحة -->
     <main class="students-container">
-        <div id="studentsGrid" class="students-grid">
-            <!-- سيتم ملء البطاقات هنا بواسطة JavaScript -->
-        </div>
+        <div id="studentsGrid" class="students-grid"></div>
         
         <div id="noStudents" class="no-students" style="display: none;">
             <i class="fas fa-inbox"></i>
-            <h3>لا يوجد طلاب مسجلين</h3>
-            <p>ابدأ بإضافة طالب جديد</p>
+            <h3 id="txt-no-students">لا يوجد طلاب مسجلين</h3>
+            <p id="txt-add-first">ابدأ بإضافة طالب جديد</p>
         </div>
     </main>
 
@@ -528,21 +528,390 @@
     <div id="studentModal" class="modal hidden">
         <div class="modal-content-large">
             <span class="close-modal" onclick="closeStudentModal()">&times;</span>
-            <div id="studentModalContent">
-                <!-- سيتم ملء المحتوى هنا -->
-            </div>
+            <div id="studentModalContent"></div>
         </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // تحميل الطلاب من localStorage أو استخدام بيانات تجريبية
+        // ========== نظام الترجمة ==========
+        let currentLang = localStorage.getItem('sama-lang') || 'ar';
+        
+        const translations = {
+            ar: {
+                site: 'سما',
+                subtitle: 'سجل متابعة الطالب',
+                pageTitle: 'قائمة الطلاب',
+                pageDesc: 'متابعة سجلات الطلاب وتقارير الأداء',
+                searchPlaceholder: 'ابحث عن طالب بالاسم أو رقم الهوية...',
+                optAll: 'جميع المراحل',
+                optPrimary: 'ابتدائي',
+                optMiddle: 'متوسط',
+                optHigh: 'ثانوي',
+                btnAdd: 'طالب جديد',
+                txtNoStudents: 'لا يوجد طلاب مسجلين',
+                txtAddFirst: 'ابدأ بإضافة طالب جديد',
+                lblRecords: 'سجل',
+                lblAverage: 'المعدل',
+                modalTitle: 'السجلات والمهارات',
+                lblParentInfo: 'بيانات ولي الأمر',
+                lblParentName: 'الاسم',
+                lblParentPhone: 'الجوال',
+                lblParentEmail: 'البريد الإلكتروني',
+                lblNotes: 'ملاحظات',
+                lblNoRecords: 'لا توجد سجلات بعد',
+                lblSkills: 'المهارات والتقييمات',
+                lblGrade: 'الدرجة',
+                lblClass: 'الصف',
+                lblId: 'الهوية',
+                themeToggle: 'تبديل الوضع',
+                langToggle: 'تغيير اللغة'
+            },
+            en: {
+                site: 'Sama',
+                subtitle: 'Student Follow-up Record',
+                pageTitle: 'Students List',
+                pageDesc: 'Track student records and performance reports',
+                searchPlaceholder: 'Search by student name or ID...',
+                optAll: 'All Levels',
+                optPrimary: 'Primary',
+                optMiddle: 'Middle',
+                optHigh: 'High School',
+                btnAdd: 'New Student',
+                txtNoStudents: 'No students registered yet',
+                txtAddFirst: 'Start by adding a new student',
+                lblRecords: 'Records',
+                lblAverage: 'Average',
+                modalTitle: 'Records & Skills',
+                lblParentInfo: 'Parent Information',
+                lblParentName: 'Name',
+                lblParentPhone: 'Phone',
+                lblParentEmail: 'Email',
+                lblNotes: 'Notes',
+                lblNoRecords: 'No records yet',
+                lblSkills: 'Skills & Evaluations',
+                lblGrade: 'Grade',
+                lblClass: 'Class',
+                lblId: 'ID',
+                themeToggle: 'Toggle Theme',
+                langToggle: 'Change Language'
+            },
+            tr: {
+                site: 'Sama',
+                subtitle: 'Öğrenci Takip Kaydı',
+                pageTitle: 'Öğrenci Listesi',
+                pageDesc: 'Öğrenci kayıtlarını ve performans raporlarını takip edin',
+                searchPlaceholder: 'Öğrenci adı veya ID ile ara...',
+                optAll: 'Tüm Seviyeler',
+                optPrimary: 'İlkokul',
+                optMiddle: 'Ortaokul',
+                optHigh: 'Lise',
+                btnAdd: 'Yeni Öğrenci',
+                txtNoStudents: 'Henüz kayıtlı öğrenci yok',
+                txtAddFirst: 'Yeni öğrenci ekleyerek başlayın',
+                lblRecords: 'Kayıtlar',
+                lblAverage: 'Ortalama',
+                modalTitle: 'Kayıtlar ve Beceriler',
+                lblParentInfo: 'Veli Bilgileri',
+                lblParentName: 'Ad',
+                lblParentPhone: 'Telefon',
+                lblParentEmail: 'E-posta',
+                lblNotes: 'Notlar',
+                lblNoRecords: 'Henüz kayıt yok',
+                lblSkills: 'Beceriler ve Değerlendirmeler',
+                lblGrade: 'Not',
+                lblClass: 'Sınıf',
+                lblId: 'Kimlik',
+                themeToggle: 'Temayı Değiştir',
+                langToggle: 'Dili Değiştir'
+            },
+            es: {
+                site: 'Sama',
+                subtitle: 'Registro de Seguimiento del Estudiante',
+                pageTitle: 'Lista de Estudiantes',
+                pageDesc: 'Seguimiento de registros e informes de rendimiento',
+                searchPlaceholder: 'Buscar por nombre o ID del estudiante...',
+                optAll: 'Todos los Niveles',
+                optPrimary: 'Primaria',
+                optMiddle: 'Secundaria',
+                optHigh: 'Preparatoria',
+                btnAdd: 'Nuevo Estudiante',
+                txtNoStudents: 'No hay estudiantes registrados aún',
+                txtAddFirst: 'Comienza agregando un nuevo estudiante',
+                lblRecords: 'Registros',
+                lblAverage: 'Promedio',
+                modalTitle: 'Registros y Habilidades',
+                lblParentInfo: 'Información del Padre/Tutor',
+                lblParentName: 'Nombre',
+                lblParentPhone: 'Teléfono',
+                lblParentEmail: 'Correo',
+                lblNotes: 'Notas',
+                lblNoRecords: 'Sin registros aún',
+                lblSkills: 'Habilidades y Evaluaciones',
+                lblGrade: 'Calificación',
+                lblClass: 'Clase',
+                lblId: 'ID',
+                themeToggle: 'Cambiar Tema',
+                langToggle: 'Cambiar Idioma'
+            },
+            ko: {
+                site: '사마',
+                subtitle: '학생기록추적',
+                pageTitle: '학생 목록',
+                pageDesc: '학생 기록 및 성적 보고서 추적',
+                searchPlaceholder: '학생 이름 또는 아이디로 검색...',
+                optAll: '모든 학년',
+                optPrimary: '초등',
+                optMiddle: '중등',
+                optHigh: '고등',
+                btnAdd: '새 학생',
+                txtNoStudents: '아직 등록된 학생이 없습니다',
+                txtAddFirst: '새 학생을 추가하여 시작하세요',
+                lblRecords: '기록',
+                lblAverage: '평균',
+                modalTitle: '기록 및 기술',
+                lblParentInfo: '학부모 정보',
+                lblParentName: '이름',
+                lblParentPhone: '전화',
+                lblParentEmail: '이메일',
+                lblNotes: '메모',
+                lblNoRecords: '아직 기록이 없습니다',
+                lblSkills: '기술 및 평가',
+                lblGrade: '점수',
+                lblClass: '학급',
+                lblId: '아이디',
+                themeToggle: '테마 전환',
+                langToggle: '언어 변경'
+            },
+            ja: {
+                site: 'サマ',
+                subtitle: '生徒フォローアップ記録',
+                pageTitle: '生徒リスト',
+                pageDesc: '生徒の記録と成績レポートを追跡',
+                searchPlaceholder: '生徒名またはIDで検索...',
+                optAll: 'すべての学年',
+                optPrimary: '小学',
+                optMiddle: '中学',
+                optHigh: '高校',
+                btnAdd: '新しい生徒',
+                txtNoStudents: 'まだ登録されている生徒はいません',
+                txtAddFirst: '新しい生徒を追加して開始',
+                lblRecords: '記録',
+                lblAverage: '平均',
+                modalTitle: '記録とスキル',
+                lblParentInfo: '保護者情報',
+                lblParentName: '名前',
+                lblParentPhone: '電話',
+                lblParentEmail: 'メール',
+                lblNotes: 'メモ',
+                lblNoRecords: 'まだ記録がありません',
+                lblSkills: 'スキルと評価',
+                lblGrade: '成績',
+                lblClass: 'クラス',
+                lblId: 'ID',
+                themeToggle: 'テーマ切替',
+                langToggle: '言語変更'
+            },
+            hi: {
+                site: 'समा',
+                subtitle: 'छात्र ट्रैकिंग रिकॉर्ड',
+                pageTitle: 'छात्र सूची',
+                pageDesc: 'छात्र रिकॉर्ड और प्रदर्शन रिपोर्ट ट्रैक करें',
+                searchPlaceholder: 'छात्र नाम या आईडी से खोजें...',
+                optAll: 'सभी स्तर',
+                optPrimary: 'प्राथमिक',
+                optMiddle: 'माध्यमिक',
+                optHigh: 'उच्च',
+                btnAdd: 'नया छात्र',
+                txtNoStudents: 'अभी तक कोई छात्र पंजीकृत नहीं',
+                txtAddFirst: 'नया छात्र जोड़कर शुरू करें',
+                lblRecords: 'रिकॉर्ड',
+                lblAverage: 'औसत',
+                modalTitle: 'रिकॉर्ड और कौशल',
+                lblParentInfo: 'अभिभावक जानकारी',
+                lblParentName: 'नाम',
+                lblParentPhone: 'फोन',
+                lblParentEmail: 'ईमेल',
+                lblNotes: 'नोट्स',
+                lblNoRecords: 'अभी तक कोई रिकॉर्ड नहीं',
+                lblSkills: 'कौशल और मूल्यांकन',
+                lblGrade: 'ग्रेड',
+                lblClass: 'कक्षा',
+                lblId: 'आईडी',
+                themeToggle: 'थीम बदलें',
+                langToggle: 'भाषा बदलें'
+            },
+            fil: {
+                site: 'Sama',
+                subtitle: 'Student Follow-up Record',
+                pageTitle: 'Listahan ng mga Mag-aaral',
+                pageDesc: 'Subaybayan ang mga record at performance report',
+                searchPlaceholder: 'Maghanap sa pangalan o ID ng mag-aaral...',
+                optAll: 'Lahat ng Antas',
+                optPrimary: 'Elementarya',
+                optMiddle: 'Junior High',
+                optHigh: 'Senior High',
+                btnAdd: 'Bagong Mag-aaral',
+                txtNoStudents: 'Walang mga mag-aaral na nakarehistro pa',
+                txtAddFirst: 'Magsimula sa pagdagdag ng bagong mag-aaral',
+                lblRecords: 'Mga Record',
+                lblAverage: 'Average',
+                modalTitle: 'Mga Record at Kasanayan',
+                lblParentInfo: 'Impormasyon ng Magulang',
+                lblParentName: 'Pangalan',
+                lblParentPhone: 'Telepono',
+                lblParentEmail: 'Email',
+                lblNotes: 'Mga Tala',
+                lblNoRecords: 'Walang mga record pa',
+                lblSkills: 'Mga Kasanayan at Pagsusuri',
+                lblGrade: 'Marka',
+                lblClass: 'Klase',
+                lblId: 'ID',
+                themeToggle: 'Baguhin ang Tema',
+                langToggle: 'Baguhin ang Wika'
+            },
+            zh: {
+                site: '萨玛',
+                subtitle: '学生跟进记录',
+                pageTitle: '学生列表',
+                pageDesc: '跟踪学生记录和成绩报告',
+                searchPlaceholder: '按学生姓名或学号搜索...',
+                optAll: '所有年级',
+                optPrimary: '小学',
+                optMiddle: '初中',
+                optHigh: '高中',
+                btnAdd: '新学生',
+                txtNoStudents: '暂无已注册学生',
+                txtAddFirst: '添加新学生开始',
+                lblRecords: '记录',
+                lblAverage: '平均',
+                modalTitle: '记录与技能',
+                lblParentInfo: '家长信息',
+                lblParentName: '姓名',
+                lblParentPhone: '电话',
+                lblParentEmail: '邮箱',
+                lblNotes: '备注',
+                lblNoRecords: '暂无记录',
+                lblSkills: '技能与评估',
+                lblGrade: '成绩',
+                lblClass: '班级',
+                lblId: '学号',
+                themeToggle: '切换主题',
+                langToggle: '更改语言'
+            }
+        };
+        
+        const flags = {
+            ar: '🇸🇦', en: '🇬🇧', tr: '🇹🇷', es: '🇪🇸',
+            ko: '🇰🇷', ja: '🇯🇵', hi: '🇮🇳', fil: '🇵🇭', zh: '🇨🇳'
+        };
+        
+        function applyTranslation(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            
+            // تحديث العناصر بالنص
+            const textElements = {
+                'txt-site': t.site,
+                'txt-subtitle': t.subtitle,
+                'txt-page-title': t.pageTitle,
+                'txt-page-desc': t.pageDesc,
+                'opt-all': t.optAll,
+                'opt-primary': t.optPrimary,
+                'opt-middle': t.optMiddle,
+                'opt-high': t.optHigh,
+                'btn-add': t.btnAdd,
+                'txt-no-students': t.txtNoStudents,
+                'txt-add-first': t.txtAddFirst
+            };
+            
+            for (const [id, text] of Object.entries(textElements)) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = text;
+            }
+            
+            // تحديث الـ placeholders
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+            
+            // تحديث أزرار التحكم
+            const themeBtn = document.getElementById('theme-toggle');
+            const langBtn = document.getElementById('lang-toggle');
+            if (themeBtn) themeBtn.title = t.themeToggle;
+            if (langBtn) langBtn.title = t.langToggle;
+            
+            // تحديث الاتجاه
+            document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            // إعادة عرض الطلاب لتحديث البطاقات
+            renderStudents();
+        }
+        
+        // زر اللغة
+        const langBtn = document.getElementById('lang-toggle');
+        if (langBtn) {
+            langBtn.textContent = flags[currentLang] || '🇸🇦';
+            
+            langBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const langs = [
+                    {code: 'ar', name: 'العربية', flag: '🇸🇦'},
+                    {code: 'en', name: 'English', flag: '🇬🇧'},
+                    {code: 'tr', name: 'Türkçe', flag: '🇹🇷'},
+                    {code: 'es', name: 'Español', flag: '🇪🇸'},
+                    {code: 'ko', name: '한국어', flag: '🇰🇷'},
+                    {code: 'ja', name: '日本語', flag: '🇯🇵'},
+                    {code: 'hi', name: 'हिन्दी', flag: '🇮🇳'},
+                    {code: 'fil', name: 'Filipino', flag: '🇵🇭'},
+                    {code: 'zh', name: '中文', flag: '🇨🇳'}
+                ];
+                
+                // إزالة القائمة القديمة
+                const oldMenu = document.querySelector('.lang-menu');
+                if (oldMenu) { oldMenu.remove(); return; }
+                
+                // إنشاء القائمة الجديدة
+                const menu = document.createElement('div');
+                menu.className = 'lang-menu';
+                menu.style.cssText = 'position:absolute;top:100%;right:0;background:white;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.3);padding:10px;min-width:180px;z-index:9999;margin-top:5px;border:2px solid #1F6F6F;';
+                
+                langs.forEach(l => {
+                    const btn = document.createElement('button');
+                    btn.textContent = l.flag + '  ' + l.name;
+                    btn.style.cssText = 'width:100%;padding:10px 15px;margin:3px 0;border:none;background:transparent;border-radius:5px;cursor:pointer;text-align:right;font-family:Tajawal,sans-serif;font-size:14px;transition:all 0.2s;';
+                    btn.onmouseover = () => { btn.style.background = '#1F6F6F'; btn.style.color = 'white'; };
+                    btn.onmouseout = () => { btn.style.background = 'transparent'; btn.style.color = 'inherit'; };
+                    btn.onclick = function(ev) {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        currentLang = l.code;
+                        localStorage.setItem('sama-lang', currentLang);
+                        langBtn.textContent = l.flag;
+                        menu.remove();
+                        applyTranslation(currentLang);
+                    };
+                    menu.appendChild(btn);
+                });
+                
+                this.parentElement.style.position = 'relative';
+                this.parentElement.appendChild(menu);
+            });
+            
+            // التطبيق الأولي
+            setTimeout(() => applyTranslation(currentLang), 200);
+        }
+        
+        // ========== الوظائف الأصلية ==========
+        
         let students = JSON.parse(localStorage.getItem('students')) || [];
 
-        // دالة لعرض الطلاب
         function renderStudents(studentsList = students) {
             const grid = document.getElementById('studentsGrid');
             const noStudents = document.getElementById('noStudents');
+            const t = translations[currentLang];
             
             if (studentsList.length === 0) {
                 grid.innerHTML = '';
@@ -554,9 +923,9 @@
             grid.innerHTML = studentsList.map((student, index) => {
                 const initials = student.studentName.split(' ').map(n => n[0]).join('').substring(0, 2);
                 const gradeText = {
-                    'primary': 'ابتدائي',
-                    'middle': 'متوسط',
-                    'high': 'ثانوي'
+                    'primary': t.optPrimary,
+                    'middle': t.optMiddle,
+                    'high': t.optHigh
                 }[student.gradeLevel] || student.gradeLevel;
                 
                 const totalRecords = student.records?.skills?.length || 0;
@@ -586,11 +955,11 @@
                         <div class="student-stats">
                             <div class="stat-badge">
                                 <span class="number">${totalRecords}</span>
-                                <span class="label">سجل</span>
+                                <span class="label">${t.lblRecords}</span>
                             </div>
                             <div class="stat-badge">
                                 <span class="number">${avgGrade}%</span>
-                                <span class="label">المعدل</span>
+                                <span class="label">${t.lblAverage}</span>
                             </div>
                         </div>
                     </div>
@@ -598,22 +967,21 @@
             }).join('');
         }
 
-        // عرض تفاصيل الطالب
         function showStudentDetails(studentId) {
             const student = students.find(s => s.studentId === studentId);
             if (!student) return;
             
             const modal = document.getElementById('studentModal');
             const content = document.getElementById('studentModalContent');
+            const t = translations[currentLang];
             
             const initials = student.studentName.split(' ').map(n => n[0]).join('').substring(0, 2);
             const gradeText = {
-                'primary': 'ابتدائي',
-                'middle': 'متوسط',
-                'high': 'ثانوي'
+                'primary': t.optPrimary,
+                'middle': t.optMiddle,
+                'high': t.optHigh
             }[student.gradeLevel] || student.gradeLevel;
             
-            // تجهيز السجلات
             let skillsHTML = '';
             if (student.records && student.records.skills && student.records.skills.length > 0) {
                 skillsHTML = student.records.skills.map(skill => `
@@ -623,7 +991,7 @@
                     </div>
                 `).join('');
             } else {
-                skillsHTML = '<p style="color: var(--text-sec); padding: 1rem; text-align: center;">لا توجد سجلات بعد</p>';
+                skillsHTML = `<p style="color: var(--text-sec); padding: 1rem; text-align: center;">${t.lblNoRecords}</p>`;
             }
             
             content.innerHTML = `
@@ -632,37 +1000,37 @@
                     <div class="student-profile-info">
                         <h2>${student.studentName}</h2>
                         <p><i class="fas fa-graduation-cap"></i> ${gradeText} - ${student.classRoom}</p>
-                        <p><i class="fas fa-id-card"></i> الهوية: ${student.studentId}</p>
+                        <p><i class="fas fa-id-card"></i> ${t.lblId}: ${student.studentId}</p>
                     </div>
                 </div>
                 <div class="records-section">
                     <div class="section-title">
                         <i class="fas fa-chart-bar"></i>
-                        السجلات والمهارات
+                        ${t.modalTitle}
                     </div>
                     <div class="skills-container">
                         <div class="skill-category">
-                            <h4><i class="fas fa-tasks"></i> المهارات والتقييمات</h4>
+                            <h4><i class="fas fa-tasks"></i> ${t.lblSkills}</h4>
                             ${skillsHTML}
                         </div>
                     </div>
                     
                     <div class="section-title">
                         <i class="fas fa-user-tie"></i>
-                        بيانات ولي الأمر
+                        ${t.lblParentInfo}
                     </div>
                     <div class="info-card">
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-user"></i> الاسم</span>
+                            <span class="info-label"><i class="fas fa-user"></i> ${t.lblParentName}</span>
                             <span class="info-value">${student.parentName}</span>
                         </div>
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-phone"></i> الجوال</span>
+                            <span class="info-label"><i class="fas fa-phone"></i> ${t.lblParentPhone}</span>
                             <span class="info-value">${student.parentPhone}</span>
                         </div>
                         ${student.parentEmail ? `
                         <div class="info-row">
-                            <span class="info-label"><i class="fas fa-envelope"></i> البريد الإلكتروني</span>
+                            <span class="info-label"><i class="fas fa-envelope"></i> ${t.lblParentEmail}</span>
                             <span class="info-value">${student.parentEmail}</span>
                         </div>
                         ` : ''}
@@ -671,7 +1039,7 @@
                     ${student.notes ? `
                     <div class="section-title">
                         <i class="fas fa-sticky-note"></i>
-                        ملاحظات
+                        ${t.lblNotes}
                     </div>
                     <div class="info-card">
                         <p style="color: var(--text-sec); line-height: 1.8;">${student.notes}</p>
@@ -684,13 +1052,11 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // إغلاق نافذة الطالب
         function closeStudentModal() {
             document.getElementById('studentModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
 
-        // البحث والفلترة
         function filterStudents() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const gradeFilter = document.getElementById('gradeFilter').value;
@@ -708,21 +1074,28 @@
         document.getElementById('searchInput').addEventListener('input', filterStudents);
         document.getElementById('gradeFilter').addEventListener('change', filterStudents);
 
-        // إغلاق النافذة عند النقر خارجها
         document.getElementById('studentModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeStudentModal();
-            }
+            if (e.target === this) closeStudentModal();
         });
 
-        // إغلاق النافذة بزر Escape
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeStudentModal();
-            }
+            if (e.key === 'Escape') closeStudentModal();
         });
 
-        // عرض الطلاب عند تحميل الصفحة
+        // الوضع الليلي
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            const savedTheme = localStorage.getItem('sama-theme') || 'light';
+            if (savedTheme === 'dark') document.body.classList.add('dark-mode');
+            
+            themeBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('sama-theme', isDark ? 'dark' : 'light');
+                this.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            });
+        }
+
         renderStudents();
     </script>
 </body>
